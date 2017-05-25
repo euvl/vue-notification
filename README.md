@@ -1,18 +1,39 @@
-1. Incude "nice-notifications" component in your app/body.
-```vue
-<nice-notifications/>
+### How to
+
+In main.js:
+
+```javascript
+import Vue from 'vue'
+import VN  from 'vue-notification'
+
+Vue.use(VN)
 ```
 
-2. In anyVue component call `this.$notify(params)` fuction to show notification.
+In App.vue:
+
 ```vue
+<notifications />
+```
+
+In any of your files:
+
+```javascript
+
 this.$notify({
-  ...
+  title: 'Inportant message',
+  text: 'Hello user! This is a notification!'
 });
 ```
 
-### Api
+### Props
 
-```
+`todo`
+
+### API
+
+`todo`
+
+```javascript
   this.$notify({
     group: 'foo',
     type: 'warning',
@@ -27,24 +48,24 @@ You can write your own css styles for notifications:
 Structure:
 
 ```scss
-# SCSS:
+// SCSS:
 
 .notification.my-style {
-  # Style of the notification itself
+  // Style of the notification itself
 
   .notification-title {
-    # Style for title line
+    // Style for title line
   }
 
   .notification-content {
-    # Style for content
+    // Style for content
   }
 
 
   &.my-type {
-    # Style for specific type of notification, will be applied when you
-    # call notification with "type" parameter:
-    # this.$notify({ type: 'my-type', message: 'Foo' })
+    // Style for specific type of notification, will be applied when you
+    // call notification with "type" parameter:
+    // this.$notify({ type: 'my-type', message: 'Foo' })
   }
 }
 ```
