@@ -49,7 +49,6 @@ body {
   padding: 100px;
 }
 
-
 .notification.style-two {
   margin: 5px;
   margin-bottom: 5px;
@@ -63,7 +62,7 @@ body {
     0 2px 8px 0 rgba(232, 237, 250, 0.5);
 
   color: #8898A5;
-  font-weight: 600;
+  // font-weight: 600;
 
   & .notification-title {
     font-weight: 600;
