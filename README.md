@@ -1,3 +1,5 @@
+Vue.js 2 notification library
+
 ### How to
 
 In main.js:
