@@ -22,7 +22,7 @@ In any of your files:
 ```javascript
 
 this.$notify({
-  title: 'Inportant message',
+  title: 'Important message',
   text: 'Hello user! This is a notification!'
 });
 ```
