@@ -1,4 +1,4 @@
-Vue.js 2 notification library
+# Vue.js notifications
 
 ### How to
 
@@ -30,6 +30,7 @@ this.$notify({
 ### Props
 
 `name` - (optional) name of the notification holder
+
 `width` - (optional) tada
 
 ### API
