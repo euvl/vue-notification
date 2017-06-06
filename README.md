@@ -33,6 +33,8 @@ this.$notify({
 
 `width` - (optional) tada
 
+`classes` - (optional) list of classes that will be applied to notification element
+
 ### API
 
 ```javascript
