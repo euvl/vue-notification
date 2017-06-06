@@ -35,6 +35,8 @@ this.$notify({
 
 `classes` - (optional) list of classes that will be applied to notification element
 
+`position` - (optional) part of the screen where notifications will pop out
+
 ### API
 
 ```javascript
