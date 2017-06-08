@@ -42,8 +42,6 @@ this.$notify({
 ```javascript
   this.$notify({
     // Name of the notification holder
-    // If multiple notification holders have the same name 
-    // then they all will show this notification
     group: 'foo',
     
     // Class that will be assigned to the notification
