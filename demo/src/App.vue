@@ -7,10 +7,11 @@
     </h2>
     <notifications group="foo" position="bottom left" :speed="500" />
     <notifications group="bar"
-                   position="bottom right"
+                   position="top right"
                    classes="custom" />
     <notifications group="baz"
                    :animation="animation"
+                   :reverse="true"
                    position="top left" />
     <div class="content">
       <button @click="show('foo')">Show bottom left GENERAL</button>
@@ -18,7 +19,7 @@
       <button @click="show('foo', 'error')">Show bottom left ERROR</button>
       <br>
       <br>
-      <button @click="show('bar')">Show bottom right</button>
+      <button @click="show('bar')">Show top right</button>
       <br>
       <button @click="show('baz')">Show top left</button>
     </div>
@@ -39,7 +40,8 @@ export default {
           scale: [1, 0.2]
         },
         leave: {
-          opacity: 0
+          opacity: 0,
+          height: 0
         }
       }
     }
@@ -98,11 +100,9 @@ body {
   font-size: 13px;
   padding: 10px;
 
-  color: #FCFDFF;
-  //border: 1px solid #eaeefb;
-  box-shadow: 0 2px 3px 0 rgba(#000000, 0.2);
-  background: #FF8D68;
-  // font-weight: 600;
+  color: #5A6B81;
+  border-bottom: 2px solid rgba(#474748, 0.1);
+  background: #E5EBF1;
 
   & .notification-title {
     font-weight: 600;

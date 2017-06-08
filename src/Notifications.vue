@@ -40,6 +40,10 @@ export default {
     group: {
       type: String
     },
+    reverse: {
+      type: Boolean,
+      default: false
+    },
     position: {
       type: String,
       default: 'top right'
@@ -116,7 +120,11 @@ export default {
         }, item.length)
       }
 
-      if (this.botToTop) {
+      let direction = this.reverse
+        ? !this.botToTop
+        : this.botToTop
+
+      if (direction) {
         this.list.push(item)
       } else {
         this.list.unshift(item)

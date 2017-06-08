@@ -147,6 +147,10 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
     group: {
       type: String
     },
+    reverse: {
+      type: Boolean,
+      default: false
+    },
     position: {
       type: String,
       default: 'top right'
@@ -225,7 +229,11 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
         }, item.length);
       }
 
-      if (_this.botToTop) {
+      var direction = _this.reverse ? !_this.botToTop : _this.botToTop;
+
+      console.log(_this.reverse, _this.botToTop);
+
+      if (direction) {
         _this.list.push(item);
       } else {
         _this.list.unshift(item);
