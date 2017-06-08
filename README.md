@@ -35,7 +35,7 @@ this.$notify({
 
 ### Props
 
-`group` - (optional) name of the notification holder
+`group` - (optional) name of the notification holder, if specified
 
 `width` - (optional) tada
 
@@ -44,6 +44,12 @@ this.$notify({
 `position` - (optional) part of the screen where notifications will pop out
 
 `animation` - (optional) Velocity animation configuration
+
+`duration` - (optional) How long notification stays on screen
+
+`speed` - (optional) Speed of the animation
+
+`delay` - todo :D
 
 ### API
 
@@ -60,6 +66,12 @@ this.$notify({
 
     // Content, will be wrapped in div.notification-content
     text: 'This is <b> content </b>'
+    
+    // Overrides default/provided duration
+    duration: 10000,
+    
+    // Overrides default/provided animation speed
+    speed: 1000
   })
 ```
 
@@ -104,20 +116,25 @@ Library uses `Velocity` javascript animations, the format is:
 
 ```javascript
 /*
- * Both 'enter' and 'leave' should be either an object or a function
- *
+ * Both 'enter' and 'leave' can be either an object or a function
  */
 animation = {
-  enter: (element) => {
+  enter (element) {
      /*
-      element - is a notification element before animation
-        meaning that you can take it's initial height, width, color, etc
-     */
-
+      *  "element" - is a notification element 
+      *    (before animation, meaning that you can take it's initial height, width, color, etc)
+      */
+     let height = element.clientHeight
+     
      return {
-       height: [element.clientHeight, 0],
-       backgroundColor: '#0000ff'
-       opacity: Math.random() * 0.5 + 0.5
+       // Animates from 0px to "height"
+       heigh: [height, 0],
+       
+       // Animates from initial color, to #0000ff
+       backgroundColor: '#0000ff',
+       
+       // Animates from 0 to random opacity (in range between 0.5 and 1)
+       opacity: [Math.random() * 0.5 + 0.5, 0]
      }  
   },
   leave: {
