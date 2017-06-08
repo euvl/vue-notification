@@ -45,7 +45,7 @@ this.$notify({
 
 `animation` - (optional) Velocity animation configuration
 
-`duration` - (optional) How long notification stays on screen
+`duration` - (optional) How long notification stays on screen (if **negative** - notification will stay **forever** or until clicked)
 
 `speed` - (optional) Speed of the animation
 
@@ -61,10 +61,10 @@ this.$notify({
     // Class that will be assigned to the notification
     type: 'warning',
 
-    // Title, will be wrapped in div.notification-title
+    // Title (will be wrapped in div.notification-title)
     title: 'This is title',
 
-    // Content, will be wrapped in div.notification-content
+    // Content (will be wrapped in div.notification-content)
     text: 'This is <b> content </b>'
     
     // Overrides default/provided duration
