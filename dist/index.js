@@ -231,8 +231,6 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
 
       var direction = _this.reverse ? !_this.botToTop : _this.botToTop;
 
-      console.log(_this.reverse, _this.botToTop);
-
       if (direction) {
         _this.list.push(item);
       } else {
