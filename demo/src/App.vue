@@ -1,5 +1,10 @@
 <template>
   <div id="app">
+    <h2>Vue.js Notification
+      <br>
+      <a href="https://github.com/euvl/vue-notification/blob/master/README.md" target="readme">Readme</a>
+      <a href="https://github.com/euvl/vue-notification/" target="issues">Github</a>
+    </h2>
     <notifications group="foo" position="bottom left" :speed="500" />
     <notifications group="bar"
                    position="bottom right"
@@ -53,24 +58,33 @@ export default {
 
 <style lang="scss">
 body {
-  padding: 0;
-  margin: 0;
-}
-
-#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
   padding: 100px;
+  margin: 0;
 
-  .content {
-    margin: 0 auto;
-    width: 300px;
+  h2 {
+    font-weight: 300;
 
-    button {
-      width: 100%;
+    a {
+      color: black;
+      font-size: 12px;
+    }
+  }
+
+  button {
+    width: 100%;
+  }
+
+  #app {
+    text-align: center;
+    color: #2c3e50;
+
+    .content {
+      margin: 0 auto;
+      width: 300px;
     }
   }
 }
