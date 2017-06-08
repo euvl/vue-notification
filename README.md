@@ -49,7 +49,7 @@ this.$notify({
 
 `speed` - (optional) Speed of the animation
 
-`delay` - todo :D
+`reverse` - (optional) show notifications in reverse order
 
 ### API
 
@@ -66,10 +66,10 @@ this.$notify({
 
     // Content (will be wrapped in div.notification-content)
     text: 'This is <b> content </b>'
-    
+
     // Overrides default/provided duration
     duration: 10000,
-    
+
     // Overrides default/provided animation speed
     speed: 1000
   })
@@ -116,7 +116,7 @@ To apply this style you will have to specify "classes" property:
 .vue-notification {
   padding: 10px;
   margin: 0 5px 5px;
-  
+
   font-size: 12px;
 
   color: #ffffff;
@@ -151,18 +151,18 @@ Library uses `Velocity` javascript animations, the format is:
 animation = {
   enter (element) {
      /*
-      *  "element" - is a notification element 
+      *  "element" - is a notification element
       *    (before animation, meaning that you can take it's initial height, width, color, etc)
       */
      let height = element.clientHeight
-     
+
      return {
        // Animates from 0px to "height"
        height: [height, 0],
-       
+
        // Animates from initial color, to #0000ff
        backgroundColor: '#0000ff',
-       
+
        // Animates from 0 to random opacity (in range between 0.5 and 1)
        opacity: [Math.random() * 0.5 + 0.5, 0]
      }  
