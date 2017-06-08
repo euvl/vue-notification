@@ -158,7 +158,7 @@ animation = {
      
      return {
        // Animates from 0px to "height"
-       heigh: [height, 0],
+       height: [height, 0],
        
        // Animates from initial color, to #0000ff
        backgroundColor: '#0000ff',
