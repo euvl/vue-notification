@@ -1,16 +1,27 @@
 <template>
   <div id="app">
-    <notifications name="foo" position="top left" classes="style-default" />
-    <notifications name="bar" position="top right" classes="style-one" />
-    <notifications name="yaz"
-                   position="bottom right"
-                   transition="fade"
-                   classes="style-two" />
-    <div class="content">
-      <button @click="show('foo')">Show top left (basic)</button>
-      <button @click="show('bar')">Show top right (styled)</button>
+    <h2>Vue.js Notification
       <br>
-      <button @click="show('yaz')">Show top right (styled, animated)</button>
+      <a href="https://github.com/euvl/vue-notification/blob/master/README.md" target="readme">Readme</a>
+      <a href="https://github.com/euvl/vue-notification/" target="issues">Github</a>
+    </h2>
+    <notifications group="foo" position="bottom left" :speed="500" />
+    <notifications group="bar"
+                   position="top right"
+                   classes="custom" />
+    <notifications group="baz"
+                   :animation="animation"
+                   :reverse="true"
+                   position="top left" />
+    <div class="content">
+      <button @click="show('foo')">Show bottom left GENERAL</button>
+      <button @click="show('foo', 'warn')">Show bottom left WARNING</button>
+      <button @click="show('foo', 'error')">Show bottom left ERROR</button>
+      <br>
+      <br>
+      <button @click="show('bar')">Show top right</button>
+      <br>
+      <button @click="show('baz')">Show top left</button>
     </div>
   </div>
 </template>
@@ -19,16 +30,29 @@
 
 export default {
   name: 'app',
+  data () {
+    return {
+      id: 0,
+      animation: {
+        enter: {
+          opacity: [1, 0],
+          translateX: [0, -300],
+          scale: [1, 0.2]
+        },
+        leave: {
+          opacity: 0,
+          height: 0
+        }
+      }
+    }
+  },
   methods: {
-    show (group) {
+    show (group, type = '') {
+      let title = `Test ${type} notification #${this.id++}`
       let now = new Date()
-      let number = Math.random()
+      let text = `This is notification text!<br>Date: ${now}`
 
-      this.$notify({
-        group: group,
-        title: 'Test notification',
-        text: `${number}<br>${now}`
-      })
+      this.$notify({ group, title, text, type })
     }
   }
 }
@@ -36,33 +60,49 @@ export default {
 
 <style lang="scss">
 body {
-  padding: 0;
-  margin: 0;
-}
-
-#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
   padding: 100px;
+  margin: 0;
+
+  h2 {
+    font-weight: 300;
+
+    a {
+      color: black;
+      font-size: 12px;
+    }
+  }
+
+  button {
+    width: 100%;
+  }
+
+  #app {
+    text-align: center;
+    color: #2c3e50;
+
+    .content {
+      margin: 0 auto;
+      width: 300px;
+    }
+  }
 }
 
-.notification.style-two {
+.notification.custom {
   margin: 5px;
   margin-bottom: 5px;
+
+  border-radius: 5px;
 
   font-size: 13px;
   padding: 10px;
 
-  background: #FCFDFF;
-  border: 1px solid #eaeefb;
-  box-shadow: 0 0 4px 0 rgba(232, 237, 250, 0.6),
-    0 2px 8px 0 rgba(232, 237, 250, 0.5);
-
-  color: #8898A5;
-  // font-weight: 600;
+  color: #5A6B81;
+  border-bottom: 2px solid rgba(#474748, 0.1);
+  background: #E5EBF1;
 
   & .notification-title {
     font-weight: 600;
