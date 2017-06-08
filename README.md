@@ -1,50 +1,94 @@
-1. Incude "nice-notifications" component in your app/body.
-```vue
-<nice-notifications/>
+# Vue.js notifications
+
+### Install
+
+```
+npm install --save vue-notification
 ```
 
-2. In anyVue component call `this.$notify(params)` fuction to show notification.
+### How to
+
+In main.js:
+
+```javascript
+import Vue           from 'vue'
+import Notifications from 'vue-notification'
+
+Vue.use(Notifications)
+```
+
+In App.vue:
+
 ```vue
+<notifications />
+```
+
+In any of your files:
+
+```javascript
+
 this.$notify({
-  ...
+  title: 'Important message',
+  text: 'Hello user! This is a notification!'
 });
 ```
 
-### Api
+### Props
 
-```
+`group` - (optional) name of the notification holder
+
+`width` - (optional) tada
+
+`classes` - (optional) list of classes that will be applied to notification element
+
+`position` - (optional) part of the screen where notifications will pop out
+
+`animation` - (optional) Velocity animation configuration
+
+### API
+
+```javascript
   this.$notify({
+    // Name of the notification holder
     group: 'foo',
+
+    // Class that will be assigned to the notification
     type: 'warning',
+
+    // Title, will be wrapped in div.notification-title
     title: 'This is title',
+
+    // Content, will be wrapped in div.notification-content
     text: 'This is <b> content </b>'
   })
 ```
 
+Title and Text can be HTML strings.
+
 ### Style
+
 You can write your own css styles for notifications:
 
 Structure:
 
 ```scss
-# SCSS:
+// SCSS:
 
 .notification.my-style {
-  # Style of the notification itself
+  // Style of the notification itself
 
   .notification-title {
-    # Style for title line
+    // Style for title line
   }
 
   .notification-content {
-    # Style for content
+    // Style for content
   }
 
-
   &.my-type {
-    # Style for specific type of notification, will be applied when you
-    # call notification with "type" parameter:
-    # this.$notify({ type: 'my-type', message: 'Foo' })
+    // Style for specific type of notification, will be applied when you
+    // call notification with "type" parameter:
+    // this.$notify({ type: 'my-type', message: 'Foo' })
   }
 }
 ```
@@ -53,3 +97,39 @@ To apply this style you will have to specify "classes" property:
 ```vue
   <notifications classes="my-style"/>
 ```
+
+### Animation
+
+Library uses `Velocity` javascript animations, the format is:
+
+```javascript
+/*
+ * Both 'enter' and 'leave' should be either an object or a function
+ *
+ */
+animation = {
+  enter: (element) => {
+     /*
+      element - is a notification element before animation
+        meaning that you can take it's initial height, width, color, etc
+     */
+
+     return {
+       height: [element.clientHeight, 0],
+       backgroundColor: '#0000ff'
+       opacity: Math.random() * 0.5 + 0.5
+     }  
+  },
+  leave: {
+    height: 0,
+    opacity: 0,
+    backgroundColor: '#00ff00'
+  }
+}
+```
+
+```vue
+<notifications animation="animation" />
+```
+
+The reason for using Velocity is that it gives more control over animating `Height` of the element which is important for this library
