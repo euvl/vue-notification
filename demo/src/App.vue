@@ -1,16 +1,13 @@
 <template>
   <div id="app">
-    <notifications name="foo" position="top left" classes="style-default" />
-    <notifications name="bar" position="top right" classes="style-one" />
-    <notifications name="yaz"
+    <notifications group="foo" position="top left" />
+    <notifications group="bar"
                    position="bottom right"
-                   transition="fade"
-                   classes="style-two" />
+                   classes="custom" />
     <div class="content">
       <button @click="show('foo')">Show top left (basic)</button>
-      <button @click="show('bar')">Show top right (styled)</button>
       <br>
-      <button @click="show('yaz')">Show top right (styled, animated)</button>
+      <button @click="show('bar')">Show top right (styled, animated)</button>
     </div>
   </div>
 </template>
@@ -19,16 +16,21 @@
 
 export default {
   name: 'app',
+  data () {
+    return {
+      id: 0
+    }
+  },
   methods: {
     show (group) {
-      let now = new Date()
-      let number = Math.random()
+      let title = `Test notification #${this.id++}`
+      let text = `
+        Random number: ${Math.random()}
+        <br>
+        Date: ${new Date()}
+      `
 
-      this.$notify({
-        group: group,
-        title: 'Test notification',
-        text: `${number}<br>${now}`
-      })
+      this.$notify({ group, title, text })
     }
   }
 }
@@ -47,9 +49,18 @@ body {
   text-align: center;
   color: #2c3e50;
   padding: 100px;
+
+  .content {
+    margin: 0 auto;
+    width: 300px;
+    
+    button {
+      width: 100%;
+    }
+  }
 }
 
-.notification.style-two {
+.notification.custom {
   margin: 5px;
   margin-bottom: 5px;
 

@@ -204,6 +204,7 @@ export default {
   display: block;
   box-sizing: border-box;
   background: white;
+  text-align: left;
 }
 
 .notification-title {
@@ -211,30 +212,27 @@ export default {
 }
 
 .vue-notification {
-  background: #44A4FC;
-  border-left: 5px solid #187FE7;
   font-size: 12px;
   padding: 10px;
+  margin: 0 5px 5px;
+
   color: white;
-  margin: 5px;
-  margin-top: 0;
+  background: #44A4FC;
+  border-left: 5px solid #187FE7;
 }
 
 .vue-notification.warn {
   background: #ffb648;
-  border-left: 5px solid #f48a06;
-  color: white;
+  border-left-color: #f48a06;
 }
 
 .vue-notification.error {
   background: #E54D42;
-  border-left: 5px solid #B82E24;
-  color: white;
+  border-left-color: #B82E24;
 }
 
 .vue-notification.success {
   background: #68CD86;
-  border-left: 5px solid #42A85F;
-  color: white;
+  border-left-color: #42A85F;
 }
 </style>
