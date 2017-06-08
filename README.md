@@ -112,8 +112,6 @@ To apply this style you will have to specify "classes" property:
 
 **Default:**
 
-Default
-
 ```scss
 .vue-notification {
   padding: 10px;
