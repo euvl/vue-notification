@@ -110,6 +110,38 @@ To apply this style you will have to specify "classes" property:
   <notifications classes="my-style"/>
 ```
 
+**Default:**
+
+Default
+
+```scss
+.vue-notification {
+  padding: 10px;
+  margin: 0 5px 5px;
+  
+  font-size: 12px;
+
+  color: #ffffff;
+  background: #44A4FC;
+  border-left: 5px solid #187FE7;
+
+  &.warn {
+    background: #ffb648;
+    border-left-color: #f48a06;
+  }
+
+  &.error {
+    background: #E54D42;
+    border-left-color: #B82E24;
+  }
+
+  &.success {
+    background: #68CD86;
+    border-left-color: #42A85F;
+  }
+}
+```
+
 ### Animation
 
 Library uses `Velocity` javascript animations, the format is:
