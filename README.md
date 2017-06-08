@@ -65,6 +65,7 @@ this.$notify({
     title: 'This is title',
 
     // Content (will be wrapped in div.notification-content)
+
     text: 'This is <b> content </b>'
 
     // Overrides default/provided duration
