@@ -163,17 +163,13 @@ animation = {
        // Animates from 0px to "height"
        height: [height, 0],
 
-       // Animates from initial color, to #0000ff
-       backgroundColor: '#0000ff',
-
        // Animates from 0 to random opacity (in range between 0.5 and 1)
        opacity: [Math.random() * 0.5 + 0.5, 0]
      }  
   },
   leave: {
     height: 0,
-    opacity: 0,
-    backgroundColor: '#00ff00'
+    opacity: 0
   }
 }
 ```
