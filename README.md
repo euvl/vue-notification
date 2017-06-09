@@ -87,7 +87,7 @@ Structure:
 ```scss
 // SCSS:
 
-.notification.my-style {
+.my-style {
   // Style of the notification itself
 
   .notification-title {
@@ -99,9 +99,11 @@ Structure:
   }
 
   &.my-type {
-    // Style for specific type of notification, will be applied when you
-    // call notification with "type" parameter:
-    // this.$notify({ type: 'my-type', message: 'Foo' })
+    /*
+    Style for specific type of notification, will be applied when you
+    call notification with "type" parameter:
+    this.$notify({ type: 'my-type', message: 'Foo' })
+    */
   }
 }
 ```
