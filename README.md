@@ -48,7 +48,7 @@ All props are optional.
 | speed        | 300          | speed of the animation |
 | reverse      | false        | show notifications in reverse order |
 
-$$$ = {enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}
+$$$ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
 ### API
 
