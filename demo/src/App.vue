@@ -64,7 +64,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  padding: 100px;
+  padding: 0;
+  padding-top: 100px;
   margin: 0;
 
   h2 {
@@ -86,7 +87,7 @@ body {
 
     .content {
       margin: 0 auto;
-      width: 300px;
+      max-width: 300px;
     }
   }
 }

@@ -164,26 +164,31 @@ export default {
         ? anim.call(this, el)
         : anim
     },
+
     destroy (note) {
       clearTimeout(note.timer)
       note.state = STATE.destroyed
     },
+
     enter (el, complete) {
       Velocity(el, this.getAnimation('enter', el), {
         duration: this.speed,
         complete
       })
     },
+
     leave (el, complete) {
       Velocity(el, this.getAnimation('leave', el), {
         duration: this.speed,
         complete
       })
     },
+
     afterLeave (el) {
       this.list = this.list
         .filter(v => v.state !== STATE.destroyed)
     },
+
     positionAsArray () {
       return typeof this.position === 'string'
         ? split(this.position)

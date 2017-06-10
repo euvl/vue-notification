@@ -35,21 +35,20 @@ this.$notify({
 
 ### Props
 
-`group` - (optional) name of the notification holder, if specified
+All props are optional.
 
-`width` - (optional) tada
+| Name         | Default      | Description |
+| ---          | ---          | ---         |
+| group        |              | name of the notification holder, if specified |
+| width        | 300          | width of notification holder |
+| classes      | 'vue-notification' | list of classes that will be applied to notification element |
+| position     | 'top right'  | part of the screen where notifications will pop out |
+| animation    | $$$          | `Velocity` animation configuration |
+| duration     | 3000         | how long notification stays on screen (if **negative** - notification will stay **forever** or until clicked) |
+| speed        | 300          | speed of the animation |
+| reverse      | false        | show notifications in reverse order |
 
-`classes` - (optional) list of classes that will be applied to notification element
-
-`position` - (optional) part of the screen where notifications will pop out
-
-`animation` - (optional) Velocity animation configuration
-
-`duration` - (optional) How long notification stays on screen (if **negative** - notification will stay **forever** or until clicked)
-
-`speed` - (optional) Speed of the animation
-
-`reverse` - (optional) show notifications in reverse order
+$$$ = {enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}
 
 ### API
 
