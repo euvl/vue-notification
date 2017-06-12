@@ -1,4 +1,6 @@
-# Vue.js notifications
+### Vue.js notifications
+
+Demo: http://vue-notification.yev.io/
 
 <p align="center">
   <img src="https://media.giphy.com/media/l0IxZTtDitELemJiw/giphy.gif">
