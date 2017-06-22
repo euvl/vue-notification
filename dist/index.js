@@ -5285,17 +5285,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.destroy(item)
         }
       }
-    }, [(item.title) ? _c('div', {
+    }, [_vm._t("title", [(item.title) ? _c('div', {
       staticClass: "notification-title",
       domProps: {
         "innerHTML": _vm._s(item.title)
       }
-    }) : _vm._e(), _vm._v(" "), _c('div', {
+    }) : _vm._e()], {
+      title: item.title
+    }), _vm._v(" "), _vm._t("content", [_c('div', {
       staticClass: "notification-content",
       domProps: {
         "innerHTML": _vm._s(item.text)
       }
-    })])]) : _vm._e()
+    })], {
+      text: item.text
+    })], 2)]) : _vm._e()
   }))], 1)
 },staticRenderFns: []}
 

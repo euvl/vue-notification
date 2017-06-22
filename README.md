@@ -56,6 +56,16 @@ All props are optional.
 
 $$$ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
+### Slots
+
+Optional named slots are supported.
+
+| Name         | Scope props       | Description |
+| ---          | ---               | ---         |
+| title        | title: item title | Slot to render notification title |
+| content      | text: item text   | Slot to render notification content|
+
+
 ### API
 
 ```javascript

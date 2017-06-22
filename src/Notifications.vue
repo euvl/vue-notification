@@ -11,11 +11,15 @@
           :data-id="item.id">
       <div :class="['notification', classes, item.type]"
             @click="destroy(item)">
-        <div v-if="item.title"
-             class="notification-title"
-             v-html="item.title"></div>
-        <div class="notification-content"
-             v-html="item.text"></div>
+        <slot name="title" :title="item.title">
+          <div v-if="item.title"
+              class="notification-title"
+              v-html="item.title"></div>
+        </slot>
+        <slot name="content" :text="item.text">
+          <div class="notification-content"
+              v-html="item.text"></div>
+        </slot>
       </div>
     </div>
   </transition-group>
