@@ -9,14 +9,19 @@
           v-if="item.state != 2"
           :key="item.id"
           :data-id="item.id">
-      <div :class="['notification', classes, item.type]"
+      <slot name="body" :class="[classes, item.type]" :item="item" :close="() => destroy(item)">
+        <div :class="['notification', classes, item.type]"
             @click="destroy(item)">
-        <div v-if="item.title"
-             class="notification-title"
-             v-html="item.title"></div>
-        <div class="notification-content"
-             v-html="item.text"></div>
-      </div>
+
+          <div v-if="item.title"
+              class="notification-title"
+              v-html="item.title"></div>
+
+          <div class="notification-content"
+              v-html="item.text"></div>
+
+        </div>
+      </slot>
     </div>
   </transition-group>
 </div>

@@ -5278,7 +5278,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "data-id": item.id
       }
-    }, [_c('div', {
+    }, [_vm._t("body", [_c('div', {
       class: ['notification', _vm.classes, item.type],
       on: {
         "click": function($event) {
@@ -5295,7 +5295,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "innerHTML": _vm._s(item.text)
       }
-    })])]) : _vm._e()
+    })])], {
+      item: item,
+      close: function () { return _vm.destroy(item); }
+    })], 2) : _vm._e()
   }))], 1)
 },staticRenderFns: []}
 
