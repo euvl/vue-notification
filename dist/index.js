@@ -5278,28 +5278,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "data-id": item.id
       }
-    }, [_c('div', {
+    }, [_vm._t("body", [_c('div', {
       class: ['notification', _vm.classes, item.type],
       on: {
         "click": function($event) {
           _vm.destroy(item)
         }
       }
-    }, [_vm._t("title", [(item.title) ? _c('div', {
+    }, [(item.title) ? _c('div', {
       staticClass: "notification-title",
       domProps: {
         "innerHTML": _vm._s(item.title)
       }
-    }) : _vm._e()], {
-      title: item.title
-    }), _vm._v(" "), _vm._t("content", [_c('div', {
+    }) : _vm._e(), _vm._v(" "), _c('div', {
       staticClass: "notification-content",
       domProps: {
         "innerHTML": _vm._s(item.text)
       }
-    })], {
-      text: item.text
-    })], 2)]) : _vm._e()
+    })])], {
+      item: item,
+      close: function () { return _vm.destroy(item); }
+    })], 2) : _vm._e()
   }))], 1)
 },staticRenderFns: []}
 

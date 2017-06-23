@@ -13,6 +13,19 @@
                    :animation="animation"
                    :reverse="true"
                    position="top left" />
+    <notifications group="custo-template"
+                   :animation="animation"
+                   :reverse="true"
+                   position="bottom right">
+       <template slot="body" scope="props">
+        <div class="container">
+            <a class="title">{{props.item.title}}</a>
+            <a class="close" @click="props.close">x</a>
+            <div v-html="props.item.text"> 
+            </div>
+        </div>
+      </template>
+    </notifications>
     <div class="content">
       <button @click="show('foo')">Show bottom left GENERAL</button>
       <button @click="show('foo', 'warn')">Show bottom left WARNING</button>
@@ -22,6 +35,8 @@
       <button @click="show('bar')">Show top right</button>
       <br>
       <button @click="show('baz')">Show top left</button>
+      <br>
+      <button @click="show('custo-template')">Show bottom right</button>
     </div>
   </div>
 </template>
@@ -107,6 +122,26 @@ body {
 
   & .notification-title {
     font-weight: 600;
+  }
+}
+
+.container {
+  background: red;
+
+  a.title {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  a.close {
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+  }
+
+  div {
+    background: yellow;
   }
 }
 
