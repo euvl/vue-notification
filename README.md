@@ -221,6 +221,7 @@ The reason for using Velocity is that it gives more control over animating `Heig
 
 ### Development
 
+```bash
 To run an example:
 
 # Build main library
