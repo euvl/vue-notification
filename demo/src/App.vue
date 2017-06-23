@@ -14,15 +14,17 @@
                    :reverse="true"
                    position="top left" />
     <notifications group="custom-template"
-                   :animation="animation"
+                   :duration="4000"
                    :reverse="true"
                    position="bottom right">
        <template slot="body" scope="props">
         <div class="container">
-            <a class="title">{{props.item.title}}</a>
-            <a class="close" @click="props.close">x</a>
-            <div v-html="props.item.text">
+            <div class="title">
+              <a href="http://google.com">{{props.item.title}}</a>
             </div>
+            <div class="content" v-html="props.item.text">
+            </div>
+            <div class="close" @click="props.close">x</div>
         </div>
       </template>
     </notifications>
@@ -126,22 +128,51 @@ body {
 }
 
 .container {
-  background: red;
+  position: relative;
+  margin: 0px 10px 10px;
+  background: #EAE7ED;
 
-  a.title {
-    color: blue;
-    text-decoration: underline;
+  .title {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
     cursor: pointer;
+
+    background: #004A7C;
+
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    a {
+      color: white;
+    }
   }
 
-  a.close {
+  .close {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+
+    top: 5px;
+    right: 5px;
+
     cursor: pointer;
+    color: red;
+
+    font-weight: 900;
+
+    border-radius: 4px;
+
+    background: red;
+    color: white;
     position: absolute;
-    right: 0px;
+
   }
 
-  div {
-    background: yellow;
+  .content {
+    font-size: 14px;
   }
 }
 

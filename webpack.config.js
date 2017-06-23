@@ -7,7 +7,7 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
     filename: 'index.js',
-    library:'VueJsToggleButton',
+    library:'vue-notification',
     libraryTarget: 'umd'
   },
   module: {
