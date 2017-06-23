@@ -51,12 +51,12 @@ All props are optional.
 | width        | 300          | width of notification holder |
 | classes      | 'vue-notification' | list of classes that will be applied to notification element |
 | position     | 'top right'  | part of the screen where notifications will pop out |
-| animation    | $$$          | `Velocity` animation configuration |
+| animation    | $*           | `Velocity` animation configuration |
 | duration     | 3000         | how long notification stays on screen (if **negative** - notification will stay **forever** or until clicked) |
 | speed        | 300          | speed of the animation |
 | reverse      | false        | show notifications in reverse order |
 
-$$$ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
+$ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
 ### Slot
 
@@ -68,7 +68,6 @@ Scope props:
 | ---      | ---                | ---         |
 | item     | Object | notification object |
 | close    | Function  | when called closes the notification |
-
 
 Example:
 
@@ -116,6 +115,17 @@ Example:
 ```
 
 Title and Text can be HTML strings.
+
+### Position
+
+"Position" property requires a string with 2 keywords for vertical and horizontal postion.
+
+Format: `"<vertical> <horizontal>"`.
+
+- Horizontal options: `left`, `center`, `top`
+- Vertical options: `top`, `bottom`
+
+Default is "top right".
 
 ### Style
 
