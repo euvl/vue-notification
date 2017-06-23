@@ -13,7 +13,7 @@
                    :animation="animation"
                    :reverse="true"
                    position="top left" />
-    <notifications group="custo-template"
+    <notifications group="custom-template"
                    :animation="animation"
                    :reverse="true"
                    position="bottom right">
@@ -21,7 +21,7 @@
         <div class="container">
             <a class="title">{{props.item.title}}</a>
             <a class="close" @click="props.close">x</a>
-            <div v-html="props.item.text"> 
+            <div v-html="props.item.text">
             </div>
         </div>
       </template>
@@ -36,7 +36,7 @@
       <br>
       <button @click="show('baz')">Show top left</button>
       <br>
-      <button @click="show('custo-template')">Show bottom right</button>
+      <button @click="show('custom-template')">Show bottom right</button>
     </div>
   </div>
 </template>

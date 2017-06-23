@@ -65,8 +65,28 @@ Scope props:
 | Name     | Type               | Description |
 | ---      | ---                | ---         |
 | item     | Object | notification object |
-| close    | Function  | when called close the notification|
+| close    | Function  | when called closes the notification |
 
+
+Example:
+
+```vue
+<notifications group="custom-template"  
+               position="bottom right">
+   <template slot="body" scope="props">
+    <div>
+        <a class="title">
+          {{props.item.title}}
+        </a>
+        <a class="close" @click="props.close">
+          <i class="fa fa-fw fa-close"></i>
+        </a>
+        <div v-html="props.item.text">
+        </div>
+    </div>
+  </template>
+</notifications>
+```
 
 ### API
 
