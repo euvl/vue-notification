@@ -16,7 +16,7 @@
     <notifications group="custom-template"
                    :duration="4000"
                    :reverse="true"
-                   position="bottom right">
+                   position="bottom center">
        <template slot="body" scope="props">
         <div class="container">
             <div class="title">
@@ -38,7 +38,7 @@
       <br>
       <button @click="show('baz')">Show top left</button>
       <br>
-      <button @click="show('custom-template')">Show bottom right</button>
+      <button @click="show('custom-template')">Show bottom center</button>
     </div>
   </div>
 </template>

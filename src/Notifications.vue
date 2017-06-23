@@ -37,6 +37,8 @@ const dirs = {
   y: ['top', 'bottom']
 }
 
+const defaultPosition = 'top right'
+
 const STATE = { idle: 0, destroying: 1, destroyed: 2 }
 
 export default {
@@ -45,13 +47,17 @@ export default {
     group: {
       type: String
     },
+    width: {
+      type: Number,
+      default: 300
+    },
     reverse: {
       type: Boolean,
       default: false
     },
     position: {
       type: String,
-      default: 'top right'
+      default: defaultPosition
     },
     classes: {
       type: String,
@@ -138,23 +144,32 @@ export default {
   },
   computed: {
     styles() {
-      var object = {}
-      var position = []
+      let defaults = defaultPosition.split(' ')
+      let x = defaults[0]
+      let y = defaults[1]
 
       this.positionAsArray()
         .forEach(v => {
-          if (!position[0] && dirs.y.indexOf(v) != -1) {
-            position[0] = v
+          if (dirs.y.indexOf(v) != -1) {
+            y = v
           }
-          if (!position[1] && dirs.x.indexOf(v) != -1) {
-            position[1] = v
+          if (dirs.x.indexOf(v) != -1) {
+            x = v
           }
         })
 
-      return {
-        [position[0]] : '0px',
-        [position[1]] : '0px'
+      let styles = {
+        width: `${this.width}px`,
+        [y]: '0px'
       }
+
+      if (x === 'center') {
+        styles['left'] = `calc(50% - ${this.width/2}px)`
+      } else {
+        styles[x] = '0px'
+      }
+
+      return styles
     },
 
     botToTop() {
@@ -205,7 +220,6 @@ export default {
 <style>
 .notifications {
   display: block;
-  width: 300px;
   position: fixed;
   z-index: 5000;
 }

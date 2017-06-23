@@ -139,6 +139,8 @@ var dirs = {
   y: ['top', 'bottom']
 };
 
+var defaultPosition = 'top right';
+
 var STATE = { idle: 0, destroying: 1, destroyed: 2 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -147,13 +149,17 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
     group: {
       type: String
     },
+    width: {
+      type: Number,
+      default: 300
+    },
     reverse: {
       type: Boolean,
       default: false
     },
     position: {
       type: String,
-      default: 'top right'
+      default: defaultPosition
     },
     classes: {
       type: String,
@@ -241,21 +247,30 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
 
   computed: {
     styles: function styles() {
-      var _ref;
-
-      var object = {};
-      var position = [];
+      var defaults = defaultPosition.split(' ');
+      var x = defaults[0];
+      var y = defaults[1];
 
       this.positionAsArray().forEach(function (v) {
-        if (!position[0] && dirs.y.indexOf(v) != -1) {
-          position[0] = v;
+        if (dirs.y.indexOf(v) != -1) {
+          y = v;
         }
-        if (!position[1] && dirs.x.indexOf(v) != -1) {
-          position[1] = v;
+        if (dirs.x.indexOf(v) != -1) {
+          x = v;
         }
       });
 
-      return _ref = {}, _defineProperty(_ref, position[0], '0px'), _defineProperty(_ref, position[1], '0px'), _ref;
+      var styles = _defineProperty({
+        width: this.width + 'px'
+      }, y, '0px');
+
+      if (x === 'center') {
+        styles['left'] = 'calc(50% - ' + this.width / 2 + 'px)';
+      } else {
+        styles[x] = '0px';
+      }
+
+      return styles;
     },
     botToTop: function botToTop() {
       return this.styles.hasOwnProperty('bottom');
@@ -358,7 +373,7 @@ exports = module.exports = __webpack_require__(7)();
 
 
 // module
-exports.push([module.i, ".notifications{display:block;width:300px;position:fixed;z-index:5000}.notification-wrapper{display:block;overflow:hidden;width:100%;margin:0;padding:0}.notification{display:block;box-sizing:border-box;background:#fff;text-align:left}.notification-title{font-weight:600}.vue-notification{font-size:12px;padding:10px;margin:0 5px 5px;color:#fff;background:#44a4fc;border-left:5px solid #187fe7}.vue-notification.warn{background:#ffb648;border-left-color:#f48a06}.vue-notification.error{background:#e54d42;border-left-color:#b82e24}.vue-notification.success{background:#68cd86;border-left-color:#42a85f}", ""]);
+exports.push([module.i, ".notifications{display:block;position:fixed;z-index:5000}.notification-wrapper{display:block;overflow:hidden;width:100%;margin:0;padding:0}.notification{display:block;box-sizing:border-box;background:#fff;text-align:left}.notification-title{font-weight:600}.vue-notification{font-size:12px;padding:10px;margin:0 5px 5px;color:#fff;background:#44a4fc;border-left:5px solid #187fe7}.vue-notification.warn{background:#ffb648;border-left-color:#f48a06}.vue-notification.error{background:#e54d42;border-left-color:#b82e24}.vue-notification.success{background:#68cd86;border-left-color:#42a85f}", ""]);
 
 // exports
 
