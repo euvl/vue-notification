@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/vue-notification.svg)](https://badge.fury.io/js/vue-notification)
+
 ### Vue.js notifications
 
 Demo: http://vue-notification.yev.io/
@@ -216,3 +218,20 @@ animation = {
 ```
 
 The reason for using Velocity is that it gives more control over animating `Height` of the element which is important for this library
+
+### Development
+
+To run an example:
+
+# Build main library
+
+cd vue-notification
+npm install
+npm run build
+
+# Build and run demo
+
+cd demo
+npm install
+npm run dev
+```
