@@ -58,37 +58,6 @@ All props are optional.
 
 $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
-### Slot
-
-Optional scope slot named "body" is supported.
-
-Scope props:
-
-| Name     | Type               | Description |
-| ---      | ---                | ---         |
-| item     | Object | notification object |
-| close    | Function  | when called closes the notification |
-
-Example:
-
-```vue
-<notifications group="custom-template"  
-               position="bottom right">
-   <template slot="body" scope="props">
-    <div>
-        <a class="title">
-          {{props.item.title}}
-        </a>
-        <a class="close" @click="props.close">
-          <i class="fa fa-fw fa-close"></i>
-        </a>
-        <div v-html="props.item.text">
-        </div>
-    </div>
-  </template>
-</notifications>
-```
-
 ### API
 
 ```javascript
@@ -200,6 +169,37 @@ To apply this style you will have to specify "classes" property:
     border-left-color: #42A85F;
   }
 }
+```
+
+### Slot
+
+Optional scope slot named "body" is supported.
+
+Scope props:
+
+| Name     | Type               | Description |
+| ---      | ---                | ---         |
+| item     | Object | notification object |
+| close    | Function  | when called closes the notification |
+
+Example:
+
+```vue
+<notifications group="custom-template"  
+               position="bottom right">
+   <template slot="body" scope="props">
+    <div>
+        <a class="title">
+          {{props.item.title}}
+        </a>
+        <a class="close" @click="props.close">
+          <i class="fa fa-fw fa-close"></i>
+        </a>
+        <div v-html="props.item.text">
+        </div>
+    </div>
+  </template>
+</notifications>
 ```
 
 ### Animation
