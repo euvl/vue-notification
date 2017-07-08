@@ -1,3 +1,11 @@
+const directions = {
+  x: ['left', 'center', 'right'],
+  y: ['top', 'bottom']
+}
+
+/**
+  * Sequential ID generator
+  */
 export const Id = (i => () => i++)(0)
 
 /**
@@ -11,10 +19,6 @@ export const split = (value) => {
   return value.split(/\s+/gi).filter(v => v)
 }
 
-const directions = {
-  x: ['left', 'center', 'right'],
-  y: ['top', 'bottom']
-}
 /**
   * Cleanes and transforms string of format "x y" into object {x, y}. 
   * Possible combinations:
