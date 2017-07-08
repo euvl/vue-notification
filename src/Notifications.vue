@@ -4,7 +4,7 @@
                     :name="animationName"
                     @enter="enter"
                     @leave="leave"
-                    @after-leave="afterLeave">
+                    @after-leave="filter">
     <div class="notification-wrapper"
          v-for="item in list"
          v-if="item.state != 2"
@@ -14,7 +14,8 @@
             :class="[classes, item.type]" 
             :item="item" 
             :close="() => destroy(item)">
-        <div :class="['notification', classes, item.type]"
+        <div :class="notificationСlass(item)"
+             :style="notificationStyle(item)"
             @click="destroy(item)">
 
           <div v-if="item.title"
@@ -84,16 +85,15 @@ export default {
         return value === 'css' || value === 'velocity'
       }
     },
-
     animation: {
       type: Object,
       default () {
         return defaultVelocityAnimation
       }
     },
-
     animationName: {
-      type: String
+      type: String,
+      default: 'vn-fade'
     },
 
     speed: {
@@ -137,13 +137,15 @@ export default {
         text,
         type,
         state: STATE.idle,
+        speed,
         length: duration + speed
       }
 
       if (duration >= 0) {
-        item.timer = setTimeout(() => {
-          this.destroy(item)
-        }, item.length)
+        item.timer = 
+          setTimeout(() => {
+            this.destroy(item)
+          }, item.length)
       }
 
       let direction = this.reverse
@@ -156,9 +158,6 @@ export default {
         this.list.unshift(item)
       }
     })
-  },
-  mounted () {
-
   },
   computed: {
     isVelocityAnimation () {
@@ -186,17 +185,39 @@ export default {
     }
   },
   methods: {
+    notificationСlass (item) {
+      return [
+        'notification',
+        this.classes, 
+        item.type
+      ]
+    },
+
+    notificationStyle (item) {
+      if (!this.isVelocityAnimation) {
+        return  {
+          transition: `all ${item.speed}ms`
+        }
+      }
+
+      return null
+    },
+
+    destroy (item) {
+      clearTimeout(item.timer)
+      item.state = STATE.destroyed
+
+      if (!this.isVelocityAnimation) {
+        this.filter()
+      }
+    },
+
     getAnimation (index, el) {
       let anim = this.animation[index]
 
       return typeof anim === 'function'
         ? anim.call(this, el)
         : anim
-    },
-
-    destroy (note) {
-      clearTimeout(note.timer)
-      note.state = STATE.destroyed
     },
 
     enter (el, complete) {
@@ -221,7 +242,8 @@ export default {
       }
     },
 
-    afterLeave (el) {
+    filter () {
+      console.log('afterLeave')
       this.list = this.list
         .filter(v => v.state !== STATE.destroyed)
     }
@@ -278,4 +300,13 @@ export default {
   background: #68CD86;
   border-left-color: #42A85F;
 }
+
+.vn-fade-enter-active, .vn-fade-leave-active {
+  transition: opacity .5s;
+}
+
+.vn-fade-enter, .vn-fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+
 </style>

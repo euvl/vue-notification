@@ -173,11 +173,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var dirs = {
-  x: ['left', 'center', 'right'],
-  y: ['top', 'bottom']
-};
-
 var defaultPosition = ['top', 'right'];
 var defaultCssAnimation = 'n-fade';
 var defaultVelocityAnimation = {
@@ -195,10 +190,10 @@ var defaultVelocityAnimation = {
   }
 };
 
-var STATE = { idle: 0, destroying: 1, destroyed: 2 };
+var STATE = { idle: 0, destroyed: 2 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Notify',
+  name: 'Notifications',
   props: {
     group: {
       type: String
@@ -219,6 +214,7 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
       type: String,
       default: 'vue-notification'
     },
+
     animationType: {
       type: String,
       default: 'css',
@@ -227,11 +223,16 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
       }
     },
     animation: {
-      type: [String, Object],
+      type: Object,
       default: function _default() {
         return defaultVelocityAnimation;
       }
     },
+    animationName: {
+      type: String,
+      default: 'vn-fade'
+    },
+
     speed: {
       type: Number,
       default: 300
@@ -274,6 +275,7 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
         text: text,
         type: type,
         state: STATE.idle,
+        speed: speed,
         length: duration + speed
       };
 
@@ -294,6 +296,9 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
   },
 
   computed: {
+    isVelocityAnimation: function isVelocityAnimation() {
+      return this.animationType === 'velocity';
+    },
     styles: function styles() {
       var _listToDirection = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["b" /* listToDirection */])(this.position),
           x = _listToDirection.x,
@@ -316,32 +321,53 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
     }
   },
   methods: {
+    notificationСlass: function notificationLass(item) {
+      return ['notification', this.classes, item.type];
+    },
+    notificationStyle: function notificationStyle(item) {
+      if (!this.isVelocityAnimation) {
+        return {
+          transition: 'all ' + item.speed + 'ms'
+        };
+      }
+
+      return null;
+    },
+    destroy: function destroy(item) {
+      clearTimeout(item.timer);
+      item.state = STATE.destroyed;
+
+      if (!this.isVelocityAnimation) {
+        this.filter();
+      }
+    },
     getAnimation: function getAnimation(index, el) {
       var anim = this.animation[index];
 
       return typeof anim === 'function' ? anim.call(this, el) : anim;
     },
-    destroy: function destroy(note) {
-      clearTimeout(note.timer);
-      note.state = STATE.destroyed;
-    },
     enter: function enter(el, complete) {
-      var animation = this.getAnimation('enter', el);
+      if (this.isVelocityAnimation) {
+        var animation = this.getAnimation('enter', el);
 
-      this.velocity(el, animation, {
-        duration: this.speed,
-        complete: complete
-      });
+        this.velocity(el, animation, {
+          duration: this.speed,
+          complete: complete
+        });
+      }
     },
     leave: function leave(el, complete) {
-      var animation = this.getAnimation('leave', el);
+      if (this.isVelocityAnimation) {
+        var animation = this.getAnimation('leave', el);
 
-      this.velocity(el, animation, {
-        duration: this.speed,
-        complete: complete
-      });
+        this.velocity(el, animation, {
+          duration: this.speed,
+          complete: complete
+        });
+      }
     },
-    afterLeave: function afterLeave(el) {
+    filter: function filter() {
+      console.log('afterLeave');
       this.list = this.list.filter(function (v) {
         return v.state !== STATE.destroyed;
       });
@@ -357,6 +383,11 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Id; });
 /* unused harmony export split */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return listToDirection; });
+var directions = {
+  x: ['left', 'center', 'right'],
+  y: ['top', 'bottom']
+};
+
 var Id = function (i) {
   return function () {
     return i++;
@@ -371,11 +402,6 @@ var split = function split(value) {
   return value.split(/\s+/gi).filter(function (v) {
     return v;
   });
-};
-
-var directions = {
-  x: ['left', 'center', 'right'],
-  y: ['top', 'bottom']
 };
 
 var listToDirection = function listToDirection(value) {
@@ -407,7 +433,7 @@ exports = module.exports = __webpack_require__(7)();
 
 
 // module
-exports.push([module.i, ".notifications{display:block;position:fixed;z-index:5000}.notification-wrapper{display:block;overflow:hidden;width:100%;margin:0;padding:0}.notification{display:block;box-sizing:border-box;background:#fff;text-align:left}.notification-title{font-weight:600}.vue-notification{font-size:12px;padding:10px;margin:0 5px 5px;color:#fff;background:#44a4fc;border-left:5px solid #187fe7}.vue-notification.warn{background:#ffb648;border-left-color:#f48a06}.vue-notification.error{background:#e54d42;border-left-color:#b82e24}.vue-notification.success{background:#68cd86;border-left-color:#42a85f}", ""]);
+exports.push([module.i, ".notifications{display:block;position:fixed;z-index:5000}.notification-wrapper{display:block;overflow:hidden;width:100%;margin:0;padding:0}.notification{display:block;box-sizing:border-box;background:#fff;text-align:left}.notification-title{font-weight:600}.vue-notification{font-size:12px;padding:10px;margin:0 5px 5px;color:#fff;background:#44a4fc;border-left:5px solid #187fe7}.vue-notification.warn{background:#ffb648;border-left-color:#f48a06}.vue-notification.error{background:#e54d42;border-left-color:#b82e24}.vue-notification.success{background:#68cd86;border-left-color:#42a85f}.vn-fade-enter-active,.vn-fade-leave-active{transition:opacity .5s}.vn-fade-enter,.vn-fade-leave-to{opacity:0}", ""]);
 
 // exports
 
@@ -535,13 +561,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     style: (_vm.styles)
   }, [_c('transition-group', {
     attrs: {
-      "css": !!_vm.velocity,
-      "name": !_vm.velocity && _vm.animation
+      "css": !_vm.isVelocityAnimation,
+      "name": _vm.animationName
     },
     on: {
       "enter": _vm.enter,
       "leave": _vm.leave,
-      "after-leave": _vm.afterLeave
+      "after-leave": _vm.filter
     }
   }, _vm._l((_vm.list), function(item) {
     return (item.state != 2) ? _c('div', {
@@ -551,7 +577,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "data-id": item.id
       }
     }, [_vm._t("body", [_c('div', {
-      class: ['notification', _vm.classes, item.type],
+      class: _vm.notificationСlass(item),
+      style: (_vm.notificationStyle(item)),
       on: {
         "click": function($event) {
           _vm.destroy(item)
