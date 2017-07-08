@@ -1,6 +1,6 @@
 <template>
 <div class="notifications" :style="styles">
-  <transition-group :css="false"
+  <transition-group :css="velocity"
                     @enter="enter"
                     @leave="leave"
                     @after-leave="afterLeave">
@@ -9,7 +9,10 @@
           v-if="item.state != 2"
           :key="item.id"
           :data-id="item.id">
-      <slot name="body" :class="[classes, item.type]" :item="item" :close="() => destroy(item)">
+      <slot name="body" 
+            :class="[classes, item.type]" 
+            :item="item" 
+            :close="() => destroy(item)">
         <div :class="['notification', classes, item.type]"
             @click="destroy(item)">
 
@@ -28,7 +31,7 @@
 </template>
 <script>
 import Vue           from 'vue'
-import Velocity      from 'velocity-animate'
+import Plugin        from './index'
 import { events }    from './events'
 import { Id, split } from './util'
 
@@ -38,7 +41,6 @@ const dirs = {
 }
 
 const defaultPosition = 'top right'
-
 const STATE = { idle: 0, destroying: 1, destroyed: 2 }
 
 export default {
@@ -64,7 +66,7 @@ export default {
       default: 'vue-notification'
     },
     animation: {
-      type: Object,
+      type: [String, Object],
       default() {
         return {
           enter (el) {
@@ -97,6 +99,7 @@ export default {
   },
   data () {
     return {
+      velocity: Plugin.params.velocity,
       list: []
     }
   },
@@ -143,7 +146,7 @@ export default {
     })
   },
   computed: {
-    styles() {
+    styles () {
       let defaults = defaultPosition.split(' ')
       let x = defaults[0]
       let y = defaults[1]
@@ -172,7 +175,7 @@ export default {
       return styles
     },
 
-    botToTop() {
+    botToTop () {
       return this.styles.hasOwnProperty('bottom')
     }
   },
@@ -191,14 +194,18 @@ export default {
     },
 
     enter (el, complete) {
-      Velocity(el, this.getAnimation('enter', el), {
+      let animation = this.getAnimation('enter', el)
+
+      this.velocity(el, animation, {
         duration: this.speed,
         complete
       })
     },
 
     leave (el, complete) {
-      Velocity(el, this.getAnimation('leave', el), {
+      let animation = this.getAnimation('leave', el)
+
+      this.velocity(el, animation, {
         duration: this.speed,
         complete
       })
