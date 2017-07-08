@@ -13,7 +13,7 @@
                    :animation="animation"
                    :reverse="true"
                    position="top left" />
-    <notifications group="custom"
+    <notifications group="custom-template"
                    :duration="4000"
                    :reverse="true"
                    position="bottom center">
@@ -38,7 +38,7 @@
       <br>
       <button @click="show('baz')">Show top left</button>
       <br>
-      <button @click="show('custom')">Show bottom center</button>
+      <button @click="show('custom-template')">Show bottom center</button>
     </div>
   </div>
 </template>
