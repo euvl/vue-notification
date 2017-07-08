@@ -6,6 +6,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "velocity-animate": "^1.5.0",
     "vue": "^2.0.0"
   },
   "devDependencies": {

@@ -2,7 +2,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import plugin from 'plugin'
 
-Vue.use(plugin)
+import velocity from 'velocity-animate'
+
+Vue.use(plugin, {
+  velocity: velocity
+})
 
 new Vue({
   el: '#app',

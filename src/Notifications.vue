@@ -1,6 +1,7 @@
 <template>
 <div class="notifications" :style="styles">
-  <transition-group :css="velocity"
+  <transition-group :css="!!velocity"
+                    :name="!velocity && animation"
                     @enter="enter"
                     @leave="leave"
                     @after-leave="afterLeave">

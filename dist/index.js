@@ -179,7 +179,6 @@ var dirs = {
 };
 
 var defaultPosition = 'top right';
-
 var STATE = { idle: 0, destroying: 1, destroyed: 2 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -205,7 +204,7 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
       default: 'vue-notification'
     },
     animation: {
-      type: Object,
+      type: [String, Object],
       default: function _default() {
         return {
           enter: function enter(el) {
@@ -239,7 +238,7 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
   },
   data: function data() {
     return {
-      useVelocity: __WEBPACK_IMPORTED_MODULE_1__index__["default"].params.velocity,
+      velocity: __WEBPACK_IMPORTED_MODULE_1__index__["default"].params.velocity,
       list: []
     };
   },
@@ -327,13 +326,17 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
       note.state = STATE.destroyed;
     },
     enter: function enter(el, complete) {
-      window.Velocity(el, this.getAnimation('enter', el), {
+      var animation = this.getAnimation('enter', el);
+
+      this.velocity(el, animation, {
         duration: this.speed,
         complete: complete
       });
     },
     leave: function leave(el, complete) {
-      window.Velocity(el, this.getAnimation('leave', el), {
+      var animation = this.getAnimation('leave', el);
+
+      this.velocity(el, animation, {
         duration: this.speed,
         complete: complete
       });
@@ -504,7 +507,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     style: (_vm.styles)
   }, [_c('transition-group', {
     attrs: {
-      "css": _vm.useVelocity
+      "css": !!_vm.velocity,
+      "name": !_vm.velocity && _vm.animation
     },
     on: {
       "enter": _vm.enter,
