@@ -31,21 +31,32 @@
 </div>
 </template>
 <script>
-import Vue           from 'vue'
-import Plugin        from './index'
-import { events }    from './events'
-import { Id, split } from './util'
+import Vue                            from 'vue'
+import Plugin                         from './index'
+import { events }                     from './events'
+import { Id, split, listToDirection } from './util'
 
-const dirs = {
-  x: ['left', 'center', 'right'],
-  y: ['top', 'bottom']
+const defaultPosition = ['top', 'right']
+const defaultCssAnimation = 'n-fade'
+const defaultVelocityAnimation = {
+  enter: (el) => {
+    var height = el.clientHeight
+
+    return {
+      height: [height, 0],
+       opacity: [1, 0]
+    }
+  },
+  leave: {
+    height: 0,
+    opacity: [0, 1]
+  }
 }
 
-const defaultPosition = 'top right'
 const STATE = { idle: 0, destroying: 1, destroyed: 2 }
 
 export default {
-  name: 'Notify',
+  name: 'Notifications',
   props: {
     group: {
       type: String
@@ -66,23 +77,17 @@ export default {
       type: String,
       default: 'vue-notification'
     },
+    animationType: {
+      type: String,
+      default: 'css',
+      validator (value) {
+        return value === 'css' || value === 'velocity'
+      }
+    },
     animation: {
       type: [String, Object],
-      default() {
-        return {
-          enter (el) {
-            var height = el.clientHeight
-
-            return {
-              height: [height, 0],
-              opacity: [1, 0]
-            }
-          },
-          leave: {
-            height: 0,
-            opacity: [0, 1]
-          }
-        }
+      default () {
+        return defaultVelocityAnimation
       }
     },
     speed: {
@@ -148,20 +153,7 @@ export default {
   },
   computed: {
     styles () {
-      let defaults = defaultPosition.split(' ')
-      let x = defaults[0]
-      let y = defaults[1]
-
-      this.positionAsArray()
-        .forEach(v => {
-          if (dirs.y.indexOf(v) != -1) {
-            y = v
-          }
-          if (dirs.x.indexOf(v) != -1) {
-            x = v
-          }
-        })
-
+      let { x, y } = listToDirection(this.position)
       let styles = {
         width: `${this.width}px`,
         [y]: '0px'
@@ -215,12 +207,6 @@ export default {
     afterLeave (el) {
       this.list = this.list
         .filter(v => v.state !== STATE.destroyed)
-    },
-
-    positionAsArray () {
-      return typeof this.position === 'string'
-        ? split(this.position)
-        : this.position
     }
   }
 }

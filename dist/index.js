@@ -178,7 +178,23 @@ var dirs = {
   y: ['top', 'bottom']
 };
 
-var defaultPosition = 'top right';
+var defaultPosition = ['top', 'right'];
+var defaultCssAnimation = 'n-fade';
+var defaultVelocityAnimation = {
+  enter: function enter(el) {
+    var height = el.clientHeight;
+
+    return {
+      height: [height, 0],
+      opacity: [1, 0]
+    };
+  },
+  leave: {
+    height: 0,
+    opacity: [0, 1]
+  }
+};
+
 var STATE = { idle: 0, destroying: 1, destroyed: 2 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -203,24 +219,17 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
       type: String,
       default: 'vue-notification'
     },
+    animationType: {
+      type: String,
+      default: 'css',
+      validator: function validator(value) {
+        return value === 'css' || value === 'velocity';
+      }
+    },
     animation: {
       type: [String, Object],
       default: function _default() {
-        return {
-          enter: function enter(el) {
-            var height = el.clientHeight;
-
-            return {
-              height: [height, 0],
-              opacity: [1, 0]
-            };
-          },
-
-          leave: {
-            height: 0,
-            opacity: [0, 1]
-          }
-        };
+        return defaultVelocityAnimation;
       }
     },
     speed: {
@@ -286,18 +295,9 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
 
   computed: {
     styles: function styles() {
-      var defaults = defaultPosition.split(' ');
-      var x = defaults[0];
-      var y = defaults[1];
-
-      this.positionAsArray().forEach(function (v) {
-        if (dirs.y.indexOf(v) != -1) {
-          y = v;
-        }
-        if (dirs.x.indexOf(v) != -1) {
-          x = v;
-        }
-      });
+      var _listToDirection = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["b" /* listToDirection */])(this.position),
+          x = _listToDirection.x,
+          y = _listToDirection.y;
 
       var styles = _defineProperty({
         width: this.width + 'px'
@@ -345,9 +345,6 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
       this.list = this.list.filter(function (v) {
         return v.state !== STATE.destroyed;
       });
-    },
-    positionAsArray: function positionAsArray() {
-      return typeof this.position === 'string' ? __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__util__["b" /* split */])(this.position) : this.position;
     }
   }
 });
@@ -358,16 +355,47 @@ var STATE = { idle: 0, destroying: 1, destroyed: 2 };
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Id; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return split; });
+/* unused harmony export split */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return listToDirection; });
 var Id = function (i) {
   return function () {
     return i++;
   };
 }(0);
+
 var split = function split(value) {
+  if (typeof value !== 'string') {
+    return [];
+  }
+
   return value.split(/\s+/gi).filter(function (v) {
     return v;
   });
+};
+
+var directions = {
+  x: ['left', 'center', 'right'],
+  y: ['top', 'bottom']
+};
+
+var listToDirection = function listToDirection(value) {
+  if (typeof value === 'string') {
+    value = split(value);
+  }
+
+  var x = null;
+  var y = null;
+
+  value.forEach(function (v) {
+    if (directions.y.indexOf(v) !== -1) {
+      y = v;
+    }
+    if (directions.x.indexOf(v) !== -1) {
+      x = v;
+    }
+  });
+
+  return { x: x, y: y };
 };
 
 /***/ }),
