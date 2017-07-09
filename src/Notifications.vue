@@ -1,21 +1,21 @@
 <template>
 <div class="notifications" :style="styles">
-  <transition-group :css="!isVelocityAnimation"
+  <transition-group :css="!isVA"
                     :name="animationName"
-                    @enter="enter"
-                    @leave="leave"
-                    @after-leave="filter">
+                    @enter="isVA && velocityEnter"
+                    @leave="isVA && velocityLeave"
+                    @after-leave="isVA && clean">
     <div class="notification-wrapper"
          v-for="item in list"
          v-if="item.state != 2"
+         :style="nwStyle(item)"
          :key="item.id"
          :data-id="item.id">
-      <slot name="body" 
-            :class="[classes, item.type]" 
-            :item="item" 
+      <slot name="body"
+            :class="[classes, item.type]"
+            :item="item"
             :close="() => destroy(item)">
-        <div :class="notificationСlass(item)"
-             :style="notificationStyle(item)"
+        <div :class="nСlass(item)"
             @click="destroy(item)">
 
           <div v-if="item.title"
@@ -24,6 +24,9 @@
 
           <div class="notification-content"
               v-html="item.text"></div>
+          <div>
+            {{item}}
+          </div>
         </div>
       </slot>
     </div>
@@ -53,7 +56,10 @@ const defaultVelocityAnimation = {
   }
 }
 
-const STATE = { idle: 0, destroyed: 2 }
+const STATE = {
+  idle: 0, 
+  destroyed: 2
+}
 
 export default {
   name: 'Notifications',
@@ -61,18 +67,22 @@ export default {
     group: {
       type: String
     },
+
     width: {
       type: Number,
       default: 300
     },
+
     reverse: {
       type: Boolean,
       default: false
     },
+
     position: {
       type: String,
       default: defaultPosition
     },
+
     classes: {
       type: String,
       default: 'vue-notification'
@@ -85,12 +95,14 @@ export default {
         return value === 'css' || value === 'velocity'
       }
     },
+
     animation: {
       type: Object,
       default () {
         return defaultVelocityAnimation
       }
     },
+
     animationName: {
       type: String,
       default: 'vn-fade'
@@ -100,10 +112,12 @@ export default {
       type: Number,
       default: 300
     },
+
     duration: {
       type: Number,
       default: 3000
     },
+
     delay: {
       type: Number,
       default: 0
@@ -142,10 +156,9 @@ export default {
       }
 
       if (duration >= 0) {
-        item.timer = 
-          setTimeout(() => {
-            this.destroy(item)
-          }, item.length)
+        item.timer = setTimeout(() => {
+          this.destroy(item)
+        }, item.length)
       }
 
       let direction = this.reverse
@@ -160,12 +173,16 @@ export default {
     })
   },
   computed: {
-    isVelocityAnimation () {
+    /**
+      * isVelocityAnimation
+      */
+    isVA () {
       return this.animationType === 'velocity'
     },
 
     styles () {
       let { x, y } = listToDirection(this.position)
+
       let styles = {
         width: `${this.width}px`,
         [y]: '0px'
@@ -185,30 +202,37 @@ export default {
     }
   },
   methods: {
-    notificationСlass (item) {
+    nСlass (item) {
       return [
         'notification',
-        this.classes, 
+        this.classes,
         item.type
       ]
     },
 
-    notificationStyle (item) {
-      if (!this.isVelocityAnimation) {
-        return  {
-          transition: `all ${item.speed}ms`
-        }
-      }
-
-      return null
+    nwStyle (item) {
+      return this.isVA
+        ? null
+        : {
+            transition: `all ${item.speed}ms`
+          }
     },
 
     destroy (item) {
       clearTimeout(item.timer)
       item.state = STATE.destroyed
 
-      if (!this.isVelocityAnimation) {
-        this.filter()
+      if (!this.isVA) {
+        this.clean()
+  //      this.$nextTick(() => {
+    /*    for (var i = 0; i < this.list.length; i++) {
+          var obj = this.list[i]
+
+          if(obj.id === item.id) {
+            this.list.splice(i, 1)
+            break
+          }
+        } */
       }
     },
 
@@ -220,32 +244,26 @@ export default {
         : anim
     },
 
-    enter (el, complete) {
-      if (this.isVelocityAnimation) {
-        let animation = this.getAnimation('enter', el)
+    velocityEnter (el, complete) {
+      let animation = this.getAnimation('enter', el)
 
-        this.velocity(el, animation, {
-          duration: this.speed,
-          complete
-        })
-      }
+      this.velocity(el, animation, {
+        duration: this.speed,
+         complete
+      })
     },
 
-    leave (el, complete) {
-      if (this.isVelocityAnimation) {
-        let animation = this.getAnimation('leave', el)
+    velocityLeave (el, complete) {
+      let animation = this.getAnimation('leave', el)
 
-        this.velocity(el, animation, {
-          duration: this.speed,
-          complete
-        })
-      }
+      this.velocity(el, animation, {
+        duration: this.speed,
+        complete
+      })
     },
 
-    filter () {
-      console.log('afterLeave')
-      this.list = this.list
-        .filter(v => v.state !== STATE.destroyed)
+    clean () {
+      this.list = this.list.filter(v => v.state !== STATE.destroyed)
     }
   }
 }
@@ -301,12 +319,21 @@ export default {
   border-left-color: #42A85F;
 }
 
-.vn-fade-enter-active, .vn-fade-leave-active {
+.vn-fade-enter-active, .vn-fade-leave-active, .vn-fade-move  {
+  transition: all .5s;
+}
+
+.vn-fade-enter, .vn-fade-leave-to {
+  opacity: 0;
+}
+
+.vn-fade-left-enter-active, .vn-fade-left-leave-active, .vn-fade-left-move {
   transition: opacity .5s;
 }
 
-.vn-fade-enter, .vn-fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+.vn-fade-left-enter, .vn-fade-left-leave-to {
   opacity: 0;
+  transform: translateX(-300px);
 }
 
 </style>

@@ -190,7 +190,10 @@ var defaultVelocityAnimation = {
   }
 };
 
-var STATE = { idle: 0, destroyed: 2 };
+var STATE = {
+  idle: 0,
+  destroyed: 2
+};
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Notifications',
@@ -198,18 +201,22 @@ var STATE = { idle: 0, destroyed: 2 };
     group: {
       type: String
     },
+
     width: {
       type: Number,
       default: 300
     },
+
     reverse: {
       type: Boolean,
       default: false
     },
+
     position: {
       type: String,
       default: defaultPosition
     },
+
     classes: {
       type: String,
       default: 'vue-notification'
@@ -222,12 +229,14 @@ var STATE = { idle: 0, destroyed: 2 };
         return value === 'css' || value === 'velocity';
       }
     },
+
     animation: {
       type: Object,
       default: function _default() {
         return defaultVelocityAnimation;
       }
     },
+
     animationName: {
       type: String,
       default: 'vn-fade'
@@ -237,10 +246,12 @@ var STATE = { idle: 0, destroyed: 2 };
       type: Number,
       default: 300
     },
+
     duration: {
       type: Number,
       default: 3000
     },
+
     delay: {
       type: Number,
       default: 0
@@ -296,7 +307,7 @@ var STATE = { idle: 0, destroyed: 2 };
   },
 
   computed: {
-    isVelocityAnimation: function isVelocityAnimation() {
+    isVA: function isVA() {
       return this.animationType === 'velocity';
     },
     styles: function styles() {
@@ -321,24 +332,20 @@ var STATE = { idle: 0, destroyed: 2 };
     }
   },
   methods: {
-    notificationСlass: function notificationLass(item) {
+    nСlass: function nLass(item) {
       return ['notification', this.classes, item.type];
     },
-    notificationStyle: function notificationStyle(item) {
-      if (!this.isVelocityAnimation) {
-        return {
-          transition: 'all ' + item.speed + 'ms'
-        };
-      }
-
-      return null;
+    nwStyle: function nwStyle(item) {
+      return this.isVA ? null : {
+        transition: 'all ' + item.speed + 'ms'
+      };
     },
     destroy: function destroy(item) {
       clearTimeout(item.timer);
       item.state = STATE.destroyed;
 
-      if (!this.isVelocityAnimation) {
-        this.filter();
+      if (!this.isVA) {
+        this.clean();
       }
     },
     getAnimation: function getAnimation(index, el) {
@@ -346,28 +353,23 @@ var STATE = { idle: 0, destroyed: 2 };
 
       return typeof anim === 'function' ? anim.call(this, el) : anim;
     },
-    enter: function enter(el, complete) {
-      if (this.isVelocityAnimation) {
-        var animation = this.getAnimation('enter', el);
+    velocityEnter: function velocityEnter(el, complete) {
+      var animation = this.getAnimation('enter', el);
 
-        this.velocity(el, animation, {
-          duration: this.speed,
-          complete: complete
-        });
-      }
+      this.velocity(el, animation, {
+        duration: this.speed,
+        complete: complete
+      });
     },
-    leave: function leave(el, complete) {
-      if (this.isVelocityAnimation) {
-        var animation = this.getAnimation('leave', el);
+    velocityLeave: function velocityLeave(el, complete) {
+      var animation = this.getAnimation('leave', el);
 
-        this.velocity(el, animation, {
-          duration: this.speed,
-          complete: complete
-        });
-      }
+      this.velocity(el, animation, {
+        duration: this.speed,
+        complete: complete
+      });
     },
-    filter: function filter() {
-      console.log('afterLeave');
+    clean: function clean() {
       this.list = this.list.filter(function (v) {
         return v.state !== STATE.destroyed;
       });
@@ -433,7 +435,7 @@ exports = module.exports = __webpack_require__(7)();
 
 
 // module
-exports.push([module.i, ".notifications{display:block;position:fixed;z-index:5000}.notification-wrapper{display:block;overflow:hidden;width:100%;margin:0;padding:0}.notification{display:block;box-sizing:border-box;background:#fff;text-align:left}.notification-title{font-weight:600}.vue-notification{font-size:12px;padding:10px;margin:0 5px 5px;color:#fff;background:#44a4fc;border-left:5px solid #187fe7}.vue-notification.warn{background:#ffb648;border-left-color:#f48a06}.vue-notification.error{background:#e54d42;border-left-color:#b82e24}.vue-notification.success{background:#68cd86;border-left-color:#42a85f}.vn-fade-enter-active,.vn-fade-leave-active{transition:opacity .5s}.vn-fade-enter,.vn-fade-leave-to{opacity:0}", ""]);
+exports.push([module.i, ".notifications{display:block;position:fixed;z-index:5000}.notification-wrapper{display:block;overflow:hidden;width:100%;margin:0;padding:0}.notification{display:block;box-sizing:border-box;background:#fff;text-align:left}.notification-title{font-weight:600}.vue-notification{font-size:12px;padding:10px;margin:0 5px 5px;color:#fff;background:#44a4fc;border-left:5px solid #187fe7}.vue-notification.warn{background:#ffb648;border-left-color:#f48a06}.vue-notification.error{background:#e54d42;border-left-color:#b82e24}.vue-notification.success{background:#68cd86;border-left-color:#42a85f}.vn-fade-enter-active,.vn-fade-leave-active,.vn-fade-move{transition:all .5s}.vn-fade-enter,.vn-fade-leave-to{opacity:0}.vn-fade-left-enter-active,.vn-fade-left-leave-active{transition:opacity .5s}.vn-fade-left-enter,.vn-fade-left-leave-to{opacity:0;transform:translateX(-300px)}", ""]);
 
 // exports
 
@@ -561,24 +563,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     style: (_vm.styles)
   }, [_c('transition-group', {
     attrs: {
-      "css": !_vm.isVelocityAnimation,
+      "css": !_vm.isVA,
       "name": _vm.animationName
     },
     on: {
-      "enter": _vm.enter,
-      "leave": _vm.leave,
-      "after-leave": _vm.filter
+      "enter": function($event) {
+        _vm.isVA && _vm.velocityEnter
+      },
+      "leave": function($event) {
+        _vm.isVA && _vm.velocityLeave
+      },
+      "after-leave": function($event) {
+        _vm.isVA && _vm.clean
+      }
     }
   }, _vm._l((_vm.list), function(item) {
     return (item.state != 2) ? _c('div', {
       key: item.id,
       staticClass: "notification-wrapper",
+      style: (_vm.nwStyle(item)),
       attrs: {
         "data-id": item.id
       }
     }, [_vm._t("body", [_c('div', {
-      class: _vm.notificationСlass(item),
-      style: (_vm.notificationStyle(item)),
+      class: _vm.nСlass(item),
       on: {
         "click": function($event) {
           _vm.destroy(item)
@@ -594,7 +602,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "innerHTML": _vm._s(item.text)
       }
-    })])], {
+    }), _vm._v(" "), _c('div', [_vm._v("\n            " + _vm._s(item) + "\n          ")])])], {
       item: item,
       close: function () { return _vm.destroy(item); }
     })], 2) : _vm._e()
