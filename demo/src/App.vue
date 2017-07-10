@@ -7,7 +7,6 @@
       <a href="https://github.com/euvl/vue-notification/" 
          target="issues">Github</a>
     </h2>
-
     <!-- CSS animation example -->
     <notifications group="foo-css" 
                    position="bottom left" 

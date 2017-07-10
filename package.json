@@ -19,6 +19,9 @@
   "peerDependencies": {
     "vue": "^2.0.0"
   },
+  "dependencies": {
+    "velocity-animate": "^1.5.0"
+  },
   "keywords": [
     "vue",
     "notification"

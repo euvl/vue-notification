@@ -17,6 +17,7 @@
             :close="() => destroy(item)">
         <div :class="nСlass(item)"
              @click="destroy(item)">
+
           <div v-if="item.title"
                class="notification-title"
                v-html="item.title"></div>
@@ -110,7 +111,6 @@ export default {
   },
   data () {
     return {
-      velocity: Plugin.params.velocity,
       list: []
     }
   },
@@ -186,7 +186,7 @@ export default {
       return styles
     },
 
-    botToTop () {
+    botToTop() {
       return this.styles.hasOwnProperty('bottom')
     }
   },
@@ -223,16 +223,17 @@ export default {
         ? anim.call(this, el)
         : anim
     },
-
+    
     enter ({ el, complete }) {
       let animation = this.getAnimation('enter', el)
 
       this.velocity(el, animation, {
+
         duration: this.speed,
         complete
       })
     },
-
+    
     leave ({ el, complete }) {
       let animation = this.getAnimation('leave', el)
 
