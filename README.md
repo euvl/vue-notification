@@ -45,18 +45,18 @@ this.$notify({
 
 All props are optional.
 
-| Name         | Default      | Description |
-| ---          | ---          | ---         |
-| group        | null         | Name of the notification holder, if specified |
-| width        | 300          | Width of notification holder |
-| classes      | 'vue-notification' | List of classes that will be applied to notification element |
-| position     | 'top right'  | }art of the screen where notifications will pop out |
-| animation-type | 'css'      | Type of animation, currently supported types are: `css` and `velocity` |
-| animation-name | null       | Animation name required for `css` animation |
-| animation    | `$`*           | Animation configuration from `Velocity` animation |
-| duration     | 3000         | How long notification stays on screen (if **negative** - notification will stay **forever** or until clicked) |
-| speed        | 300          | Speed of the animation showing/hiding |
-| reverse      | false        | Show notifications in reverse order |
+| Name           | Type    | Default      | Description |
+| ---            | ---     | ---          | ---         |
+| group          | String  | null         | Name of the notification holder, if specified |
+| width          | Number  | 300          | Width of notification holder |
+| classes        | String/Array | 'vue-notification' | List of classes that will be applied to notification element |
+| position       | String/Array | 'top right'  | Part of the screen where notifications will pop out |
+| animation-type | String<br>`css`/`velocty` | 'css'      | Type of animation, currently supported types are `css` and `velocity` |
+| animation-name | String  | null       | Animation name required for `css` animation |
+| animation      | Object  | `$`*         | Animation configuration for `Velocity` animation |
+| duration       | Number  | 3000         | Time (ms) animation stays visible (if **negative** - notification will stay **forever** or until clicked) |
+| speed          | Number  | 300          | Speed of animation showing/hiding |
+| reverse        | Boolean | false        | Show notifications in reverse order |
 
 $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
@@ -189,16 +189,16 @@ To apply this style you will have to specify "classes" property:
 }
 ```
 
-### Slot
+### Custom template (slot)
 
 Optional scope slot named "body" is supported.
 
 Scope props:
 
-| Name     | Type               | Description |
-| ---      | ---                | ---         |
-| item     | Object | notification object |
-| close    | Function  | when called closes the notification |
+| Name  | Type     | Description                         |
+| ---   | ---      | ---                                 |
+| item  | Object   | notification object                 |
+| close | Function | when called closes the notification |
 
 Example:
 
