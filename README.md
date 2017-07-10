@@ -240,7 +240,7 @@ import velocity      from 'velocity-animation'
 Vue.use(Notifications, { velocity })
 ```
 
-Then in your template you will have to set `animation-type="velocity"`.
+In the template you will have to set `animation-type="velocity"`.
 
 ```vue
 <notification animation-type="veloctiy"/>
