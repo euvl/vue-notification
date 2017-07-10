@@ -97,9 +97,24 @@ Also you can use simplified version:
 this.$notify('text')
 ```
 
+### Groups
+
+If you are planning to use `notification` component for 2 or more completely different types of notifications (for example, authentication error messages in top center and generic app notifications in bottom-right corner) - you can specify a `group` property which is essentially a name of notification holder.
+
+Example:
+
+```vue
+<notifications group="auth"/>
+<notifications group="app"/>
+```
+
+```javascript
+this.$notify({ type: 'auth', text: 'Wrong password, please try again later' })
+```
+
 ### Position
 
-"Position" property requires a string with 2 keywords for vertical and horizontal postion.
+`Position` property requires a string with 2 keywords for vertical and horizontal postion.
 
 Format: `"<vertical> <horizontal>"`.
 
@@ -137,6 +152,7 @@ Structure:
   }
 }
 ```
+
 To apply this style you will have to specify "classes" property:
 
 ```vue
