@@ -1,95 +1,109 @@
 <template>
 <div class="notifications" :style="styles">
-  <transition-group :css="false"
-                    @enter="enter"
-                    @leave="leave"
-                    @after-leave="afterLeave">
+  <component :is="componentName"
+             :name="animationName"
+             @enter="enter"
+             @leave="leave"
+             @after-leave="clean">
     <div class="notification-wrapper"
-          v-for="item in list"
-          v-if="item.state != 2"
-          :key="item.id"
-          :data-id="item.id">
-      <slot name="body" :class="[classes, item.type]" :item="item" :close="() => destroy(item)">
-        <div :class="['notification', classes, item.type]"
-            @click="destroy(item)">
+         v-for="item in list"
+         v-if="item.state != 2"
+         :style="nwStyle(item)"
+         :key="item.id"
+         :data-id="item.id">
+      <slot name="body"
+            :class="[classes, item.type]"
+            :item="item"
+            :close="() => destroy(item)">
+        <div :class="nСlass(item)"
+             @click="destroy(item)">
 
           <div v-if="item.title"
-              class="notification-title"
-              v-html="item.title"></div>
-
+               class="notification-title"
+               v-html="item.title"></div>
           <div class="notification-content"
-              v-html="item.text"></div>
-
+               v-html="item.text"></div>
         </div>
       </slot>
     </div>
-  </transition-group>
+  </component>
 </div>
 </template>
 <script>
-import Vue           from 'vue'
-import Velocity      from 'velocity-animate'
-import { events }    from './events'
-import { Id, split } from './util'
+import Vue                            from 'vue'
+import Plugin                         from './index'
+import { events }                     from './events'
+import { Id, split, listToDirection } from './util'
+import defaults                       from './defaults'
+import VelocityGroup                  from './VelocityGroup.vue'
+import CssGroup                       from './CssGroup.vue'
 
-const dirs = {
-  x: ['left', 'center', 'right'],
-  y: ['top', 'bottom']
+const STATE = {
+  idle: 0, 
+  destroyed: 2
 }
 
-const defaultPosition = 'top right'
-
-const STATE = { idle: 0, destroying: 1, destroyed: 2 }
-
 export default {
-  name: 'Notify',
+  name: 'Notifications',
+  components: {
+    VelocityGroup,
+    CssGroup
+  },
   props: {
     group: {
       type: String
     },
+
     width: {
       type: Number,
       default: 300
     },
+
     reverse: {
       type: Boolean,
       default: false
     },
+
     position: {
       type: String,
-      default: defaultPosition
+      default: defaults.position
     },
+
     classes: {
       type: String,
       default: 'vue-notification'
     },
-    animation: {
-      type: Object,
-      default() {
-        return {
-          enter (el) {
-            var height = el.clientHeight
 
-            return {
-              height: [height, 0],
-              opacity: [1, 0]
-            }
-          },
-          leave: {
-            height: 0,
-            opacity: [0, 1]
-          }
-        }
+    animationType: {
+      type: String,
+      default: 'css',
+      validator (value) {
+        return value === 'css' || value === 'velocity'
       }
     },
+
+    animation: {
+      type: Object,
+      default () {
+        return defaults.velocityAnimation
+      }
+    },
+
+    animationName: {
+      type: String,
+      default: defaults.cssAnimation
+    },
+
     speed: {
       type: Number,
       default: 300
     },
+
     duration: {
       type: Number,
       default: 3000
     },
+
     delay: {
       type: Number,
       default: 0
@@ -102,7 +116,7 @@ export default {
   },
   created () {
     events.$on('add', event => {
-      if (this.group && this.group !== event.group) {
+      if (this.group && this.group != event.group) {
         return
       }
 
@@ -122,7 +136,8 @@ export default {
         text,
         type,
         state: STATE.idle,
-        length: duration + speed
+        speed,
+        length: duration + 2 * speed
       }
 
       if (duration >= 0) {
@@ -143,20 +158,19 @@ export default {
     })
   },
   computed: {
-    styles() {
-      let defaults = defaultPosition.split(' ')
-      let x = defaults[0]
-      let y = defaults[1]
+    /**
+      * isVelocityAnimation
+      */
+    isVA () {
+      return this.animationType === 'velocity'
+    },
 
-      this.positionAsArray()
-        .forEach(v => {
-          if (dirs.y.indexOf(v) != -1) {
-            y = v
-          }
-          if (dirs.x.indexOf(v) != -1) {
-            x = v
-          }
-        })
+    componentName () {
+      return this.isVA ? 'VelocityGroup' : 'CssGroup'
+    },
+
+    styles () {
+      let { x, y } = listToDirection(this.position)
 
       let styles = {
         width: `${this.width}px`,
@@ -177,6 +191,31 @@ export default {
     }
   },
   methods: {
+    nСlass (item) {
+      return [
+        'notification',
+        this.classes,
+        item.type
+      ]
+    },
+
+    nwStyle (item) {
+      return this.isVA
+        ? null
+        : {
+            transition: `all ${item.speed}ms`
+          }
+    },
+
+    destroy (item) {
+      clearTimeout(item.timer)
+      item.state = STATE.destroyed
+
+      if (!this.isVA) {
+        this.clean()
+      } 
+    },
+
     getAnimation (index, el) {
       let anim = this.animation[index]
 
@@ -184,35 +223,29 @@ export default {
         ? anim.call(this, el)
         : anim
     },
+    
+    enter ({ el, complete }) {
+      let animation = this.getAnimation('enter', el)
 
-    destroy (note) {
-      clearTimeout(note.timer)
-      note.state = STATE.destroyed
+      this.velocity(el, animation, {
+
+        duration: this.speed,
+        complete
+      })
     },
+    
+    leave ({ el, complete }) {
+      let animation = this.getAnimation('leave', el)
 
-    enter (el, complete) {
-      Velocity(el, this.getAnimation('enter', el), {
+      this.velocity(el, animation, {
         duration: this.speed,
         complete
       })
     },
 
-    leave (el, complete) {
-      Velocity(el, this.getAnimation('leave', el), {
-        duration: this.speed,
-        complete
-      })
-    },
-
-    afterLeave (el) {
+    clean () {
       this.list = this.list
         .filter(v => v.state !== STATE.destroyed)
-    },
-
-    positionAsArray () {
-      return typeof this.position === 'string'
-        ? split(this.position)
-        : this.position
     }
   }
 }
@@ -267,4 +300,13 @@ export default {
   background: #68CD86;
   border-left-color: #42A85F;
 }
+
+.vn-fade-enter-active, .vn-fade-leave-active, .vn-fade-move  {
+  transition: all .5s;
+}
+
+.vn-fade-enter, .vn-fade-leave-to {
+  opacity: 0;
+}
+
 </style>

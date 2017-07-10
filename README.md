@@ -8,6 +8,11 @@ Demo: http://vue-notification.yev.io/
   <img src="https://media.giphy.com/media/l0IxZTtDitELemJiw/giphy.gif">
 </p>
 
+### Version 1.3.0 changes 
+❗️❗️❗️
+
+In version 1.3.0 velocity animation **is not a default option**. If you still want to use velicoty animations please take a look in [Velocity Animation](#velocity_animation) section.
+
 ### Install
 
 ```
@@ -45,16 +50,18 @@ this.$notify({
 
 All props are optional.
 
-| Name         | Default      | Description |
-| ---          | ---          | ---         |
-| group        |              | name of the notification holder, if specified |
-| width        | 300          | width of notification holder |
-| classes      | 'vue-notification' | list of classes that will be applied to notification element |
-| position     | 'top right'  | part of the screen where notifications will pop out |
-| animation    | $*           | `Velocity` animation configuration |
-| duration     | 3000         | how long notification stays on screen (if **negative** - notification will stay **forever** or until clicked) |
-| speed        | 300          | speed of the animation |
-| reverse      | false        | show notifications in reverse order |
+| Name           | Type    | Default      | Description |
+| ---           | ---     | ---          | ---         |
+| group          | String  | null         | Name of the notification holder, if specified |
+| width          | Number  | 300          | Width of notification holder |
+| classes        | String/Array | 'vue-notification' | List of classes that will be applied to notification element |
+| position       | String/Array | 'top right'  | Part of the screen where notifications will pop out |
+| animation-type | String  | 'css'      | Type of animation, currently supported types are `css` and `velocity` |
+| animation-name | String  | null       | Animation name required for `css` animation |
+| animation      | Object  | `$`*         | Animation configuration for `Velocity` animation |
+| duration       | Number  | 3000         | Time (ms) animation stays visible (if **negative** - notification will stay **forever** or until clicked) |
+| speed          | Number  | 300          | Speed of animation showing/hiding |
+| reverse        | Boolean | false        | Show notifications in reverse order |
 
 $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
@@ -95,9 +102,24 @@ Also you can use simplified version:
 this.$notify('text')
 ```
 
+### Groups
+
+If you are planning to use `notification` component for 2 or more completely different types of notifications (for example, authentication error messages in top center and generic app notifications in bottom-right corner) - you can specify `group` property which is essentially a name of notification holder.
+
+Example:
+
+```vue
+<notifications group="auth"/>
+<notifications group="app"/>
+```
+
+```javascript
+this.$notify({ type: 'auth', text: 'Wrong password, please try again later' })
+```
+
 ### Position
 
-"Position" property requires a string with 2 keywords for vertical and horizontal postion.
+`Position` property requires a string with 2 keywords for vertical and horizontal postion.
 
 Format: `"<vertical> <horizontal>"`.
 
@@ -135,6 +157,7 @@ Structure:
   }
 }
 ```
+
 To apply this style you will have to specify "classes" property:
 
 ```vue
@@ -171,16 +194,16 @@ To apply this style you will have to specify "classes" property:
 }
 ```
 
-### Slot
+### Custom template (slot)
 
 Optional scope slot named "body" is supported.
 
 Scope props:
 
-| Name     | Type               | Description |
-| ---      | ---                | ---         |
-| item     | Object | notification object |
-| close    | Function  | when called closes the notification |
+| Name  | Type     | Description                         |
+| ---   | ---      | ---                                 |
+| item  | Object   | notification object                 |
+| close | Function | when called closes the notification |
 
 Example:
 
@@ -201,10 +224,31 @@ Example:
   </template>
 </notifications>
 ```
+<a name="velocity_animation"></a>
 
-### Animation
+### Velocity Animation
 
-Library uses `Velocity` javascript animations, the format is:
+Plugin can use use `Velocity` library to make js-powered animations. To start using it you will have to manually install `velocity` & supply the librarty to `vue-notification` plugin (reason for doing that is to reduce the size of this plugin).
+
+In your `main.js`: 
+
+```javascript
+import Vue           from 'vue'
+import Notifications from 'vue-notification'
+import velocity      from 'velocity-animation'
+
+Vue.use(Notifications, { velocity })
+```
+
+In the template you will have to set `animation-type="velocity"`.
+
+```vue
+<notification animation-type="veloctiy"/>
+```
+
+The animation configuration consists of 2 objects/functions: `enter` and `leave`. 
+
+Example:
 
 ```javascript
 /*
@@ -234,10 +278,9 @@ animation = {
 ```
 
 ```vue
-<notifications animation="animation" />
+<notifications animation-type="velocity"
+               animation="animation"/>
 ```
-
-The reason for using Velocity is that it gives more control over animating `Height` of the element which is important for this library
 
 ### Development
 
