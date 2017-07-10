@@ -33,26 +33,9 @@ import Vue                            from 'vue'
 import Plugin                         from './index'
 import { events }                     from './events'
 import { Id, split, listToDirection } from './util'
-
+import defaults                       from './defaults'
 import VelocityGroup                  from './VelocityGroup.vue'
 import CssGroup                       from './CssGroup.vue'
-
-const defaultPosition = ['top', 'right']
-const defaultCssAnimation = 'n-fade'
-const defaultVelocityAnimation = {
-  enter: (el) => {
-    var height = el.clientHeight
-
-    return {
-      height: [height, 0],
-       opacity: [1, 0]
-    }
-  },
-  leave: {
-    height: 0,
-    opacity: [0, 1]
-  }
-}
 
 const STATE = {
   idle: 0, 
@@ -82,7 +65,7 @@ export default {
 
     position: {
       type: String,
-      default: defaultPosition
+      default: defaults.position
     },
 
     classes: {
@@ -101,13 +84,13 @@ export default {
     animation: {
       type: Object,
       default () {
-        return defaultVelocityAnimation
+        return defaults.velocityAnimation
       }
     },
 
     animationName: {
       type: String,
-      default: 'vn-fade'
+      default: defaults.cssAnimation
     },
 
     speed: {
