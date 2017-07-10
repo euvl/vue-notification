@@ -224,8 +224,9 @@ Example:
   </template>
 </notifications>
 ```
+<a name="velocity_animation"></a>
 
-### Velocity Animation <a name="velocity_animation"></a>
+### Velocity Animation
 
 Plugin can use use `Velocity` library to make js-powered animations. To start using it you will have to manually install `velocity` & supply the librarty to `vue-notification` plugin (reason for doing that is to reduce the size of this plugin).
 
