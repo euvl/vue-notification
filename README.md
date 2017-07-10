@@ -278,7 +278,8 @@ animation = {
 ```
 
 ```vue
-<notifications animation="animation" animation-type="velocity" />
+<notifications animation-type="velocity"
+               animation="animation"/>
 ```
 
 ### Development
