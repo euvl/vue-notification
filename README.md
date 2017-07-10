@@ -8,6 +8,11 @@ Demo: http://vue-notification.yev.io/
   <img src="https://media.giphy.com/media/l0IxZTtDitELemJiw/giphy.gif">
 </p>
 
+### Version 1.3.0 changes 
+❗️❗️❗️
+
+In version 1.3.0 velocity animation **is not a default option**. If you still want to use velicoty animations please take a look in [Velocity Animation](#velocity_animation) section.
+
 ### Install
 
 ```
@@ -99,7 +104,7 @@ this.$notify('text')
 
 ### Groups
 
-If you are planning to use `notification` component for 2 or more completely different types of notifications (for example, authentication error messages in top center and generic app notifications in bottom-right corner) - you can specify a `group` property which is essentially a name of notification holder.
+If you are planning to use `notification` component for 2 or more completely different types of notifications (for example, authentication error messages in top center and generic app notifications in bottom-right corner) - you can specify `group` property which is essentially a name of notification holder.
 
 Example:
 
@@ -220,7 +225,7 @@ Example:
 </notifications>
 ```
 
-### Velocity Animation
+### Velocity Animation <a name="velocity_animation"></a>
 
 Plugin can use use `Velocity` library to make js-powered animations. To start using it you will have to manually install `velocity` & supply the librarty to `vue-notification` plugin (reason for doing that is to reduce the size of this plugin).
 
