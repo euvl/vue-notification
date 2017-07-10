@@ -116,7 +116,7 @@ export default {
   },
   created () {
     events.$on('add', event => {
-      if (this.group && this.group !== event.group) {
+      if (this.group && this.group != event.group) {
         return
       }
 

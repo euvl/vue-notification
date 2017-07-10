@@ -332,7 +332,7 @@ var STATE = {
     var _this = this;
 
     __WEBPACK_IMPORTED_MODULE_2__events__["a" /* events */].$on('add', function (event) {
-      if (_this.group && _this.group !== event.group) {
+      if (_this.group && _this.group != event.group) {
         return;
       }
 
