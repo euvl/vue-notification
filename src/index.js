@@ -2,12 +2,13 @@ import Notifications from './Notifications.vue'
 import { events }    from './events'
 
 var Notify = {
-  install(Vue) {
+  install(Vue, params = {}) {
     if (this.installed) {
       return;
     }
 
-    this.installed = true;
+    this.installed = true
+    this.params = params
 
     Vue.component('notifications', Notifications)
     Vue.prototype.$notify = (params) => {

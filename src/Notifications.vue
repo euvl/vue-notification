@@ -111,7 +111,8 @@ export default {
   },
   data () {
     return {
-      list: []
+      list: [],
+      velocity: Plugin.params.velocity
     }
   },
   created () {

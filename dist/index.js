@@ -160,11 +160,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var Notify = {
   install: function install(Vue) {
+    var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
     if (this.installed) {
       return;
     }
 
     this.installed = true;
+    this.params = params;
 
     Vue.component('notifications', __WEBPACK_IMPORTED_MODULE_0__Notifications_vue___default.a);
     Vue.prototype.$notify = function (params) {
@@ -321,7 +324,8 @@ var STATE = {
   },
   data: function data() {
     return {
-      list: []
+      list: [],
+      velocity: __WEBPACK_IMPORTED_MODULE_1__index__["default"].params.velocity
     };
   },
   created: function created() {
