@@ -278,7 +278,7 @@ var STATE = {
     },
 
     position: {
-      type: String,
+      type: [String, Array],
       default: __WEBPACK_IMPORTED_MODULE_4__defaults__["a" /* default */].position
     },
 

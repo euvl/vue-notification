@@ -65,7 +65,7 @@ export default {
     },
 
     position: {
-      type: String,
+      type: [String, Array],
       default: defaults.position
     },
 
