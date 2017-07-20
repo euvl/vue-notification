@@ -82,7 +82,7 @@ $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
     title: 'This is title',
 
     // Content (will be wrapped in div.notification-content)
-    text: 'This is <b> content </b>'
+    text: 'This is <b> content </b>',
 
     // (optional)
     // Overrides default/provided duration
