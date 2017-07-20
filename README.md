@@ -228,14 +228,14 @@ Example:
 
 ### Velocity Animation
 
-Plugin can use use `Velocity` library to make js-powered animations. To start using it you will have to manually install `velocity` & supply the librarty to `vue-notification` plugin (reason for doing that is to reduce the size of this plugin).
+Plugin can use use `Velocity` library to make js-powered animations. To start using it you will have to manually install `velocity-animate` & supply the librarty to `vue-notification` plugin (reason for doing that is to reduce the size of this plugin).
 
 In your `main.js`: 
 
 ```javascript
 import Vue           from 'vue'
 import Notifications from 'vue-notification'
-import velocity      from 'velocity-animation'
+import velocity      from 'velocity-animate'
 
 Vue.use(Notifications, { velocity })
 ```
@@ -243,7 +243,7 @@ Vue.use(Notifications, { velocity })
 In the template you will have to set `animation-type="velocity"`.
 
 ```vue
-<notification animation-type="veloctiy"/>
+<notifications animation-type="veloctiy"/>
 ```
 
 The animation configuration consists of 2 objects/functions: `enter` and `leave`. 
