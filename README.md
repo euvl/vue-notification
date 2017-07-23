@@ -5,7 +5,7 @@
 Demo: http://vue-notification.yev.io/
 
 <p align="center">
-  <img src=https://media.giphy.com/media/xUn3C6FmbGmszMem64/giphy.gif">
+  <img src="https://media.giphy.com/media/xUn3C6FmbGmszMem64/giphy.gif">
 </p>
 
 ### Version 1.3.0 changes 
