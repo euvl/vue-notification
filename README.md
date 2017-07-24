@@ -282,6 +282,22 @@ animation = {
                animation="animation"/>
 ```
 
+### TypeScript support
+
+You will have to extend Vue type declaration:
+
+
+```
+import Notification from ‘vue-notification’;
+
+declare module ‘vue/types/vue’ {
+  export interface Vue {
+    $notify: Notification;
+  }
+}
+```
+
+
 ### Development
 
 ```bash
