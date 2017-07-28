@@ -66,7 +66,9 @@ export default {
 
     position: {
       type: [String, Array],
-      default: defaults.position
+      default: () => {
+        return defaults.position
+      }
     },
 
     classes: {
