@@ -108,7 +108,7 @@ Example:
 ```
 
 ```javascript
-this.$notify({ type: 'auth', text: 'Wrong password, please try again later' })
+this.$notify({ group: 'auth', text: 'Wrong password, please try again later' })
 ```
 
 ### Position
