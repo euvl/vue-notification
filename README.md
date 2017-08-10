@@ -238,7 +238,7 @@ Vue.use(Notifications, { velocity })
 In the template you will have to set `animation-type="velocity"`.
 
 ```vue
-<notifications animation-type="veloctiy"/>
+<notifications animation-type="velocity"/>
 ```
 
 The animation configuration consists of 2 objects/functions: `enter` and `leave`. 
