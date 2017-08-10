@@ -118,7 +118,7 @@ this.$notify({ group: 'auth', text: 'Wrong password, please try again later' })
 
 Format: `"<vertical> <horizontal>"`.
 
-- Horizontal options: `left`, `center`, `top`
+- Horizontal options: `left`, `center`, `right`
 - Vertical options: `top`, `bottom`
 
 Default is "top right".
