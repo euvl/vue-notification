@@ -8,14 +8,9 @@ Demo: http://vue-notification.yev.io/
   <img src="https://media.giphy.com/media/xUn3C6FmbGmszMem64/giphy.gif">
 </p>
 
-### Version 1.3.0 changes 
-❗️❗️❗️
-
-In version 1.3.0 velocity animation **is not a default option**. If you still want to use velicoty animations please take a look in [Velocity Animation](#velocity_animation) section.
-
 ### Install
 
-```
+```bash
 npm install --save vue-notification
 ```
 
@@ -39,7 +34,6 @@ In App.vue:
 In any of your files:
 
 ```javascript
-
 this.$notify({
   title: 'Important message',
   text: 'Hello user! This is a notification!'
@@ -286,8 +280,7 @@ animation = {
 
 You will have to extend Vue type declaration:
 
-
-```
+```javascript
 import Notification from ‘vue-notification’;
 
 declare module ‘vue/types/vue’ {
@@ -296,7 +289,6 @@ declare module ‘vue/types/vue’ {
   }
 }
 ```
-
 
 ### Development
 
