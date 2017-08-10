@@ -280,10 +280,10 @@ animation = {
 
 You will have to extend Vue type declaration:
 
-```javascript
-import Notification from ‘vue-notification’;
+```typescript
+import Notification from 'vue-notification';
 
-declare module ‘vue/types/vue’ {
+declare module 'vue/types/vue' {
   export interface Vue {
     $notify: Notification;
   }
