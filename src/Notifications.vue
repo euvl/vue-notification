@@ -31,7 +31,6 @@
 </template>
 <script>
 import Vue                            from 'vue'
-import Plugin                         from './index'
 import { events }                     from './events'
 import { Id, split, listToDirection } from './util'
 import defaults                       from './defaults'
@@ -39,11 +38,15 @@ import VelocityGroup                  from './VelocityGroup.vue'
 import CssGroup                       from './CssGroup.vue'
 
 const STATE = {
-  idle: 0, 
+  idle: 0,
   destroyed: 2
 }
 
-export default {
+const config = {
+  velocity: null
+}
+
+const Component = {
   name: 'Notifications',
   components: {
     VelocityGroup,
@@ -114,11 +117,47 @@ export default {
   data () {
     return {
       list: [],
-      velocity: Plugin.params.velocity
+      velocity: config.velocity
     }
   },
   created () {
-    events.$on('add', event => {
+    events.$on('add', this.addItem);
+  },
+  computed: {
+    /**
+      * isVelocityAnimation
+      */
+    isVA () {
+      return this.animationType === 'velocity'
+    },
+
+    componentName () {
+      return this.isVA ? 'VelocityGroup' : 'CssGroup'
+    },
+
+    styles () {
+      let { x, y } = listToDirection(this.position)
+
+      let styles = {
+        width: `${this.width}px`,
+        [y]: '0px'
+      }
+
+      if (x === 'center') {
+        styles['left'] = `calc(50% - ${this.width/2}px)`
+      } else {
+        styles[x] = '0px'
+      }
+
+      return styles
+    },
+
+    botToTop() {
+      return this.styles.hasOwnProperty('bottom')
+    }
+  },
+  methods: {
+    addItem(event) {
       if (this.group && this.group != event.group) {
         return
       }
@@ -158,42 +197,7 @@ export default {
       } else {
         this.list.unshift(item)
       }
-    })
-  },
-  computed: {
-    /**
-      * isVelocityAnimation
-      */
-    isVA () {
-      return this.animationType === 'velocity'
     },
-
-    componentName () {
-      return this.isVA ? 'VelocityGroup' : 'CssGroup'
-    },
-
-    styles () {
-      let { x, y } = listToDirection(this.position)
-
-      let styles = {
-        width: `${this.width}px`,
-        [y]: '0px'
-      }
-
-      if (x === 'center') {
-        styles['left'] = `calc(50% - ${this.width/2}px)`
-      } else {
-        styles[x] = '0px'
-      }
-
-      return styles
-    },
-
-    botToTop() {
-      return this.styles.hasOwnProperty('bottom')
-    }
-  },
-  methods: {
     nСlass (item) {
       return [
         'notification',
@@ -216,7 +220,7 @@ export default {
 
       if (!this.isVA) {
         this.clean()
-      } 
+      }
     },
 
     getAnimation (index, el) {
@@ -226,7 +230,7 @@ export default {
         ? anim.call(this, el)
         : anim
     },
-    
+
     enter ({ el, complete }) {
       let animation = this.getAnimation('enter', el)
 
@@ -236,7 +240,7 @@ export default {
         complete
       })
     },
-    
+
     leave ({ el, complete }) {
       let animation = this.getAnimation('leave', el)
 
@@ -252,6 +256,14 @@ export default {
     }
   }
 }
+
+Component.configure = (opts = {}) => {
+  if (opts.velocity !== undefined) {
+    config.velocity = opts.velocity
+  }
+}
+
+export default Component
 </script>
 <style>
 .notifications {

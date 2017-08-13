@@ -10,6 +10,12 @@ var Notify = {
     this.installed = true
     this.params = params
 
+    const { velocity } = params
+
+    if (velocity) {
+      Notifications.configure({ velocity })
+    }
+
     Vue.component('notifications', Notifications)
     Vue.prototype.$notify = (params) => {
       if (typeof params === 'string') {
