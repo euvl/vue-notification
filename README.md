@@ -64,7 +64,7 @@ $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
 ```javascript
   this.$notify({
-    // (optional) 
+    // (optional)
     // Name of the notification holder
     group: 'foo',
 
@@ -72,7 +72,7 @@ $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
     // Class that will be assigned to the notification
     type: 'warning',
 
-    // (optional) 
+    // (optional)
     // Title (will be wrapped in div.notification-title)
     title: 'This is title',
 
@@ -225,7 +225,7 @@ Example:
 
 Plugin can use use `Velocity` library to make js-powered animations. To start using it you will have to manually install `velocity-animate` & supply the librarty to `vue-notification` plugin (reason for doing that is to reduce the size of this plugin).
 
-In your `main.js`: 
+In your `main.js`:
 
 ```javascript
 import Vue           from 'vue'
@@ -241,7 +241,7 @@ In the template you will have to set `animation-type="velocity"`.
 <notifications animation-type="velocity"/>
 ```
 
-The animation configuration consists of 2 objects/functions: `enter` and `leave`. 
+The animation configuration consists of 2 objects/functions: `enter` and `leave`.
 
 Example:
 
@@ -307,4 +307,10 @@ npm run build
 cd demo
 npm install
 npm run dev
+
+# Run tests
+npm run test
+
+# Watch unit tests
+npm run unit:watch
 ```
