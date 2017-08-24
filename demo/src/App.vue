@@ -2,17 +2,17 @@
   <div id="app">
     <h2>Vue.js Notification
       <br>
-      <a href="https://github.com/euvl/vue-notification/blob/master/README.md" 
+      <a href="https://github.com/euvl/vue-notification/blob/master/README.md"
          target="readme">Readme</a>
-      <a href="https://github.com/euvl/vue-notification/" 
+      <a href="https://github.com/euvl/vue-notification/"
          target="issues">Github</a>
     </h2>
     <!-- CSS animation example -->
-    <notifications group="foo-css" 
-                   position="bottom left" 
+    <notifications group="foo-css"
+                   position="bottom left"
                    :speed="500" />
 
-    <!-- Velocity animation example --> 
+    <!-- Velocity animation example -->
     <notifications group="foo-velocity"
                    position="bottom right"
                    animation-type="velocity"
@@ -21,7 +21,8 @@
     <!-- Custom style example -->
     <notifications group="custom-style"
                    position="top center"
-                   classes="n-light" 
+                   classes="n-light"
+                   :max="3"
                    :width="400"/>
 
     <!-- Custom template example -->
@@ -65,7 +66,7 @@
         <button class="warn"
                 style="width: 30%"
                 @click="show('foo-css', 'warn')">
-          <i class="icon ion-alert-circled"/> 
+          <i class="icon ion-alert-circled"/>
           WARNING
         </button>
         <button class="error"
@@ -79,7 +80,7 @@
       <div style="padding-top: 10px"></div>
 
       <p>
-        Velocity animation: 
+        Velocity animation:
       </p>
 
       <div>
@@ -92,7 +93,7 @@
         <button class="warn"
                 style="width: 30%"
                 @click="show('foo-velocity', 'warn')">
-          <i class="icon ion-alert-circled"/> 
+          <i class="icon ion-alert-circled"/>
           WARNING
         </button>
         <button class="error"
@@ -105,7 +106,7 @@
       <div style="padding-top: 20px">
         <p>Custom style:</p>
         <button @click="show('custom-style')">
-          top center
+          top center (max=3)
         </button>
         <p>Custom template:</p>
         <button @click="show('custom-template')">
@@ -221,7 +222,15 @@ body {
   }
 }
 
-/* 
+.sub-button {
+  display: inline-block;
+  float: right;
+  background: #E54D42;
+  padding: 4px;
+  box-shadow: 0 5px 15px 0px rgba(46, 61, 73, 0.1);
+}
+
+/*
   EXAMPLES
 */
 
@@ -289,7 +298,7 @@ body {
   .custom-template-content {
     padding: 10px;
     flex: 1 0 auto;
-    
+
     .custom-template-title {
       letter-spacing: 1px;
       text-transform: uppercase;
@@ -299,13 +308,13 @@ body {
   }
 }
 
-.v-fade-left-enter-active, 
-.v-fade-left-leave-active, 
+.v-fade-left-enter-active,
+.v-fade-left-leave-active,
 .v-fade-left-move {
   transition: all .5s;
 }
 
-.v-fade-left-enter, 
+.v-fade-left-enter,
 .v-fade-left-leave-to {
   opacity: 0;
   transform: translateX(-500px) scale(0.2);

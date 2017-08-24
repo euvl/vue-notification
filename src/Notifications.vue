@@ -38,8 +38,8 @@ import VelocityGroup                  from './VelocityGroup.vue'
 import CssGroup                       from './CssGroup.vue'
 
 const STATE = {
-  idle: 0,
-  destroyed: 2
+  IDLE: 0,
+  DESTROYED: 2
 }
 
 const config = {
@@ -112,6 +112,11 @@ const Component = {
     delay: {
       type: Number,
       default: 0
+    },
+
+    max: {
+      type: Number,
+      default: Infinity
     }
   },
   data () {
@@ -152,12 +157,16 @@ const Component = {
       return styles
     },
 
-    botToTop() {
+    active () {
+      return this.list.filter(v => v.state !== STATE.DESTROYED)
+    },
+
+    botToTop () {
       return this.styles.hasOwnProperty('bottom')
     }
   },
   methods: {
-    addItem(event) {
+    addItem (event) {
       if (this.group && this.group != event.group) {
         return
       }
@@ -177,7 +186,7 @@ const Component = {
         title,
         text,
         type,
-        state: STATE.idle,
+        state: STATE.IDLE,
         speed,
         length: duration + 2 * speed
       }
@@ -192,10 +201,24 @@ const Component = {
         ? !this.botToTop
         : this.botToTop
 
+      let indexToDestroy = -1
+
       if (direction) {
         this.list.push(item)
+
+        if (this.active.length > this.max) {
+          indexToDestroy = -1
+        }
       } else {
         this.list.unshift(item)
+
+        if (this.active.length > this.max) {
+          indexToDestroy = this.active.length - 1
+        }
+      }
+
+      if (indexToDestroy !== -1) {
+        this.destroy(this.active[indexToDestroy])
       }
     },
     nСlass (item) {
@@ -216,7 +239,7 @@ const Component = {
 
     destroy (item) {
       clearTimeout(item.timer)
-      item.state = STATE.destroyed
+      item.state = STATE.DESTROYED
 
       if (!this.isVA) {
         this.clean()
@@ -252,7 +275,7 @@ const Component = {
 
     clean () {
       this.list = this.list
-        .filter(v => v.state !== STATE.destroyed)
+        .filter(v => v.state !== STATE.DESTROYED)
     }
   }
 }
