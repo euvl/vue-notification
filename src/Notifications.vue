@@ -171,6 +171,11 @@ const Component = {
         return
       }
 
+      if (event.clean || event.clear) {
+        this.destroyAll()
+        return
+      }
+
       let duration = typeof event.duration === 'number'
         ? event.duration
         : this.duration
@@ -244,6 +249,10 @@ const Component = {
       if (!this.isVA) {
         this.clean()
       }
+    },
+
+    destroyAll () {
+      this.active.forEach(this.destroy)
     },
 
     getAnimation (index, el) {

@@ -110,7 +110,11 @@
         </button>
         <p>Custom template:</p>
         <button @click="show('custom-template')">
-          top left
+          show top left
+        </button>
+        <p></p>
+        <button @click="clean('custom-template')">
+          <u>clean all</u> top left
         </button>
       </div>
     </div>
@@ -144,6 +148,10 @@ export default {
       let text = `This is notification text!<br>Date: ${now}`
 
       this.$notify({ group, title, text, type })
+    },
+
+    clean (group) {
+      this.$notify({ group, clean: true })
     }
   }
 }

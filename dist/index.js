@@ -342,6 +342,11 @@ var Component = {
         return;
       }
 
+      if (event.clean || event.clear) {
+        this.destroyAll();
+        return;
+      }
+
       var duration = typeof event.duration === 'number' ? event.duration : this.duration;
 
       var speed = typeof event.speed === 'number' ? event.speed : this.speed;
@@ -404,6 +409,9 @@ var Component = {
       if (!this.isVA) {
         this.clean();
       }
+    },
+    destroyAll: function destroyAll() {
+      this.active.forEach(this.destroy);
     },
     getAnimation: function getAnimation(index, el) {
       var anim = this.animation[index];
