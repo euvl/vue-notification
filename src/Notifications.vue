@@ -36,6 +36,7 @@ import { Id, split, listToDirection } from './util'
 import defaults                       from './defaults'
 import VelocityGroup                  from './VelocityGroup.vue'
 import CssGroup                       from './CssGroup.vue'
+import parseNumericValue              from './parser'
 
 const STATE = {
   IDLE: 0,
@@ -58,7 +59,7 @@ const Component = {
     },
 
     width: {
-      type: Number,
+      type: [Number, String],
       default: 300
     },
 
@@ -129,6 +130,9 @@ const Component = {
     events.$on('add', this.addItem);
   },
   computed: {
+    actualWidth () {
+      return parseNumericValue(this.width)
+    },
     /**
       * isVelocityAnimation
       */
@@ -142,14 +146,16 @@ const Component = {
 
     styles () {
       let { x, y } = listToDirection(this.position)
+      let width = this.actualWidth.value
+      let suffix = this.actualWidth.type
 
       let styles = {
-        width: `${this.width}px`,
+        width: `${width}${suffix}`,
         [y]: '0px'
       }
 
       if (x === 'center') {
-        styles['left'] = `calc(50% - ${this.width/2}px)`
+        styles['left'] = `calc(50% - ${width/2}${suffix})`
       } else {
         styles[x] = '0px'
       }
