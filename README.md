@@ -48,7 +48,7 @@ All props are optional.
 | Name           | Type    | Default      | Description |
 | ---           | ---     | ---          | ---         |
 | group          | String  | null         | Name of the notification holder, if specified |
-| width          | Number  | 300          | Width of notification holder |
+| width          | Number/String  | 300          | Width of notification holder, can be `%`, `px` string or number.<br>Valid values: '100%', '200px', 200 |
 | classes        | String/Array | 'vue-notification' | List of classes that will be applied to notification element |
 | position       | String/Array | 'top right'  | Part of the screen where notifications will pop out |
 | animation-type | String  | 'css'      | Type of animation, currently supported types are `css` and `velocity` |
@@ -220,6 +220,13 @@ Example:
 </notifications>
 ```
 <a name="velocity_animation"></a>
+
+
+### Width 
+
+Width can be set using suffexed string (if simple number is not enough), valid suffixes "px" and "%".
+
+Example: 100%, 50px, 50
 
 ### Velocity Animation
 
