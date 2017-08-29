@@ -29,13 +29,14 @@ Vue.use(Notifications)
 In App.vue:
 
 ```vue
-<notifications />
+<notifications group="foo" />
 ```
 
 In any of your files:
 
 ```javascript
 this.$notify({
+  group: 'foo',
   title: 'Important message',
   text: 'Hello user! This is a notification!'
 });
