@@ -278,6 +278,11 @@ var Component = {
       default: 300
     },
 
+    cooldown: {
+      type: Number,
+      default: 0
+    },
+
     duration: {
       type: Number,
       default: 3000

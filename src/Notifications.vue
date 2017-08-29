@@ -5,9 +5,9 @@
              @enter="enter"
              @leave="leave"
              @after-leave="clean">
-    <div class="notification-wrapper"
-         v-for="item in list"
+    <div v-for="item in list"
          v-if="item.state != 2"
+         class="notification-wrapper"
          :style="nwStyle(item)"
          :key="item.id"
          :data-id="item.id">
@@ -17,7 +17,6 @@
             :close="() => destroy(item)">
         <div :class="nСlass(item)"
              @click="destroy(item)">
-
           <div v-if="item.title"
                class="notification-title"
                v-html="item.title"></div>
@@ -103,6 +102,11 @@ const Component = {
     speed: {
       type: Number,
       default: 300
+    },
+    /* Todo */
+    cooldown: {
+      type: Number,
+      default: 0
     },
 
     duration: {
