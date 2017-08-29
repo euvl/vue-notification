@@ -52,6 +52,10 @@
       </template>
     </notifications>
 
+    <!-- Full width example -->
+    <notifications group="full-width"
+                   width="100%" />
+
     <div class="content">
       <p>
         CSS animation:
@@ -115,6 +119,10 @@
         <p></p>
         <button @click="clean('custom-template')">
           <u>clean all</u> top left
+        </button>
+        <p></p>
+        <button @click="show('full-width')">
+          show bottom (full width)
         </button>
       </div>
     </div>
