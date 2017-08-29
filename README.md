@@ -224,9 +224,9 @@ Example:
 
 ### Width 
 
-Width can be set using suffexed string (if simple number is not enough), valid suffixes "px" and "%".
+Width can be set using a string with a percent or pixel extension (if simple number is not enough). 
 
-Example: 100%, 50px, 50
+Examples: '100%', '50px', '50', 50
 
 ### Velocity Animation
 
