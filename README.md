@@ -29,13 +29,14 @@ Vue.use(Notifications)
 In App.vue:
 
 ```vue
-<notifications />
+<notifications group="foo" />
 ```
 
 In any of your files:
 
 ```javascript
 this.$notify({
+  group: 'foo',
   title: 'Important message',
   text: 'Hello user! This is a notification!'
 });
@@ -56,6 +57,7 @@ All props are optional.
 | animation      | Object  | `$`*         | Animation configuration for `Velocity` animation |
 | duration       | Number  | 3000         | Time (ms) animation stays visible (if **negative** - notification will stay **forever** or until clicked) |
 | speed          | Number  | 300          | Speed of animation showing/hiding |
+| max            | Number  | Infinity     | Maximum number of notifications that can be shown in notification holder |
 | reverse        | Boolean | false        | Show notifications in reverse order |
 
 $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
@@ -282,6 +284,17 @@ animation = {
 ```vue
 <notifications animation-type="velocity"
                animation="animation"/>
+```
+
+### Cleaning 
+
+To remove all notifications, use `clean: true` parameter.
+
+```javascript
+this.$notify({
+  group: 'foo',
+  clean: true
+})
 ```
 
 ### TypeScript support
