@@ -285,6 +285,17 @@ animation = {
                animation="animation"/>
 ```
 
+### Cleaning 
+
+To remove all notifications, use `clean: true` parameter.
+
+```javascript
+this.$notify({
+  group: 'foo',
+  clean: true
+})
+```
+
 ### TypeScript support
 
 You will have to extend Vue type declaration:
