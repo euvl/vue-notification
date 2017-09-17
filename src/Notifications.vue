@@ -8,14 +8,15 @@
     <div v-for="item in list"
          v-if="item.state != 2"
          class="notification-wrapper"
-         :style="nwStyle(item)"
+         :style="notifyWrapperStyle(item)"
          :key="item.id"
          :data-id="item.id">
       <slot name="body"
             :class="[classes, item.type]"
             :item="item"
             :close="() => destroy(item)">
-        <div :class="nСlass(item)"
+        <!-- Default slot template -->
+        <div :class="notifyClass(item)"
              @click="destroy(item)">
           <div v-if="item.title"
                class="notification-title"
@@ -130,7 +131,7 @@ const Component = {
       velocity: config.velocity
     }
   },
-  created () {
+  mounted () {
     events.$on('add', this.addItem);
   },
   computed: {
@@ -145,7 +146,9 @@ const Component = {
     },
 
     componentName () {
-      return this.isVA ? 'VelocityGroup' : 'CssGroup'
+      return this.isVA
+        ? 'VelocityGroup'
+        : 'CssGroup'
     },
 
     styles () {
@@ -154,7 +157,7 @@ const Component = {
       let suffix = this.actualWidth.type
 
       let styles = {
-        width: `${width}${suffix}`,
+        width: width + suffix,
         [y]: '0px'
       }
 
@@ -236,7 +239,8 @@ const Component = {
         this.destroy(this.active[indexToDestroy])
       }
     },
-    nСlass (item) {
+
+    notifyClass (item) {
       return [
         'notification',
         this.classes,
@@ -244,7 +248,7 @@ const Component = {
       ]
     },
 
-    nwStyle (item) {
+    notifyWrapperStyle (item) {
       return this.isVA
         ? null
         : {

@@ -1,5 +1,5 @@
 <template>
-   <transition-group :name="name">
+  <transition-group :name="name">
     <slot/>
   </transition-group/>
 </template>
