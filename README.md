@@ -57,6 +57,7 @@ All props are optional.
 | animation      | Object  | `$`*         | Animation configuration for `Velocity` animation |
 | duration       | Number  | 3000         | Time (ms) animation stays visible (if **negative** - notification will stay **forever** or until clicked) |
 | speed          | Number  | 300          | Speed of animation showing/hiding |
+| max            | Number  | Infinity     | Maximum number of notifications that can be shown in notification holder |
 | reverse        | Boolean | false        | Show notifications in reverse order |
 
 $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
