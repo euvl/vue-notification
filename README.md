@@ -125,6 +125,12 @@ Format: `"<vertical> <horizontal>"`.
 
 Default is "top right".
 
+Example: 
+
+```vue
+<notifications position="top left"/>
+```
+
 ### Style
 
 You can write your own css styles for notifications:
