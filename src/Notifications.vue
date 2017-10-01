@@ -55,7 +55,8 @@ const Component = {
   },
   props: {
     group: {
-      type: String
+      type: String,
+      default: ''
     },
 
     width: {
@@ -180,7 +181,7 @@ const Component = {
   },
   methods: {
     addItem (event) {
-      if (this.group && this.group != event.group) {
+      if (this.group !== event.group) {
         return
       }
 

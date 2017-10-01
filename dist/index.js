@@ -228,7 +228,8 @@ var Component = {
   },
   props: {
     group: {
-      type: String
+      type: String,
+      default: ''
     },
 
     width: {
@@ -304,7 +305,7 @@ var Component = {
       velocity: config.velocity
     };
   },
-  created: function created() {
+  mounted: function mounted() {
     __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$on('add', this.addItem);
   },
 
@@ -327,7 +328,7 @@ var Component = {
       var suffix = this.actualWidth.type;
 
       var styles = _defineProperty({
-        width: '' + width + suffix
+        width: width + suffix
       }, y, '0px');
 
       if (x === 'center') {
@@ -351,7 +352,7 @@ var Component = {
     addItem: function addItem(event) {
       var _this = this;
 
-      if (this.group && this.group != event.group) {
+      if (this.group !== event.group) {
         return;
       }
 
@@ -407,10 +408,10 @@ var Component = {
         this.destroy(this.active[indexToDestroy]);
       }
     },
-    nСlass: function nLass(item) {
+    notifyClass: function notifyClass(item) {
       return ['notification', this.classes, item.type];
     },
-    nwStyle: function nwStyle(item) {
+    notifyWrapperStyle: function notifyWrapperStyle(item) {
       return this.isVA ? null : {
         transition: 'all ' + item.speed + 'ms'
       };
@@ -818,12 +819,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return (item.state != 2) ? _c('div', {
       key: item.id,
       staticClass: "notification-wrapper",
-      style: (_vm.nwStyle(item)),
+      style: (_vm.notifyWrapperStyle(item)),
       attrs: {
         "data-id": item.id
       }
     }, [_vm._t("body", [_c('div', {
-      class: _vm.nСlass(item),
+      class: _vm.notifyClass(item),
       on: {
         "click": function($event) {
           _vm.destroy(item)
