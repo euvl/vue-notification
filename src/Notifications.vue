@@ -30,7 +30,7 @@
 </div>
 </template>
 <script>
-import Vue                            from 'vue'
+import plugin                         from './index'
 import { events }                     from './events'
 import { Id, split, listToDirection } from './util'
 import defaults                       from './defaults'
@@ -41,10 +41,6 @@ import parseNumericValue              from './parser'
 const STATE = {
   IDLE: 0,
   DESTROYED: 2
-}
-
-const config = {
-  velocity: null
 }
 
 const Component = {
@@ -129,7 +125,7 @@ const Component = {
   data () {
     return {
       list: [],
-      velocity: config.velocity
+      velocity: plugin.params.velocity
     }
   },
   mounted () {
@@ -301,12 +297,6 @@ const Component = {
       this.list = this.list
         .filter(v => v.state !== STATE.DESTROYED)
     }
-  }
-}
-
-Component.configure = (opts = {}) => {
-  if (opts.velocity !== undefined) {
-    config.velocity = opts.velocity
   }
 }
 
