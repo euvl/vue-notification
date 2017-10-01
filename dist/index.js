@@ -382,6 +382,8 @@ var Component = {
     addItem: function addItem(event) {
       var _this = this;
 
+      event.group = event.group || '';
+
       if (this.group !== event.group) {
         return;
       }
