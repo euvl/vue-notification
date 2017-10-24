@@ -317,6 +317,10 @@ declare module 'vue/types/vue' {
 }
 ```
 
+### FAQ
+
+Check closed issues with `FAQ` label to get answers for most asked questions.
+
 ### Development
 
 ```bash
