@@ -20,7 +20,7 @@ export const split = (value) => {
 }
 
 /**
-  * Cleanes and transforms string of format "x y" into object {x, y}. 
+  * Cleanes and transforms string of format "x y" into object {x, y}.
   * Possible combinations:
   *   x - left, center, right
   *   y - top, bottom
@@ -43,4 +43,17 @@ export const listToDirection = (value) => {
   })
 
   return { x, y }
+}
+
+/**
+ * Get the raw type string of a value e.g. [object Object]
+ */
+const _toString = Object.prototype.toString
+
+/**
+ * Strict object type check. Only returns true
+ * for plain JavaScript objects.
+ */
+export const isPlainObject (obj) => {
+  return _toString.call(obj) === '[object Object]'
 }
