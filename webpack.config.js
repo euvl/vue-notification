@@ -10,6 +10,7 @@ module.exports = {
     library:'vue-notification',
     libraryTarget: 'umd'
   },
+  target: 'node',
   module: {
     rules: [
       {
