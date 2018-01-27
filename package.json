@@ -5,7 +5,8 @@
   "author": "euvl <yev.vlasenko@gmail.com>",
   "private": false,
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "build:base": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
+    "build:ssr": "cross-env NODE_ENV=production webpack --config webpack.config.ssr.js --progress --hide-modules",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/setup/karma.conf.js --single-run",
     "unit:watch": "cross-env BABEL_ENV=test karma start test/unit/setup/karma.conf.js --watch",
     "test": "npm run unit"
@@ -58,6 +59,7 @@
     "vue-loader": "^11.1.4",
     "vue-template-compiler": "^2.0.0",
     "webpack": "^2.7.0",
-    "webpack-dev-server": "^2.7.1"
+    "webpack-dev-server": "^2.7.1",
+    "webpack-merge": "^4.1.1"
   }
 }
