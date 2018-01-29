@@ -1,5 +1,6 @@
 import Notifications from './Notifications.vue'
 import { events }    from './events'
+import { isPlainObject } from './util'
 
 var Notify = {
   install(Vue, params = {}) {
@@ -17,7 +18,7 @@ var Notify = {
         params = { title: '', text: params }
       }
 
-      if (typeof params === 'object') {
+      if (isPlainObject(params)) {
         events.$emit('add', params)
       }
     }
