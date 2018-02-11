@@ -1,28 +1,45 @@
 <template>
-<div class="notifications" :style="styles">
-  <component :is="componentName"
-             :name="animationName"
-             @enter="enter"
-             @leave="leave"
-             @after-leave="clean">
-    <div v-for="item in list"
-         v-if="item.state != 2"
-         class="notification-wrapper"
-         :style="notifyWrapperStyle(item)"
-         :key="item.id"
-         :data-id="item.id">
-      <slot name="body"
-            :class="[classes, item.type]"
-            :item="item"
-            :close="() => destroy(item)">
+<div
+  class="notifications"
+  :style="styles"
+>
+  <component
+    :is="componentName"
+    :name="animationName"
+    @enter="enter"
+    @leave="leave"
+    @after-leave="clean"
+  >
+    <div
+      v-for="item in list"
+      v-if="item.state != 2"
+      class="notification-wrapper"
+      :style="notifyWrapperStyle(item)"
+      :key="item.id"
+      :data-id="item.id"
+    >
+      <slot
+        name="body"
+        :class="[classes, item.type]"
+        :item="item"
+        :close="() => destroy(item)"
+      >
         <!-- Default slot template -->
-        <div :class="notifyClass(item)"
-             @click="destroy(item)">
-          <div v-if="item.title"
-               class="notification-title"
-               v-html="item.title"></div>
-          <div class="notification-content"
-               v-html="item.text"></div>
+        <div
+          :class="notifyClass(item)"
+          @click="destroy(item)"
+        >
+          <div
+            v-if="item.title"
+            class="notification-title"
+            v-html="item.title"
+          >
+          </div>
+          <div
+            class="notification-content"
+            v-html="item.text"
+          >
+          </div>
         </div>
       </slot>
     </div>
@@ -149,9 +166,9 @@ const Component = {
     },
 
     styles () {
-      let { x, y } = listToDirection(this.position)
-      let width = this.actualWidth.value
-      let suffix = this.actualWidth.type
+      const { x, y } = listToDirection(this.position)
+      const width = this.actualWidth.value
+      const suffix = this.actualWidth.type
 
       let styles = {
         width: width + suffix,
@@ -188,15 +205,15 @@ const Component = {
         return
       }
 
-      let duration = typeof event.duration === 'number'
+      const duration = typeof event.duration === 'number'
         ? event.duration
         : this.duration
 
-      let speed = typeof event.speed === 'number'
+      const speed = typeof event.speed === 'number'
         ? event.speed
         : this.speed
 
-      let { title, text, type } = event
+      let { title, text, type, data } = event
 
       const item = {
         id: Id(),
@@ -205,7 +222,8 @@ const Component = {
         type,
         state: STATE.IDLE,
         speed,
-        length: duration + 2 * speed
+        length: duration + 2 * speed,
+        data
       }
 
       if (duration >= 0) {
@@ -269,18 +287,17 @@ const Component = {
     },
 
     getAnimation (index, el) {
-      let anim = this.animation[index]
+      const animation = this.animation[index]
 
-      return typeof anim === 'function'
-        ? anim.call(this, el)
-        : anim
+      return typeof animation === 'function'
+        ? animation.call(this, el)
+        : animation
     },
 
     enter ({ el, complete }) {
-      let animation = this.getAnimation('enter', el)
+      const animation = this.getAnimation('enter', el)
 
       this.velocity(el, animation, {
-
         duration: this.speed,
         complete
       })
@@ -296,8 +313,7 @@ const Component = {
     },
 
     clean () {
-      this.list = this.list
-        .filter(v => v.state !== STATE.DESTROYED)
+      this.list = this.list.filter(v => v.state !== STATE.DESTROYED)
     }
   }
 }

@@ -1,7 +1,7 @@
 import Notifications from './Notifications.vue'
 import { events }    from './events'
 
-var Notify = {
+const Notify = {
   install(Vue, params = {}) {
     if (this.installed) {
       return

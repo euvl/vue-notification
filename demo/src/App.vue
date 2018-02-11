@@ -32,7 +32,7 @@
                    animation-name="v-fade-left"
                    position="top left">
 
-       <template slot="body" scope="props">
+       <template slot="body" slot-scope="props">
         <div class="custom-template">
           <div class="custom-template-icon">
             <i class="icon ion-android-checkmark-circle"></i>
@@ -40,6 +40,10 @@
           <div class="custom-template-content">
             <div class="custom-template-title">
               {{props.item.title}}
+
+              <p>
+                Random number: {{props.item.data.randomNumber}}
+              </p>
             </div>
             <div class="custom-template-text"
                  v-html="props.item.text"></div>
@@ -151,11 +155,21 @@ export default {
   },
   methods: {
     show (group, type = '') {
-      let title = `Test ${type} notification #${this.id++}`
-      let now = new Date()
-      let text = `This is notification text!<br>Date: ${now}`
+      const text = `
+        This is notification text!
+        <br>
+        Date: ${new Date()}
+      `
 
-      this.$notify({ group, title, text, type })
+      this.$notify({
+        group,
+        title: `Test ${type} notification #${this.id++}`,
+        text,
+        type,
+        data: {
+          randomNumber: Math.random()
+        }
+      })
     },
 
     clean (group) {

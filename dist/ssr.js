@@ -399,7 +399,8 @@ var Component = {
 
       var title = event.title,
           text = event.text,
-          type = event.type;
+          type = event.type,
+          data = event.data;
 
 
       var item = {
@@ -409,7 +410,8 @@ var Component = {
         type: type,
         state: STATE.IDLE,
         speed: speed,
-        length: duration + 2 * speed
+        length: duration + 2 * speed,
+        data: data
       };
 
       if (duration >= 0) {
@@ -460,9 +462,9 @@ var Component = {
       this.active.forEach(this.destroy);
     },
     getAnimation: function getAnimation(index, el) {
-      var anim = this.animation[index];
+      var animation = this.animation[index];
 
-      return typeof anim === 'function' ? anim.call(this, el) : anim;
+      return typeof animation === 'function' ? animation.call(this, el) : animation;
     },
     enter: function enter(_ref) {
       var el = _ref.el,
@@ -471,7 +473,6 @@ var Component = {
       var animation = this.getAnimation('enter', el);
 
       this.velocity(el, animation, {
-
         duration: this.speed,
         complete: complete
       });

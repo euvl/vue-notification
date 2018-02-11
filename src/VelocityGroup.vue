@@ -1,8 +1,10 @@
 <template>
-  <transition-group :css="false"
-                    @enter="enter"
-                    @leave="leave"
-                    @after-leave="afterLeave">
+  <transition-group
+    :css="false"
+    @enter="enter"
+    @leave="leave"
+    @after-leave="afterLeave"
+  >
     <slot/>
   </transition-group>
 </template>
