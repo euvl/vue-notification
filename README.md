@@ -88,6 +88,10 @@ $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
     // (optional)
     // Overrides default/provided animation speed
     speed: 1000
+
+    // (optional)
+    // Data object that can be used in your template
+    data: {}
   })
 ```
 
@@ -125,7 +129,7 @@ Format: `"<vertical> <horizontal>"`.
 
 Default is "top right".
 
-Example: 
+Example:
 
 ```vue
 <notifications position="top left"/>
@@ -230,9 +234,9 @@ Example:
 <a name="velocity_animation"></a>
 
 
-### Width 
+### Width
 
-Width can be set using a string with a percent or pixel extension (if simple number is not enough). 
+Width can be set using a string with a percent or pixel extension (if simple number is not enough).
 
 Examples: '100%', '50px', '50', 50
 
@@ -288,11 +292,12 @@ animation = {
 ```
 
 ```vue
-<notifications animation-type="velocity"
-               animation="animation"/>
+<notifications
+  animation-type="velocity"
+  animation="animation"/>
 ```
 
-### Cleaning 
+### Cleaning
 
 To remove all notifications, use `clean: true` parameter.
 
