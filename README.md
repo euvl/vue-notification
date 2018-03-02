@@ -78,7 +78,7 @@ $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
     // (optional)
     // Class that will be assigned to the notification
-    type: 'warning',
+    type: 'warn',
 
     // (optional)
     // Title (will be wrapped in div.notification-title)
