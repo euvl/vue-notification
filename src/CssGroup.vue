@@ -1,7 +1,7 @@
 <template>
   <transition-group :name="name">
     <slot/>
-  </transition-group/>
+  </transition-group>
 </template>
 <script>
 export default {
