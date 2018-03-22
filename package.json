@@ -12,6 +12,7 @@
     "unit:watch": "cross-env BABEL_ENV=test karma start test/unit/setup/karma.conf.js --watch",
     "test": "npm run unit"
   },
+  "types": "index.d.ts",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
