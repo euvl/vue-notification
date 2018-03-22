@@ -319,20 +319,6 @@ this.$notify({
 })
 ```
 
-### TypeScript support
-
-You will have to extend Vue type declaration:
-
-```typescript
-import Notification from 'vue-notification';
-
-declare module 'vue/types/vue' {
-  export interface Vue {
-    $notify: Notification;
-  }
-}
-```
-
 ### FAQ
 
 Check closed issues with `FAQ` label to get answers for most asked questions.
