@@ -1,7 +1,7 @@
 {
   "name": "vue-notification",
   "description": "Vue.js 2 Notification library",
-  "version": "1.3.7",
+  "version": "1.3.8",
   "author": "euvl <yev.vlasenko@gmail.com>",
   "private": false,
   "scripts": {
@@ -29,6 +29,8 @@
     "velocity-animate": "^1.5.0"
   },
   "keywords": [
+    "web",
+    "front-end",
     "vue",
     "notification"
   ],
