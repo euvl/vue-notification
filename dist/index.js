@@ -428,7 +428,7 @@ var Component = {
         this.list.push(item);
 
         if (this.active.length > this.max) {
-          indexToDestroy = -1;
+          indexToDestroy = 0;
         }
       } else {
         this.list.unshift(item);
