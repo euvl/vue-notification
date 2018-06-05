@@ -8,6 +8,7 @@ export interface NotificationOptions {
     duration?: number;
     speed?: number;
     data?: object;
+    clean?: boolean;
 }
 
 declare module 'vue/types/vue' {
