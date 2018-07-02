@@ -12,7 +12,7 @@ const Notify = {
 
     Vue.component('notifications', Notifications)
 
-    Vue.prototype.$notify = (params) => {
+    const notify = (params) => {
       if (typeof params === 'string') {
         params = { title: '', text: params }
       }
@@ -21,6 +21,9 @@ const Notify = {
         events.$emit('add', params)
       }
     }
+
+    Vue.prototype.$notify = notify
+    Vue.notify = notify
   }
 }
 
