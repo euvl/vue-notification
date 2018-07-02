@@ -4,16 +4,15 @@
   "version": "1.3.10",
   "author": "euvl <yev.vlasenko@gmail.com>",
   "private": false,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
-    "build:base":
-      "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
-    "build:ssr":
-      "cross-env NODE_ENV=production webpack --config webpack.config.ssr.js --progress --hide-modules",
+    "build:base": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
+    "build:ssr": "cross-env NODE_ENV=production webpack --config webpack.config.ssr.js --progress --hide-modules",
     "build": "npm run build:base && npm run build:ssr",
-    "unit":
-      "cross-env BABEL_ENV=test karma start test/unit/setup/karma.conf.js --single-run",
-    "unit:watch":
-      "cross-env BABEL_ENV=test karma start test/unit/setup/karma.conf.js --watch",
+    "unit": "cross-env BABEL_ENV=test karma start test/unit/setup/karma.conf.js --single-run",
+    "unit:watch": "cross-env BABEL_ENV=test karma start test/unit/setup/karma.conf.js --watch",
     "test": "npm run unit"
   },
   "types": "index.d.ts",
