@@ -171,7 +171,7 @@ var Notify = {
 
     Vue.component('notifications', __WEBPACK_IMPORTED_MODULE_0__Notifications_vue___default.a);
 
-    Vue.prototype.$notify = function (params) {
+    var notify = function notify(params) {
       if (typeof params === 'string') {
         params = { title: '', text: params };
       }
@@ -180,6 +180,9 @@ var Notify = {
         __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$emit('add', params);
       }
     };
+
+    Vue.prototype.$notify = notify;
+    Vue.notify = notify;
   }
 };
 
