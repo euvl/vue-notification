@@ -240,7 +240,7 @@ Example:
 ```vue
 <notifications group="custom-template"  
                position="bottom right">
-   <template slot="body" scope="props">
+   <template slot="body" slot-scope="props">
     <div>
         <a class="title">
           {{props.item.title}}
