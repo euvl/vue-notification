@@ -43,7 +43,7 @@ In App.vue:
 <notifications group="foo" />
 ```
 
-In any of your files:
+In any of your vue files:
 
 ```javascript
 this.$notify({
@@ -51,6 +51,18 @@ this.$notify({
   title: 'Important message',
   text: 'Hello user! This is a notification!'
 });
+```
+
+Anywhere else: 
+
+```javascript
+import Vue from 'vue'
+
+Vue.notify({
+  group: 'foo',
+  title: 'Important message',
+  text: 'Hello user! This is a notification!'
+})
 ```
 
 ### Props
