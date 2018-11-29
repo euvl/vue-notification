@@ -65,12 +65,21 @@ Vue.notify({
 })
 ```
 
+### Custom instance configuration
+
+All configurations are optional.
+
+| Name           | Type    | Default       | Description |
+| ---            | ---     | ---           | ---         |
+| name           | String  | notify        | Defines the instance name. It's prefixed with the dollar sign. E.g. `$notify` |
+| componentName  | String  | notifications | The component's name |
+
 ### Props
 
 All props are optional.
 
 | Name           | Type    | Default      | Description |
-| ---           | ---     | ---          | ---         |
+| ---            | ---     | ---          | ---         |
 | group          | String  | null         | Name of the notification holder, if specified |
 | type           | String  | null         | Class that will be assigned to the notification |
 | width          | Number/String  | 300          | Width of notification holder, can be `%`, `px` string or number.<br>Valid values: '100%', '200px', 200 |

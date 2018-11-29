@@ -10,7 +10,7 @@ const Notify = {
     this.installed = true
     this.params = args
 
-    Vue.component('notifications', Notifications)
+    Vue.component(args.componentName || 'notifications', Notifications)
 
     const notify = (params) => {
       if (typeof params === 'string') {
@@ -22,7 +22,7 @@ const Notify = {
       }
     }
 
-    const name = args.name ? args.name : 'notify'
+    const name = args.name || 'notify'
 
     Vue.prototype['$' + name] = notify
     Vue[name] = notify
