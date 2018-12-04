@@ -15,6 +15,9 @@ declare module 'vue/types/vue' {
     interface Vue {
         $notify: (options: NotificationOptions | string) => void;
     }
+    interface VueConstructor {
+        notify: (options: NotificationOptions | string) => void;
+    }
 }
 
 declare class VueNotification {
