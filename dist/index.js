@@ -169,7 +169,7 @@ var Notify = {
     this.installed = true;
     this.params = args;
 
-    Vue.component('notifications', __WEBPACK_IMPORTED_MODULE_0__Notifications_vue___default.a);
+    Vue.component(args.componentName || 'notifications', __WEBPACK_IMPORTED_MODULE_0__Notifications_vue___default.a);
 
     var notify = function notify(params) {
       if (typeof params === 'string') {
@@ -181,7 +181,7 @@ var Notify = {
       }
     };
 
-    var name = args.name ? args.name : 'notify';
+    var name = args.name || 'notify';
 
     Vue.prototype['$' + name] = notify;
     Vue[name] = notify;
