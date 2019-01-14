@@ -1,6 +1,6 @@
 <template>
 <div
-  class="notifications"
+  class="component-notifications"
   :style="styles"
 >
   <component
@@ -321,7 +321,7 @@ const Component = {
 export default Component
 </script>
 <style>
-.notifications {
+.component-notifications {
   display: block;
   position: fixed;
   z-index: 5000;
