@@ -27,7 +27,7 @@
         <!-- Default slot template -->
         <div
           :class="notifyClass(item)"
-          @click="destroy(item)"
+          @click="if (closeOnClick) destroy(item)"
         >
           <div
             v-if="item.title"
@@ -137,6 +137,11 @@ const Component = {
     max: {
       type: Number,
       default: Infinity
+    },
+
+    closeOnClick: {
+      type: Boolean,
+      default: true
     }
   },
   data () {

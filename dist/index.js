@@ -332,6 +332,11 @@ var Component = {
     max: {
       type: Number,
       default: Infinity
+    },
+
+    closeOnClick: {
+      type: Boolean,
+      default: true
     }
   },
   data: function data() {
@@ -810,7 +815,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       class: _vm.notifyClass(item),
       on: {
         "click": function($event) {
-          _vm.destroy(item)
+          if (_vm.closeOnClick) { _vm.destroy(item) }
         }
       }
     }, [(item.title) ? _c('div', {
@@ -827,7 +832,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       item: item,
       close: function () { return _vm.destroy(item); }
     })], 2) : _vm._e()
-  }))], 1)
+  }), 0)], 1)
 },staticRenderFns: []}
 
 /***/ }),

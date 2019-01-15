@@ -30,7 +30,7 @@ import Vue           from 'vue'
 import Notifications from 'vue-notification'
 
 /*
-or for SSR: 
+or for SSR:
 import Notifications from 'vue-notification/dist/ssr.js'
 */
 
@@ -53,7 +53,7 @@ this.$notify({
 });
 ```
 
-Anywhere else: 
+Anywhere else:
 
 ```javascript
 import Vue from 'vue'
@@ -92,6 +92,7 @@ All props are optional.
 | speed          | Number  | 300          | Speed of animation showing/hiding |
 | max            | Number  | Infinity     | Maximum number of notifications that can be shown in notification holder |
 | reverse        | Boolean | false        | Show notifications in reverse order |
+| closeOnClick   | Boolean | true         | Close notification when clicked |
 
 $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
