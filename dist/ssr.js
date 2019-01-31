@@ -832,7 +832,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       item: item,
       close: function () { return _vm.destroy(item); }
     })], 2) : _vm._e()
-  }), 0)], 1)
+  }))], 1)
 },staticRenderFns: []}
 
 /***/ }),
