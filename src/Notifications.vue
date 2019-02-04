@@ -264,7 +264,6 @@ const Component = {
 
     notifyClass (item) {
       return [
-        'notification',
         this.classes,
         item.type
       ]
@@ -352,6 +351,9 @@ export default Component
 }
 
 .vue-notification {
+  display: block;
+  box-sizing: border-box;  
+  text-align: left;
   font-size: 12px;
   padding: 10px;
   margin: 0 5px 5px;
