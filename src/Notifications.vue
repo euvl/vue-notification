@@ -11,8 +11,7 @@
     @after-leave="clean"
   >
     <div
-      v-for="item in list"
-      v-if="item.state != 2"
+      v-for="item in active"
       class="notification-wrapper"
       :style="notifyWrapperStyle(item)"
       :key="item.id"
@@ -195,7 +194,7 @@ const Component = {
 
     botToTop () {
       return this.styles.hasOwnProperty('bottom')
-    }
+    },
   },
   methods: {
     addItem (event) {
@@ -264,6 +263,7 @@ const Component = {
 
     notifyClass (item) {
       return [
+        'vue-notification-template',
         this.classes,
         item.type
       ]
@@ -341,6 +341,13 @@ export default Component
 
 .notification-title {
   font-weight: 600;
+}
+
+.vue-notification-template {
+  display: block;	
+  box-sizing: border-box;	
+  background: white;	
+  text-align: left;	
 }
 
 .vue-notification {
