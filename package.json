@@ -1,7 +1,7 @@
 {
-  "name": "vue-notification",
+  "name": "@remotehq/vue-notification",
   "description": "Vue.js Notification Library",
-  "version": "1.3.16",
+  "version": "1.3.16-1",
   "author": "euvl",
   "private": false,
   "publishConfig": {
