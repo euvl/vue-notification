@@ -26,7 +26,7 @@
         <!-- Default slot template -->
         <div
           :class="notifyClass(item)"
-          @click="if (closeOnClick) destroy(item)"
+          @click="destroyIfNecessary(item)"
         >
           <div
             v-if="item.title"
