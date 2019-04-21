@@ -7,14 +7,6 @@
 [![npm version](https://badge.fury.io/js/vue-notification.svg)](https://badge.fury.io/js/vue-notification)
 [![npm](https://img.shields.io/npm/dm/vue-notification.svg)](https://www.npmjs.com/package/vue-notification)
 
-### Why this fork ?
-
-I corrected a Vue warning due to the use of a Javascript keywork as a property name inside vue-notification.
-```
-avoid using JavaScript keyword as property name: "if"
-  Raw expression: @click="if (closeOnClick) destroy(item)"
-```
-
 ### Vue.js notifications
 
 Demo: http://vue-notification.yev.io/
