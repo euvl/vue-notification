@@ -11,8 +11,7 @@
     @after-leave="clean"
   >
     <div
-      v-for="item in list"
-      v-if="item.state != 2"
+      v-for="item in active"
       class="notification-wrapper"
       :style="notifyWrapperStyle(item)"
       :key="item.id"
@@ -279,6 +278,14 @@ const Component = {
 
       if (!this.isVA) {
         this.clean()
+      }
+    },
+
+    destroyById (id) {
+      const item = this.items.find(v => v.id === id) 
+
+      if (item) {
+        this.destroy(item)
       }
     },
 
