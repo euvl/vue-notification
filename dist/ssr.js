@@ -160,18 +160,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var Notify = {
   install: function install(Vue) {
-    var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     if (this.installed) {
       return;
     }
 
     this.installed = true;
-    this.params = params;
+    this.params = args;
 
-    Vue.component('notifications', __WEBPACK_IMPORTED_MODULE_0__Notifications_vue___default.a);
+    Vue.component(args.componentName || 'notifications', __WEBPACK_IMPORTED_MODULE_0__Notifications_vue___default.a);
 
-    Vue.prototype.$notify = function (params) {
+    var notify = function notify(params) {
       if (typeof params === 'string') {
         params = { title: '', text: params };
       }
@@ -180,6 +180,11 @@ var Notify = {
         __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$emit('add', params);
       }
     };
+
+    var name = args.name || 'notify';
+
+    Vue.prototype['$' + name] = notify;
+    Vue[name] = notify;
   }
 };
 
@@ -327,6 +332,11 @@ var Component = {
     max: {
       type: Number,
       default: Infinity
+    },
+
+    closeOnClick: {
+      type: Boolean,
+      default: true
     }
   },
   data: function data() {
@@ -428,7 +438,7 @@ var Component = {
         this.list.push(item);
 
         if (this.active.length > this.max) {
-          indexToDestroy = -1;
+          indexToDestroy = 0;
         }
       } else {
         this.list.unshift(item);
@@ -443,7 +453,7 @@ var Component = {
       }
     },
     notifyClass: function notifyClass(item) {
-      return ['notification', this.classes, item.type];
+      return ['vue-notification-template', this.classes, item.type];
     },
     notifyWrapperStyle: function notifyWrapperStyle(item) {
       return this.isVA ? null : {
@@ -661,7 +671,7 @@ exports = module.exports = __webpack_require__(11)();
 
 
 // module
-exports.push([module.i, ".notifications{display:block;position:fixed;z-index:5000}.notification-wrapper{display:block;overflow:hidden;width:100%;margin:0;padding:0}.notification{display:block;box-sizing:border-box;background:#fff;text-align:left}.notification-title{font-weight:600}.vue-notification{font-size:12px;padding:10px;margin:0 5px 5px;color:#fff;background:#44a4fc;border-left:5px solid #187fe7}.vue-notification.warn{background:#ffb648;border-left-color:#f48a06}.vue-notification.error{background:#e54d42;border-left-color:#b82e24}.vue-notification.success{background:#68cd86;border-left-color:#42a85f}.vn-fade-enter-active,.vn-fade-leave-active,.vn-fade-move{transition:all .5s}.vn-fade-enter,.vn-fade-leave-to{opacity:0}", ""]);
+exports.push([module.i, ".notifications{display:block;position:fixed;z-index:5000}.notification-wrapper{display:block;overflow:hidden;width:100%;margin:0;padding:0}.notification-title{font-weight:600}.vue-notification-template{background:#fff}.vue-notification,.vue-notification-template{display:block;box-sizing:border-box;text-align:left}.vue-notification{font-size:12px;padding:10px;margin:0 5px 5px;color:#fff;background:#44a4fc;border-left:5px solid #187fe7}.vue-notification.warn{background:#ffb648;border-left-color:#f48a06}.vue-notification.error{background:#e54d42;border-left-color:#b82e24}.vue-notification.success{background:#68cd86;border-left-color:#42a85f}.vn-fade-enter-active,.vn-fade-leave-active,.vn-fade-move{transition:all .5s}.vn-fade-enter,.vn-fade-leave-to{opacity:0}", ""]);
 
 // exports
 
@@ -793,8 +803,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "leave": _vm.leave,
       "after-leave": _vm.clean
     }
-  }, _vm._l((_vm.list), function(item) {
-    return (item.state != 2) ? _c('div', {
+  }, _vm._l((_vm.active), function(item) {
+    return _c('div', {
       key: item.id,
       staticClass: "notification-wrapper",
       style: (_vm.notifyWrapperStyle(item)),
@@ -805,7 +815,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       class: _vm.notifyClass(item),
       on: {
         "click": function($event) {
-          _vm.destroy(item)
+          if (_vm.closeOnClick) { _vm.destroy(item) }
         }
       }
     }, [(item.title) ? _c('div', {
@@ -821,7 +831,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })])], {
       item: item,
       close: function () { return _vm.destroy(item); }
-    })], 2) : _vm._e()
+    })], 2)
   }))], 1)
 },staticRenderFns: []}
 

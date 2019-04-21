@@ -26,7 +26,7 @@
         <!-- Default slot template -->
         <div
           :class="notifyClass(item)"
-          @click="destroy(item)"
+          @click="if (closeOnClick) destroy(item)"
         >
           <div
             v-if="item.title"
@@ -136,6 +136,11 @@ const Component = {
     max: {
       type: Number,
       default: Infinity
+    },
+
+    closeOnClick: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -189,7 +194,7 @@ const Component = {
 
     botToTop () {
       return this.styles.hasOwnProperty('bottom')
-    }
+    },
   },
   methods: {
     addItem (event) {
@@ -241,7 +246,7 @@ const Component = {
         this.list.push(item)
 
         if (this.active.length > this.max) {
-          indexToDestroy = -1
+          indexToDestroy = 0
         }
       } else {
         this.list.unshift(item)
@@ -258,7 +263,7 @@ const Component = {
 
     notifyClass (item) {
       return [
-        'notification',
+        'vue-notification-template',
         this.classes,
         item.type
       ]
@@ -342,18 +347,21 @@ export default Component
   padding: 0;
 }
 
-.notification {
-  display: block;
-  box-sizing: border-box;
-  background: white;
-  text-align: left;
-}
-
 .notification-title {
   font-weight: 600;
 }
 
+.vue-notification-template {
+  display: block;	
+  box-sizing: border-box;	
+  background: white;	
+  text-align: left;	
+}
+
 .vue-notification {
+  display: block;
+  box-sizing: border-box;  
+  text-align: left;
   font-size: 12px;
   padding: 10px;
   margin: 0 5px 5px;

@@ -29,6 +29,11 @@ In main.js:
 import Vue           from 'vue'
 import Notifications from 'vue-notification'
 
+/*
+or for SSR:
+import Notifications from 'vue-notification/dist/ssr.js'
+*/
+
 Vue.use(Notifications)
 ```
 
@@ -38,7 +43,7 @@ In App.vue:
 <notifications group="foo" />
 ```
 
-In any of your files:
+In any of your vue files:
 
 ```javascript
 this.$notify({
@@ -48,13 +53,35 @@ this.$notify({
 });
 ```
 
+Anywhere else:
+
+```javascript
+import Vue from 'vue'
+
+Vue.notify({
+  group: 'foo',
+  title: 'Important message',
+  text: 'Hello user! This is a notification!'
+})
+```
+
+### Custom instance configuration
+
+All configurations are optional.
+
+| Name           | Type    | Default       | Description |
+| ---            | ---     | ---           | ---         |
+| name           | String  | notify        | Defines the instance name. It's prefixed with the dollar sign. E.g. `$notify` |
+| componentName  | String  | notifications | The component's name |
+
 ### Props
 
 All props are optional.
 
 | Name           | Type    | Default      | Description |
-| ---           | ---     | ---          | ---         |
+| ---            | ---     | ---          | ---         |
 | group          | String  | null         | Name of the notification holder, if specified |
+| type           | String  | null         | Class that will be assigned to the notification |
 | width          | Number/String  | 300          | Width of notification holder, can be `%`, `px` string or number.<br>Valid values: '100%', '200px', 200 |
 | classes        | String/Array | 'vue-notification' | List of classes that will be applied to notification element |
 | position       | String/Array | 'top right'  | Part of the screen where notifications will pop out |
@@ -65,6 +92,7 @@ All props are optional.
 | speed          | Number  | 300          | Speed of animation showing/hiding |
 | max            | Number  | Infinity     | Maximum number of notifications that can be shown in notification holder |
 | reverse        | Boolean | false        | Show notifications in reverse order |
+| closeOnClick   | Boolean | true         | Close notification when clicked |
 
 $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
@@ -223,7 +251,7 @@ Example:
 ```vue
 <notifications group="custom-template"  
                position="bottom right">
-   <template slot="body" scope="props">
+   <template slot="body" slot-scope="props">
     <div>
         <a class="title">
           {{props.item.title}}
@@ -312,20 +340,6 @@ this.$notify({
   group: 'foo',
   clean: true
 })
-```
-
-### TypeScript support
-
-You will have to extend Vue type declaration:
-
-```typescript
-import Notification from 'vue-notification';
-
-declare module 'vue/types/vue' {
-  export interface Vue {
-    $notify: Notification;
-  }
-}
 ```
 
 ### FAQ
