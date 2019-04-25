@@ -394,6 +394,11 @@ var Component = {
     }
   },
   methods: {
+    destroyIfNecessary: function destroyIfNecessary(item) {
+      if (this.closeOnClick) {
+        this.destroy(item);
+      }
+    },
     addItem: function addItem(event) {
       var _this = this;
 
@@ -478,6 +483,15 @@ var Component = {
 
       if (!this.isVA) {
         this.clean();
+      }
+    },
+    destroyById: function destroyById(id) {
+      var item = this.items.find(function (v) {
+        return v.id === id;
+      });
+
+      if (item) {
+        this.destroy(item);
       }
     },
     destroyAll: function destroyAll() {
@@ -827,7 +841,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       class: _vm.notifyClass(item),
       on: {
         "click": function($event) {
-          if (_vm.closeOnClick) { _vm.destroy(item) }
+          _vm.destroyIfNecessary(item)
         }
       }
     }, [(item.title) ? _c('div', {
