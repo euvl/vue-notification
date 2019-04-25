@@ -18,6 +18,7 @@ describe('Notifications', () => {
       expect(wrapper.vm.$props.speed).to.eq(300);
       expect(wrapper.vm.$props.duration).to.eq(3000);
       expect(wrapper.vm.$props.delay).to.eq(0);
+      expect(wrapper.vm.$props.ignoreDuplicates).to.eq(false);
     });
 
     it('list is empty', () => {
@@ -280,6 +281,56 @@ describe('Notifications', () => {
 
           clock.restore();
         });
+      });
+
+      describe('when ignoreDuplictes is on', () => {
+        const wrapper = mount(Notifications, {
+          propsData: {
+            ignoreDuplicates: true
+          }
+        });
+
+        it('adds unique item to list', () => {
+          const event = {
+            title: 'Title',
+            text: 'Text',
+            type: 'success',
+          };
+
+          const result = wrapper.vm.addItem(event);
+
+          expect(wrapper.data().list.length).to.eq(1);
+          expect(wrapper.data().list[0].id).to.exist;
+          expect(wrapper.data().list[0].title).to.eq('Title');
+          expect(wrapper.data().list[0].text).to.eq('Text');
+          expect(wrapper.data().list[0].type).to.eq('success');
+          expect(wrapper.data().list[0].state).to.eq(0);
+          expect(wrapper.data().list[0].speed).to.eq(300);
+          expect(wrapper.data().list[0].length).to.eq(3600);
+          expect(wrapper.data().list[0].timer).to.exist;
+        });
+      });
+
+      it('does not add item with same title and text to list', () => {
+        const wrapper = mount(Notifications);
+
+        const event = {
+          title: 'Title',
+          text: 'Text',
+          type: 'success',
+        };
+
+        const result = wrapper.vm.addItem(event);
+
+        expect(wrapper.data().list.length).to.eq(1);
+        expect(wrapper.data().list[0].id).to.exist;
+        expect(wrapper.data().list[0].title).to.eq('Title');
+        expect(wrapper.data().list[0].text).to.eq('Text');
+        expect(wrapper.data().list[0].type).to.eq('success');
+        expect(wrapper.data().list[0].state).to.eq(0);
+        expect(wrapper.data().list[0].speed).to.eq(300);
+        expect(wrapper.data().list[0].length).to.eq(3600);
+        expect(wrapper.data().list[0].timer).to.exist;
       });
     });
   });

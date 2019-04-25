@@ -334,6 +334,11 @@ var Component = {
       default: Infinity
     },
 
+    ignoreDuplicates: {
+      type: Boolean,
+      default: false
+    },
+
     closeOnClick: {
       type: Boolean,
       default: true
@@ -433,6 +438,13 @@ var Component = {
       var direction = this.reverse ? !this.botToTop : this.botToTop;
 
       var indexToDestroy = -1;
+
+      var isDuplicate = Boolean(this.active.find(function (item) {
+        return item.title === event.title && item.text === event.text;
+      }));
+      var canAdd = this.ignoreDuplicates ? !isDuplicate : true;
+
+      if (!canAdd) return;
 
       if (direction) {
         this.list.push(item);

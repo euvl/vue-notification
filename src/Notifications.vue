@@ -138,6 +138,11 @@ const Component = {
       default: Infinity
     },
 
+    ignoreDuplicates: {
+      type: Boolean,
+      default: false
+    },
+
     closeOnClick: {
       type: Boolean,
       default: true
@@ -241,6 +246,11 @@ const Component = {
         : this.botToTop
 
       let indexToDestroy = -1
+
+      const isDuplicate = Boolean(this.active.find(item => item.title === event.title && item.text === event.text));
+      const canAdd = this.ignoreDuplicates ? !isDuplicate : true;
+
+      if (!canAdd) return;
 
       if (direction) {
         this.list.push(item)
