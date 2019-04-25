@@ -26,7 +26,7 @@
         <!-- Default slot template -->
         <div
           :class="notifyClass(item)"
-          @click="if (closeOnClick) destroy(item)"
+          @click="destroyIfNecessary(item)"
         >
           <div
             v-if="item.title"
@@ -202,6 +202,11 @@ const Component = {
     },
   },
   methods: {
+    destroyIfNecessary(item){
+      if(this.closeOnClick){
+        this.destroy(item);
+      }
+    },
     addItem (event) {
       event.group = event.group || ''
 
@@ -293,6 +298,14 @@ const Component = {
 
       if (!this.isVA) {
         this.clean()
+      }
+    },
+
+    destroyById (id) {
+      const item = this.items.find(v => v.id === id) 
+
+      if (item) {
+        this.destroy(item)
       }
     },
 
