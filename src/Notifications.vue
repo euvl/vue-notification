@@ -1,6 +1,6 @@
 <template>
 <div
-  class="notifications"
+  class="vue-notification-group"
   :style="styles"
 >
   <component
@@ -12,7 +12,7 @@
   >
     <div
       v-for="item in active"
-      class="notification-wrapper"
+      class="vue-notification-wrapper"
       :style="notifyWrapperStyle(item)"
       :key="item.id"
       :data-id="item.id"
@@ -348,13 +348,13 @@ const Component = {
 export default Component
 </script>
 <style>
-.notifications {
+.vue-notification-group {
   display: block;
   position: fixed;
   z-index: 5000;
 }
 
-.notification-wrapper {
+.vue-notification-wrapper {
   display: block;
   overflow: hidden;
   width: 100%;
