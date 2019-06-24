@@ -92,7 +92,7 @@ All props are optional.
 | speed            | Number  | 300          | Speed of animation showing/hiding |
 | max              | Number  | Infinity     | Maximum number of notifications that can be shown in notification holder |
 | reverse          | Boolean | false        | Show notifications in reverse order |
-| ignoreDuplicates | Boolean | false        | Show notifications in reverse order |
+| ignoreDuplicates | Boolean | false        | Ignore repeated instances of the same notification |
 | closeOnClick     | Boolean | true         | Close notification when clicked |
 
 $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
