@@ -22,6 +22,10 @@ const Notify = {
       }
     }
 
+    notify.close = function (id) {
+      events.$emit('close', id)
+    }
+
     const name = args.name || 'notify'
 
     Vue.prototype['$' + name] = notify
