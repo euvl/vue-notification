@@ -417,6 +417,8 @@ var Component = {
 
       var speed = typeof event.speed === 'number' ? event.speed : this.speed;
 
+      var ignoreDuplicates = typeof event.ignoreDuplicates === 'boolean' ? event.ignoreDuplicates : this.ignoreDuplicates;
+
       var title = event.title,
           text = event.text,
           type = event.type,
@@ -447,7 +449,7 @@ var Component = {
       var isDuplicate = Boolean(this.active.find(function (item) {
         return item.title === event.title && item.text === event.text;
       }));
-      var canAdd = this.ignoreDuplicates ? !isDuplicate : true;
+      var canAdd = ignoreDuplicates ? !isDuplicate : true;
 
       if (!canAdd) return;
 
@@ -841,7 +843,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       class: _vm.notifyClass(item),
       on: {
         "click": function($event) {
-          _vm.destroyIfNecessary(item)
+          return _vm.destroyIfNecessary(item)
         }
       }
     }, [(item.title) ? _c('div', {
@@ -855,10 +857,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "innerHTML": _vm._s(item.text)
       }
     })])], {
-      item: item,
-      close: function () { return _vm.destroy(item); }
+      "item": item,
+      "close": function () { return _vm.destroy(item); }
     })], 2)
-  }))], 1)
+  }), 0)], 1)
 },staticRenderFns: []}
 
 /***/ }),
