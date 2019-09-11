@@ -21,7 +21,7 @@ declare module 'vue/types/vue' {
 }
 
 declare class VueNotification {
-    static install: PluginFunction<never>;
+    static install: PluginFunction<any>;
 }
 
 export default VueNotification;
