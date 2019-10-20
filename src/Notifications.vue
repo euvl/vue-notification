@@ -228,12 +228,11 @@ const Component = {
         ? event.speed
         : this.speed
 
-
-      let { title, text, type, data, id, ignoreDuplicates } = event
-
-      const ignoreDuplicates = typeof ignoreDuplicates === 'boolean'
-        ? ignoreDuplicates
+      const ignoreDuplicates = typeof event.ignoreDuplicates === 'boolean'
+        ? event.ignoreDuplicates
         : this.ignoreDuplicates
+
+      let { title, text, type, data, id } = event
 
       const item = {
         id: id || Id(),
@@ -258,7 +257,10 @@ const Component = {
 
       let indexToDestroy = -1
 
-      const isDuplicate = Boolean(this.active.find(item => item.title === event.title && item.text === event.text));
+      const isDuplicate = this.active.some(item => {
+        return item.title === event.title && item.text === event.text
+      });
+
       const canAdd = ignoreDuplicates ? !isDuplicate : true;
 
       if (!canAdd) return;
@@ -297,9 +299,7 @@ const Component = {
     notifyWrapperStyle (item) {
       return this.isVA
         ? null
-        : {
-            transition: `all ${item.speed}ms`
-          }
+        : { transition: `all ${item.speed}ms` }
     },
 
     destroy (item) {
