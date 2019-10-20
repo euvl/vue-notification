@@ -156,6 +156,7 @@ const Component = {
   },
   mounted () {
     events.$on('add', this.addItem);
+    events.$on('close', this.closeItem);
   },
   computed: {
     actualWidth () {
@@ -227,14 +228,15 @@ const Component = {
         ? event.speed
         : this.speed
 
-      const ignoreDuplicates = typeof event.ignoreDuplicates === 'boolean'
-        ? event.ignoreDuplicates
+
+      let { title, text, type, data, id, ignoreDuplicates } = event
+
+      const ignoreDuplicates = typeof ignoreDuplicates === 'boolean'
+        ? ignoreDuplicates
         : this.ignoreDuplicates
 
-      let { title, text, type, data } = event
-
       const item = {
-        id: Id(),
+        id: id || Id(),
         title,
         text,
         type,
@@ -278,6 +280,10 @@ const Component = {
       if (indexToDestroy !== -1) {
         this.destroy(this.active[indexToDestroy])
       }
+    },
+
+    closeItem (id) {
+      this.destroyById(id)
     },
 
     notifyClass (item) {
