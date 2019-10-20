@@ -228,7 +228,12 @@ const Component = {
         ? event.speed
         : this.speed
 
-      let { title, text, type, data, id } = event
+
+      let { title, text, type, data, id, ignoreDuplicates } = event
+
+      const ignoreDuplicates = typeof ignoreDuplicates === 'boolean'
+        ? ignoreDuplicates
+        : this.ignoreDuplicates
 
       const item = {
         id: id || Id(),
@@ -254,7 +259,7 @@ const Component = {
       let indexToDestroy = -1
 
       const isDuplicate = Boolean(this.active.find(item => item.title === event.title && item.text === event.text));
-      const canAdd = this.ignoreDuplicates ? !isDuplicate : true;
+      const canAdd = ignoreDuplicates ? !isDuplicate : true;
 
       if (!canAdd) return;
 
