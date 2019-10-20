@@ -203,9 +203,9 @@ const Component = {
     },
   },
   methods: {
-    destroyIfNecessary(item){
-      if(this.closeOnClick){
-        this.destroy(item);
+    destroyIfNecessary (item) {
+      if (this.closeOnClick) {
+        this.destroy(item)
       }
     },
     addItem (event) {
