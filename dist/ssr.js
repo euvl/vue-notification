@@ -142,7 +142,8 @@ module.exports = function normalizeComponent (
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 
-var events = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
+
+var events = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({ name: 'vue-notification' });
 
 /***/ }),
 /* 2 */
@@ -179,6 +180,10 @@ var Notify = {
       if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
         __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$emit('add', params);
       }
+    };
+
+    notify.close = function (id) {
+      __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$emit('close', id);
     };
 
     var name = args.name || 'notify';
@@ -352,6 +357,7 @@ var Component = {
   },
   mounted: function mounted() {
     __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$on('add', this.addItem);
+    __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$on('close', this.closeItem);
   },
 
   computed: {
@@ -422,11 +428,12 @@ var Component = {
       var title = event.title,
           text = event.text,
           type = event.type,
-          data = event.data;
+          data = event.data,
+          id = event.id;
 
 
       var item = {
-        id: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__util__["b" /* Id */])(),
+        id: id || __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__util__["b" /* Id */])(),
         title: title,
         text: text,
         type: type,
@@ -446,9 +453,10 @@ var Component = {
 
       var indexToDestroy = -1;
 
-      var isDuplicate = Boolean(this.active.find(function (item) {
+      var isDuplicate = this.active.some(function (item) {
         return item.title === event.title && item.text === event.text;
-      }));
+      });
+
       var canAdd = ignoreDuplicates ? !isDuplicate : true;
 
       if (!canAdd) return;
@@ -471,13 +479,14 @@ var Component = {
         this.destroy(this.active[indexToDestroy]);
       }
     },
+    closeItem: function closeItem(id) {
+      this.destroyById(id);
+    },
     notifyClass: function notifyClass(item) {
       return ['vue-notification-template', this.classes, item.type];
     },
     notifyWrapperStyle: function notifyWrapperStyle(item) {
-      return this.isVA ? null : {
-        transition: 'all ' + item.speed + 'ms'
-      };
+      return this.isVA ? null : { transition: 'all ' + item.speed + 'ms' };
     },
     destroy: function destroy(item) {
       clearTimeout(item.timer);
