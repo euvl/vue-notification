@@ -497,7 +497,7 @@ var Component = {
       }
     },
     destroyById: function destroyById(id) {
-      var item = this.items.find(function (v) {
+      var item = this.list.find(function (v) {
         return v.id === id;
       });
 
