@@ -312,7 +312,7 @@ const Component = {
     },
 
     destroyById (id) {
-      const item = this.items.find(v => v.id === id) 
+      const item = this.list.find(v => v.id === id)
 
       if (item) {
         this.destroy(item)
