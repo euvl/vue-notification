@@ -74,6 +74,8 @@ All configurations are optional.
 | name           | String  | notify        | Defines the instance name. It's prefixed with the dollar sign. E.g. `$notify` |
 | componentName  | String  | notifications | The component's name |
 
+P.S. Setting `componentName` can cause issues when using SSR.
+
 ### Props
 
 All props are optional.
