@@ -81,7 +81,7 @@ All props are optional.
 | Name             | Type    | Default      | Description |
 | ---              | ---     | ---          | ---         |
 | group            | String  | null         | Name of the notification holder, if specified |
-| type             | String  | null         | Class that will be assigned to the notification |
+| type             | String  | null         | Class that will be assigned to the notification (**warn**, **error**, **success**, etc) |
 | width            | Number/String  | 300          | Width of notification holder, can be `%`, `px` string or number.<br>Valid values: '100%', '200px', 200 |
 | classes          | String/Array | 'vue-notification' | List of classes that will be applied to notification element |
 | position         | String/Array | 'top right'  | Part of the screen where notifications will pop out |
