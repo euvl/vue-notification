@@ -44,3 +44,20 @@ export const listToDirection = (value) => {
 
   return { x, y }
 }
+
+export function Timer (callback, delay, notifItem) {
+  let start, remaining = delay;
+  
+  this.pause = function() {
+    clearTimeout(notifItem.timer);
+    remaining -= Date.now() - start;
+  };
+
+  this.resume = function() {
+    start = Date.now();
+    clearTimeout(notifItem.timer);
+    notifItem.timer = setTimeout(callback, remaining);
+  };
+
+  this.resume();
+};
