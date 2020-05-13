@@ -19,7 +19,7 @@
     >
       <slot
         name="body"
-        :class="[classes, item.type]"
+        :classes="[classes, item.type]"
         :item="item"
         :close="() => destroy(item)"
       >
