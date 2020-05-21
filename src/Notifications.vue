@@ -16,6 +16,8 @@
       :style="notifyWrapperStyle(item)"
       :key="item.id"
       :data-id="item.id"
+      @mouseenter="pauseTimeout"
+      @mouseleave="resumeTimeout"
     >
       <slot
         name="body"
@@ -48,7 +50,7 @@
 <script>
 import plugin                         from './index'
 import { events }                     from './events'
-import { Id, split, listToDirection } from './util'
+import { Id, split, listToDirection, Timer } from './util'
 import defaults                       from './defaults'
 import VelocityGroup                  from './VelocityGroup.vue'
 import CssGroup                       from './CssGroup.vue'
@@ -146,12 +148,19 @@ const Component = {
     closeOnClick: {
       type: Boolean,
       default: true
+    },
+
+    pauseOnHover: {
+      type: Boolean,
+      default: false
     }
+
   },
   data () {
     return {
       list: [],
-      velocity: plugin.params.velocity
+      velocity: plugin.params.velocity,
+      timerControl: ""
     }
   },
   mounted () {
@@ -208,6 +217,16 @@ const Component = {
         this.destroy(item)
       }
     },
+    pauseTimeout () {
+      if (this.pauseOnHover) {
+        this.timerControl.pause();
+      }
+    },
+    resumeTimeout () {
+      if (this.pauseOnHover) {
+        this.timerControl.resume();
+      }
+    },
     addItem (event) {
       event.group = event.group || ''
 
@@ -246,9 +265,7 @@ const Component = {
       }
 
       if (duration >= 0) {
-        item.timer = setTimeout(() => {
-          this.destroy(item)
-        }, item.length)
+        this.timerControl = new Timer(()=> this.destroy(item), item.length, item);
       }
 
       let direction = this.reverse
