@@ -153,6 +153,11 @@ const Component = {
     pauseOnHover: {
       type: Boolean,
       default: false
+    },
+
+    onDestroy: {
+      type: Function,
+      default: () => {}
     }
 
   },
@@ -213,6 +218,7 @@ const Component = {
   },
   methods: {
     destroyIfNecessary (item) {
+      this.$emit('onClick', item)
       if (this.closeOnClick) {
         this.destroy(item)
       }
@@ -325,6 +331,10 @@ const Component = {
 
       if (!this.isVA) {
         this.clean()
+      }
+
+      if(typeof this.onDestroy === 'function') {
+        this.onDestroy(item);
       }
     },
 
