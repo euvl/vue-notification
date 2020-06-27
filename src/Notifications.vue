@@ -153,11 +153,6 @@ const Component = {
     pauseOnHover: {
       type: Boolean,
       default: false
-    },
-
-    onDestroy: {
-      type: Function,
-      default: () => {}
     }
 
   },
@@ -333,9 +328,7 @@ const Component = {
         this.clean()
       }
 
-      if(typeof this.onDestroy === 'function') {
-        this.onDestroy(item);
-      }
+      this.$emit('destroy', item)
     },
 
     destroyById (id) {
