@@ -213,6 +213,7 @@ const Component = {
   },
   methods: {
     destroyIfNecessary (item) {
+      this.$emit('click', item)
       if (this.closeOnClick) {
         this.destroy(item)
       }
@@ -326,6 +327,8 @@ const Component = {
       if (!this.isVA) {
         this.clean()
       }
+
+      this.$emit('destroy', item)
     },
 
     destroyById (id) {
