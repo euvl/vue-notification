@@ -9,6 +9,17 @@ export interface NotificationOptions {
     speed?: number;
     data?: object;
     clean?: boolean;
+    width?: number | string;
+    classes?: string | [];
+    position?: string | [];
+    "animation-type"?: string;
+    "animation-name"?: string;
+    animation?: {};
+    max?: number;
+    reverse?: boolean;
+    ignoreDuplicates?: boolean;
+    closeOnClick?: boolean;
+
 }
 
 declare module 'vue/types/vue' {
