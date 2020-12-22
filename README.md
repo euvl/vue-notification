@@ -9,11 +9,14 @@
 
 # Vue.js notifications
 
-Demo: http://vue-notification.yev.io/
-
 <p align="center">
   <img src="https://media.giphy.com/media/xUn3C6FmbGmszMem64/giphy.gif">
 </p>
+## Demo
+
+View a live demo here:
+
+- http://vue-notification.yev.io/
 
 ## Setup
 
@@ -79,23 +82,21 @@ You configure the majority of settings for the Notifications component using pro
 
 Note that all props are optional.
 
-| Name             | Type    | Default      | Description |
-| ---              | ---     | ---          | ---         |
-| group            | String  | null         | Name of the notification holder, if specified |
-| width            | Number/String  | 300          | Width of notification holder, can be `%`, `px` string or number.<br>Valid values: '100%', '200px', 200 |
-| classes          | String/Array | 'vue-notification' | List of classes that will be applied to notification element |
-| position         | String/Array | 'top right'  | Part of the screen where notifications will pop out |
-| animation-type   | String  | 'css'      | Type of animation, currently supported types are `css` and `velocity` |
-| animation-name   | String  | null       | Animation name required for `css` animation |
-| animation        | Object  | `$`*         | Animation configuration for `Velocity` animation |
-| duration         | Number  | 3000         | Time (ms) animation stays visible (if **negative** - notification will stay **forever** or until clicked) |
-| speed            | Number  | 300          | Speed of animation showing/hiding |
-| max              | Number  | Infinity     | Maximum number of notifications that can be shown in notification holder |
-| reverse          | Boolean | false        | Show notifications in reverse order |
-| ignoreDuplicates | Boolean | false        | Ignore repeated instances of the same notification |
-| closeOnClick     | Boolean | true         | Close notification when clicked |
-
-$ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
+| Name             | Type          | Default            | Description                                                  |
+| ---------------- | ------------- | ------------------ | ------------------------------------------------------------ |
+| position         | String/Array  | 'top right'        | Part of the screen where notifications will pop out          |
+| width            | Number/String | 300                | Width of notification holder, can be `%`, `px` string or number.<br>Valid values: '100%', '200px', 200 |
+| classes          | String/Array  | 'vue-notification' | List of classes that will be applied to notification element |
+| group            | String        | null               | Name of the notification holder, if specified                |
+| duration         | Number        | 3000               | Time (in ms) to keep the notification on screen (if **negative** - notification will stay **forever** or until clicked) |
+| speed            | Number        | 300                | Time (in ms) to show / hide notifications                    |
+| animation-type   | String        | 'css'              | Type of animation, currently supported types are `css` and `velocity` |
+| animation-name   | String        | null               | Animation name required for `css` animation                  |
+| animation        | Object        | Custom             | Animation configuration for [Velocity](#Animation]) animation |
+| max              | Number        | Infinity           | Maximum number of notifications that can be shown in notification holder |
+| reverse          | Boolean       | false              | Show notifications in reverse order                          |
+| ignoreDuplicates | Boolean       | false              | Ignore repeated instances of the same notification           |
+| closeOnClick     | Boolean       | true               | Close notification when clicked                              |
 
 ### JavaScript API
 
@@ -108,10 +109,6 @@ You trigger notifications via the API:
     group: 'foo',
 
     // (optional)
-    // Class that will be assigned to the notification
-    type: 'warn',
-
-    // (optional)
     // Title (will be wrapped in div.notification-title)
     title: 'This is the <em>title</em>',
 
@@ -119,11 +116,15 @@ You trigger notifications via the API:
     text: 'This is some <b>content</b>',
 
     // (optional)
-    // Delay in milliseconds (overrides default/provided duration)
+    // Class that will be assigned to the notification
+    type: 'warn',
+
+    // (optional, override)
+    // Time (in ms) to keep the notification on screen
     duration: 10000,
 
-    // (optional)
-    // Speed in milliseconds (overrides default/provided animation speed)
+    // (optional, override)
+    // Time (in ms) to show / hide notifications
     speed: 1000
 
     // (optional)
@@ -320,9 +321,9 @@ The `props` object has the following members:
 
 ### Animation
 
-Vue Notification can use use [Velocity](https://github.com/julianshapiro/velocity) library to make js-powered animations.
+Vue Notification can use the [Velocity](https://github.com/julianshapiro/velocity) library to power the animations using JavaScript.
 
-To start using it you will have to manually install `velocity-animate` & supply the librarty to `vue-notification` plugin (reason for doing that is to reduce the size of this plugin).
+To start using it you will have to manually install `velocity-animate` & pass the library to the  `vue-notification` plugin (the reason for doing that is to reduce the size of this plugin).
 
 In your `main.js`:
 
@@ -340,39 +341,50 @@ In the template you will have to set `animation-type="velocity"`.
 <notifications animation-type="velocity"/>
 ```
 
-The animation configuration consists of 2 objects/functions: `enter` and `leave`:
+The animation configuration consists of 2 objects/functions: `enter` and `leave`, which defaults to:
+
+```js
+{
+  enter: { opacity: [1, 0] },
+  leave: { opacity: [0, 1] }
+}
+```
+
+You can also supply your own configuration, for example:
 
 ```javascript
-/*
- * Both 'enter' and 'leave' can be either an object or a function
- */
-animation = {
-  enter (element) {
-     /*
-      *  "element" - is a notification element
-      *    (before animation, meaning that you can take it's initial height, width, color, etc)
-      */
-     let height = element.clientHeight
+computed: {
+  animation () {
+    return {
+      /**
+       * Animation function
+       * 
+       * Runs before animating, so you can take the initial height, width, color, etc
+       * @param  {HTMLElement}  element  The notification element
+       */
+      enter (element) {
+        let height = element.clientHeight
+        return {
+          // animates from 0px to "height"
+          height: [height, 0],
 
-     return {
-       // Animates from 0px to "height"
-       height: [height, 0],
-
-       // Animates from 0 to random opacity (in range between 0.5 and 1)
-       opacity: [Math.random() * 0.5 + 0.5, 0]
-     }  
-  },
-  leave: {
-    height: 0,
-    opacity: 0
+          // animates from 0 to random opacity (in range between 0.5 and 1)
+          opacity: [Math.random() * 0.5 + 0.5, 0]
+        }
+      },
+      leave: {
+        height: 0,
+        opacity: 0
+      }
+    }
   }
 }
 ```
 
-The assign the animation along with the engine in the template:
+Assign your custom configuration as a component prop:
 
 ```vue
-<notifications animation-type="velocity" animation="animation"/>
+<notifications animation-type="velocity" :animation="animation"/>
 ```
 
 ## FAQ
