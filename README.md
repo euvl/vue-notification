@@ -7,23 +7,22 @@
 [![npm version](https://badge.fury.io/js/vue-notification.svg)](https://badge.fury.io/js/vue-notification)
 [![npm](https://img.shields.io/npm/dm/vue-notification.svg)](https://www.npmjs.com/package/vue-notification)
 
-### Vue.js notifications
+# Vue.js notifications
 
 Demo: http://vue-notification.yev.io/
 
 <p align="center">
   <img src="https://media.giphy.com/media/xUn3C6FmbGmszMem64/giphy.gif">
 </p>
+## Setup
 
-### Install
+Install via the command line:
 
 ```bash
 npm install --save vue-notification
 ```
 
-### How to
-
-In main.js:
+Add dependencies to your `main.js`:
 
 ```javascript
 import Vue           from 'vue'
@@ -37,53 +36,51 @@ import Notifications from 'vue-notification/dist/ssr.js'
 Vue.use(Notifications)
 ```
 
-In App.vue:
+Add the global component to your `App.vue`:
 
 ```vue
-<notifications group="foo" />
+<notifications/>
 ```
 
-In any of your vue files:
+Trigger notifications from your `.vue` files:
 
 ```javascript
+// simple
+this.$notify('Hello user!')
+
+// using options
 this.$notify({
-  group: 'foo',
   title: 'Important message',
-  text: 'Hello user! This is a notification!'
+  text: 'Hello user!'
 });
 ```
 
-Anywhere else:
+Or trigger notifications from other files, for example, your router:
 
 ```javascript
 import Vue from 'vue'
 
 Vue.notify({
-  group: 'foo',
-  title: 'Important message',
-  text: 'Hello user! This is a notification!'
+  title: 'Authorization',
+  text: 'You have been logged in!'
 })
 ```
 
-### Custom instance configuration
+## Usage
 
-All configurations are optional.
+### Component props
 
-| Name           | Type    | Default       | Description |
-| ---            | ---     | ---           | ---         |
-| name           | String  | notify        | Defines the instance name. It's prefixed with the dollar sign. E.g. `$notify` |
-| componentName  | String  | notifications | The component's name |
+You configure the majority of settings for the Notifications component using props:
 
-P.S. Setting `componentName` can cause issues when using SSR.
+```vue
+<notifications position="bottom right" classes="my-custom-class"/>
+```
 
-### Props
-
-All props are optional.
+Note that all props are optional.
 
 | Name             | Type    | Default      | Description |
 | ---              | ---     | ---          | ---         |
 | group            | String  | null         | Name of the notification holder, if specified |
-| type             | String  | null         | Class that will be assigned to the notification (**warn**, **error**, **success**, etc) |
 | width            | Number/String  | 300          | Width of notification holder, can be `%`, `px` string or number.<br>Valid values: '100%', '200px', 200 |
 | classes          | String/Array | 'vue-notification' | List of classes that will be applied to notification element |
 | position         | String/Array | 'top right'  | Part of the screen where notifications will pop out |
@@ -99,7 +96,9 @@ All props are optional.
 
 $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
-### API
+### JavaScript API
+
+You trigger notifications via the API:
 
 ```javascript
   this.$notify({
@@ -113,17 +112,17 @@ $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
 
     // (optional)
     // Title (will be wrapped in div.notification-title)
-    title: 'This is title',
+    title: 'This is the <em>title</em>',
 
     // Content (will be wrapped in div.notification-content)
-    text: 'This is <b> content </b>',
+    text: 'This is some <b>content</b>',
 
     // (optional)
-    // Overrides default/provided duration
+    // Delay in milliseconds (overrides default/provided duration)
     duration: 10000,
 
     // (optional)
-    // Overrides default/provided animation speed
+    // Speed in milliseconds (overrides default/provided animation speed)
     speed: 1000
 
     // (optional)
@@ -132,55 +131,110 @@ $ = `{enter: {opacity: [1, 0]}, leave: {opacity: [0, 1]}}`
   })
 ```
 
-Title and Text can be HTML strings.
-
-Also you can use simplified version:
+To remove notifications, include the `clean: true` parameter.
 
 ```javascript
-this.$notify('text')
+this.$notify({
+  group: 'foo', // clean only the foo group
+  clean: true
+})
 ```
 
-### Groups
+### Plugin Options
 
-If you are planning to use `notification` component for 2 or more completely different types of notifications (for example, authentication error messages in top center and generic app notifications in bottom-right corner) - you can specify `group` property which is essentially a name of notification holder.
+You can configure the plugin itself with an additional options object:
 
-Example:
-
-```vue
-<notifications group="auth"/>
-<notifications group="app"/>
+```js
+Vue.use(notifications, { name: 'alert' })
 ```
 
-```javascript
-this.$notify({ group: 'auth', text: 'Wrong password, please try again later' })
-```
+All options are optional:
+
+| Name          | Type   | Default       | Description                                                  |
+| ------------- | ------ | ------------- | ------------------------------------------------------------ |
+| name          | String | notify        | Defines the instance name. It's prefixed with the dollar sign. E.g. `$notify` |
+| componentName | String | notifications | The component's name                                         |
+
+>  **Note**: setting `componentName` can cause issues when using SSR.
+
+## Features
 
 ### Position
 
-`Position` property requires a string with 2 keywords for vertical and horizontal postion.
+You can position the component on the screen, using the `position` prop:
+
+```vue
+<notifications position="bottom right"/>
+```
+
+It requires a `string` with **two keywords** for vertical and horizontal postion.
 
 Format: `"<vertical> <horizontal>"`.
 
 - Horizontal options: `left`, `center`, `right`
 - Vertical options: `top`, `bottom`
 
-Default is "top right".
+Default is `"top right"`.
 
-Example:
+### Width
+
+Width can be set using a `number` or `string` with optional `%` or `px` extensions:
 
 ```vue
-<notifications position="top left"/>
+<notifications :width="100"/>
+<notifications width="100"/>
+<notifications width="100%"/>
+<notifications width="100px"/>
 ```
 
-### Style
+### Type
 
-You can write your own css styles for notifications:
+You can set the `type` of a notification (**warn**, **error**, **success**, etc) by adding a `type` property to the call:
 
-Structure:
+```js
+this.$notify({ type: 'success', text: 'The operation completed' })
+```
+
+This will add the `type` (i.e. "success") as a CSS class name to the `.vue-notification` element.
+
+See the [Styling](#styling) section for how to hook onto the class and style the popup.
+
+### Groups
+
+If you require different classes of notifications, i.e...
+
+- authentication errors (top center)
+- app notifications (bottom-right)
+
+...you can specify the `group` attribute:
+
+```vue
+<notifications group="auth" position="top"/>
+<notifications group="app"  position="bottom right"/>
+```
+
+You can trigger a notification for a specific group by specifying it in the API call:
+
+```javascript
+this.$notify({ group: 'auth', text: 'Wrong password, please try again' })
+```
+
+## Customisation
+
+### Styling
+
+Vue Notifications comes with default styling, but it's easy to assign your own.
+
+First, assign a the `classes` property to the component:
+
+```vue
+<notifications classes="my-style"/>
+```
+
+Then simply write your own css styles for notifications:
 
 ```scss
-// SCSS:
-
+// scss
 .my-style {
   // Style of the notification itself
 
@@ -202,24 +256,26 @@ Structure:
 }
 ```
 
-To apply this style you will have to specify "classes" property:
-
-```vue
-  <notifications classes="my-style"/>
-```
-
-**Default:**
+Note that the default styling looks like this:
 
 ```scss
+// scss
 .vue-notification {
-  padding: 10px;
+  // styling
   margin: 0 5px 5px;
-
+  padding: 10px;
   font-size: 12px;
-
   color: #ffffff;
+  
+  // default (blue)
   background: #44A4FC;
   border-left: 5px solid #187FE7;
+
+  // types (green, amber, red)
+  &.success {
+    background: #68CD86;
+    border-left-color: #42A85F;
+  }
 
   &.warn {
     background: #ffb648;
@@ -230,56 +286,42 @@ To apply this style you will have to specify "classes" property:
     background: #E54D42;
     border-left-color: #B82E24;
   }
-
-  &.success {
-    background: #68CD86;
-    border-left-color: #42A85F;
-  }
 }
 ```
 
-### Custom template (slot)
+### Content
 
-Optional scope slot named "body" is supported.
-
-Scope props:
-
-| Name  | Type     | Description                         |
-| ---   | ---      | ---                                 |
-| item  | Object   | notification object                 |
-| close | Function | when called closes the notification |
-
-Example:
+You can completely replace the content of the notifications by using Vue's slots system.
 
 ```vue
-<notifications group="custom-template"  
-               position="bottom right">
-   <template slot="body" slot-scope="props">
+<notifications position="bottom right">
+  <template slot="body" slot-scope="{ item, close }">
     <div>
-        <a class="title">
-          {{props.item.title}}
-        </a>
-        <a class="close" @click="props.close">
-          <i class="fa fa-fw fa-close"></i>
-        </a>
-        <div v-html="props.item.text">
-        </div>
+      <p class="title">
+        {{ item.title }}
+      </p>
+      <a class="close" @click="close">
+        <i class="fa fa-fw fa-close"></i>
+      </a>
+      <div v-html="props.item.text"/>
     </div>
   </template>
 </notifications>
 ```
+The `props` object has the following members:
+
+| Name  | Type     | Description                          |
+| ----- | -------- | ------------------------------------ |
+| item  | Object   | Notification object                  |
+| close | Function | A function to close the notification |
+
 <a name="velocity_animation"></a>
 
+### Animation
 
-### Width
+Vue Notification can use use [Velocity](https://github.com/julianshapiro/velocity) library to make js-powered animations.
 
-Width can be set using a string with a percent or pixel extension (if simple number is not enough).
-
-Examples: '100%', '50px', '50', 50
-
-### Velocity Animation
-
-Plugin can use use `Velocity` library to make js-powered animations. To start using it you will have to manually install `velocity-animate` & supply the librarty to `vue-notification` plugin (reason for doing that is to reduce the size of this plugin).
+To start using it you will have to manually install `velocity-animate` & supply the librarty to `vue-notification` plugin (reason for doing that is to reduce the size of this plugin).
 
 In your `main.js`:
 
@@ -297,9 +339,7 @@ In the template you will have to set `animation-type="velocity"`.
 <notifications animation-type="velocity"/>
 ```
 
-The animation configuration consists of 2 objects/functions: `enter` and `leave`.
-
-Example:
+The animation configuration consists of 2 objects/functions: `enter` and `leave`:
 
 ```javascript
 /*
@@ -328,28 +368,17 @@ animation = {
 }
 ```
 
+The assign the animation along with the engine in the template:
+
 ```vue
-<notifications
-  animation-type="velocity"
-  animation="animation"/>
+<notifications animation-type="velocity" animation="animation"/>
 ```
 
-### Cleaning
-
-To remove all notifications, use `clean: true` parameter.
-
-```javascript
-this.$notify({
-  group: 'foo',
-  clean: true
-})
-```
-
-### FAQ
+## FAQ
 
 Check closed issues with `FAQ` label to get answers for most asked questions.
 
-### Development
+## Development
 
 ```bash
 To run an example:
@@ -372,3 +401,5 @@ npm run test
 # Watch unit tests
 npm run unit:watch
 ```
+
+
