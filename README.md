@@ -14,6 +14,7 @@ Demo: http://vue-notification.yev.io/
 <p align="center">
   <img src="https://media.giphy.com/media/xUn3C6FmbGmszMem64/giphy.gif">
 </p>
+
 ## Setup
 
 Install via the command line:
