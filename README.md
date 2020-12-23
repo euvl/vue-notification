@@ -226,43 +226,52 @@ this.$notify({ group: 'auth', text: 'Wrong password, please try again' })
 
 ### Styling
 
-Vue Notifications comes with default styling, but it's easy to assign your own.
+Vue Notifications comes with default styling, but it's easy to replace with your own.
 
-First, assign a the `classes` property to the component:
+Use the `classes` prop on the global component:
 
 ```vue
-<notifications classes="my-style"/>
+<notifications classes="my-notification"/>
 ```
 
-Then simply write your own css styles for notifications:
+This will add the supplied class/classes to individual notification elements:
+
+```html
+<div class="vue-notification-wrapper">
+  <div class="vue-notification-template my-notification">
+    <div class="notification-title">Info</div>
+    <div class="notification-content">You have been logged in</div>
+  </div>
+</div>
+```
+
+Then simply write your own css rules to style the notifications:
 
 ```scss
-// scss
-.my-style {
-  // Style of the notification itself
+// style of the notification itself
+.my-notification {
+  ...
 
+  // style for title line
   .notification-title {
-    // Style for title line
+    ...
   }
 
+  // style for content
   .notification-content {
-    // Style for content
+    ...
   }
 
-  &.my-type {
-    /*
-    Style for specific type of notification, will be applied when you
-    call notification with "type" parameter:
-    this.$notify({ type: 'my-type', message: 'Foo' })
-    */
-  }
+  // additional styling hook when using`type` parameter, i.e. this.$notify({ type: 'success', message: 'Yay!' })
+  &.success { ... }
+  &.info { ... }
+  &.error { ... }
 }
 ```
 
-Note that the default styling looks like this:
+Note that the default rules are:
 
 ```scss
-// scss
 .vue-notification {
   // styling
   margin: 0 5px 5px;
@@ -297,15 +306,15 @@ Note that the default styling looks like this:
 You can completely replace the content of the notifications by using Vue's slots system.
 
 ```vue
-<notifications position="bottom right">
+<notifications>
   <template slot="body" slot-scope="{ item, close }">
-    <div>
+    <div class="my-notification">
       <p class="title">
         {{ item.title }}
       </p>
-      <a class="close" @click="close">
+      <button class="close" @click="close">
         <i class="fa fa-fw fa-close"></i>
-      </a>
+      </button>
       <div v-html="props.item.text"/>
     </div>
   </template>
