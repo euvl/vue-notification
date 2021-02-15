@@ -15,7 +15,6 @@
 
 ## Demo
 
-View a live demo here:
 
 - http://vue-notification.yev.io/
 
