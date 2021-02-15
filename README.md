@@ -99,7 +99,7 @@ Note that all props are optional.
 | ignoreDuplicates | Boolean       | false              | Ignore repeated instances of the same notification           |
 | closeOnClick     | Boolean       | true               | Close notification when clicked                              |
 
-### JavaScript API
+### API
 
 You trigger notifications via the API:
 
@@ -424,5 +424,4 @@ npm run test
 # Watch unit tests
 npm run unit:watch
 ```
-
 
