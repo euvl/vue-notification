@@ -360,7 +360,7 @@ The animation configuration consists of 2 objects/functions: `enter` and `leave`
 }
 ```
 
-You can also supply your own configuration, for example:
+You can also provide your own configuration, for example:
 
 ```javascript
 computed: {
@@ -424,4 +424,3 @@ npm run test
 # Watch unit tests
 npm run unit:watch
 ```
-
