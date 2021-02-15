@@ -20,7 +20,6 @@
 
 ## Setup
 
-Install via the command line:
 
 ```bash
 npm install --save vue-notification
