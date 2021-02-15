@@ -230,6 +230,7 @@ const Component = {
     },
     addItem (event) {
       event.group = event.group || ''
+      event.data = event.data || {}
 
       if (this.group !== event.group) {
         return
