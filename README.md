@@ -401,24 +401,25 @@ Check closed issues with `FAQ` label to get answers for most asked questions.
 
 ## Development
 
+To run a local demo:
+
 ```bash
-To run an example:
-
-# Build main library
-
-cd vue-notification
-npm install
-npm run build
-
-# Build and run demo
-
+# run the demo
 cd demo
 npm install
 npm run dev
+```
 
-# Run tests
+To contribute to the library:
+
+```bash
+# build main library
+npm install
+npm run build
+
+# run tests
 npm run test
 
-# Watch unit tests
+# watch unit tests
 npm run unit:watch
 ```
