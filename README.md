@@ -73,7 +73,7 @@ Vue.notify({
 
 ### Component props
 
-You configure the majority of settings for the Notifications component using props:
+The majority of settings for the Notifications component are configured using props:
 
 ```vue
 <notifications position="bottom right" classes="my-custom-class"/>
@@ -99,7 +99,7 @@ Note that all props are optional.
 
 ### API
 
-You trigger notifications via the API:
+Notifications are triggered via the API:
 
 ```javascript
   this.$notify({
@@ -143,7 +143,7 @@ this.$notify({
 
 ### Plugin Options
 
-You can configure the plugin itself with an additional options object:
+Configure the plugin itself using an additional options object:
 
 ```js
 Vue.use(notifications, { name: 'alert' })
@@ -162,7 +162,7 @@ All options are optional:
 
 ### Position
 
-You can position the component on the screen, using the `position` prop:
+Position the component on the screen using the `position` prop:
 
 ```vue
 <notifications position="bottom right"/>
@@ -190,7 +190,7 @@ Width can be set using a `number` or `string` with optional `%` or `px` extensio
 
 ### Type
 
-You can set the `type` of a notification (**warn**, **error**, **success**, etc) by adding a `type` property to the call:
+Set the `type` of a notification (**warn**, **error**, **success**, etc) by adding a `type` property to the call:
 
 ```js
 this.$notify({ type: 'success', text: 'The operation completed' })
@@ -202,19 +202,19 @@ See the [Styling](#styling) section for how to hook onto the class and style the
 
 ### Groups
 
-If you require different classes of notifications, i.e...
+For different classes of notifications, i.e...
 
 - authentication errors (top center)
 - app notifications (bottom-right)
 
-...you can specify the `group` attribute:
+...specify the `group` attribute:
 
 ```vue
 <notifications group="auth" position="top"/>
 <notifications group="app"  position="bottom right"/>
 ```
 
-You can trigger a notification for a specific group by specifying it in the API call:
+Trigger a notification for a specific group by specifying it in the API call:
 
 ```javascript
 this.$notify({ group: 'auth', text: 'Wrong password, please try again' })
@@ -226,7 +226,7 @@ this.$notify({ group: 'auth', text: 'Wrong password, please try again' })
 
 Vue Notifications comes with default styling, but it's easy to replace with your own.
 
-Use the `classes` prop on the global component:
+Specify one or more class hooks via the `classes` prop on the global component:
 
 ```vue
 <notifications classes="my-notification"/>
@@ -243,7 +243,7 @@ This will add the supplied class/classes to individual notification elements:
 </div>
 ```
 
-Then simply write your own css rules to style the notifications:
+Then include custom css rules to style the notifications:
 
 ```scss
 // style of the notification itself
@@ -301,7 +301,7 @@ Note that the default rules are:
 
 ### Content
 
-You can completely replace the content of the notifications by using Vue's slots system.
+To completely replace notification content, use Vue's slots system:
 
 ```vue
 <notifications>
@@ -331,7 +331,7 @@ The `props` object has the following members:
 
 Vue Notification can use the [Velocity](https://github.com/julianshapiro/velocity) library to power the animations using JavaScript.
 
-To start using it you will have to manually install `velocity-animate` & pass the library to the  `vue-notification` plugin (the reason for doing that is to reduce the size of this plugin).
+To use, manually install `velocity-animate` & pass the library to the  `vue-notification` plugin (the reason for doing that is to reduce the size of this plugin).
 
 In your `main.js`:
 
@@ -343,13 +343,13 @@ import velocity      from 'velocity-animate'
 Vue.use(Notifications, { velocity })
 ```
 
-In the template you will have to set `animation-type="velocity"`.
+In the template, set the `animation-type` prop:
 
 ```vue
 <notifications animation-type="velocity"/>
 ```
 
-The animation configuration consists of 2 objects/functions: `enter` and `leave`, which defaults to:
+The default configuration is:
 
 ```js
 {
@@ -358,7 +358,13 @@ The animation configuration consists of 2 objects/functions: `enter` and `leave`
 }
 ```
 
-You can also provide your own configuration, for example:
+To assign a custom animation, use the `animation` prop:
+
+```vue
+<notifications animation-type="velocity" :animation="animation"/>
+```
+
+Note that `enter` and `leave` can be an `object` or a `function` that returns an `object`:
 
 ```javascript
 computed: {
@@ -387,12 +393,6 @@ computed: {
     }
   }
 }
-```
-
-Assign your custom configuration as a component prop:
-
-```vue
-<notifications animation-type="velocity" :animation="animation"/>
 ```
 
 ## FAQ
