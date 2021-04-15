@@ -1,56 +1,55 @@
 <template>
-<div
-  class="vue-notification-group"
-  :style="styles"
->
-  <component
-    :is="componentName"
-    :name="animationName"
-    @enter="enter"
-    @leave="leave"
-    @after-leave="clean"
+  <div
+    class="vue-notification-group"
+    :style="styles"
   >
-    <div
-      v-for="item in active"
-      class="vue-notification-wrapper"
-      :style="notifyWrapperStyle(item)"
-      :key="item.id"
-      :data-id="item.id"
-      @mouseenter="pauseTimeout"
-      @mouseleave="resumeTimeout"
+    <component
+      :is="componentName"
+      :name="animationName"
+      @enter="enter"
+      @leave="leave"
+      @after-leave="clean"
     >
-      <slot
-        name="body"
-        :class="[classes, item.type]"
-        :item="item"
-        :close="() => destroy(item)"
+      <div
+        v-for="item in active"
+        :key="item.id"
+        class="vue-notification-wrapper"
+        :style="notifyWrapperStyle(item)"
+        :data-id="item.id"
+        @mouseenter="pauseTimeout"
+        @mouseleave="resumeTimeout"
       >
-        <!-- Default slot template -->
-        <div
-          :class="notifyClass(item)"
-          @click="destroyIfNecessary(item)"
+        <slot
+          name="body"
+          :class="[classes, item.type]"
+          :item="item"
+          :close="() => destroy(item)"
         >
+          <!-- Default slot template -->
           <div
-            v-if="item.title"
-            class="notification-title"
-            v-html="item.title"
+            :class="notifyClass(item)"
+            @click="destroyIfNecessary(item)"
           >
+            <div
+              v-if="item.title"
+              class="notification-title"
+              v-html="item.title"
+            />
+            <div
+              class="notification-content"
+              v-html="item.text"
+            />
           </div>
-          <div
-            class="notification-content"
-            v-html="item.text"
-          >
-          </div>
-        </div>
-      </slot>
-    </div>
-  </component>
-</div>
+        </slot>
+      </div>
+    </component>
+  </div>
 </template>
 <script>
-import plugin                         from './index'
+import { defineComponent }            from 'vue'
+import { params }                     from './params'
 import { events }                     from './events'
-import { Id, split, listToDirection, Timer } from './util'
+import { Id, listToDirection, Timer } from './util'
 import defaults                       from './defaults'
 import VelocityGroup                  from './VelocityGroup.vue'
 import CssGroup                       from './CssGroup.vue'
@@ -61,7 +60,7 @@ const STATE = {
   DESTROYED: 2
 }
 
-const Component = {
+export default defineComponent({
   name: 'Notifications',
   components: {
     VelocityGroup,
@@ -156,16 +155,13 @@ const Component = {
     }
 
   },
+  emits: ['click', 'destroy'],
   data () {
     return {
       list: [],
-      velocity: plugin.params.velocity,
+      velocity: params.get('velocity'),
       timerControl: ""
     }
-  },
-  mounted () {
-    events.$on('add', this.addItem);
-    events.$on('close', this.closeItem);
   },
   computed: {
     actualWidth () {
@@ -180,8 +176,8 @@ const Component = {
 
     componentName () {
       return this.isVA
-        ? 'VelocityGroup'
-        : 'CssGroup'
+        ? 'Velocity-Group'
+        : 'Css-Group'
     },
 
     styles () {
@@ -210,6 +206,10 @@ const Component = {
     botToTop () {
       return this.styles.hasOwnProperty('bottom')
     },
+  },
+  mounted () {
+    events.on('add', this.addItem);
+    events.on('close', this.closeItem);
   },
   methods: {
     destroyIfNecessary (item) {
@@ -352,7 +352,11 @@ const Component = {
         : animation
     },
 
-    enter ({ el, complete }) {
+    enter (el, complete) {
+      if (!this.isVA) {
+        complete();
+        return;
+      }
       const animation = this.getAnimation('enter', el)
 
       this.velocity(el, animation, {
@@ -361,7 +365,11 @@ const Component = {
       })
     },
 
-    leave ({ el, complete }) {
+    leave (el, complete) {
+      if (!this.isVA) {
+        complete();
+        return;
+      }
       let animation = this.getAnimation('leave', el)
 
       this.velocity(el, animation, {
@@ -374,9 +382,7 @@ const Component = {
       this.list = this.list.filter(v => v.state !== STATE.DESTROYED)
     }
   }
-}
-
-export default Component
+});
 </script>
 <style>
 .vue-notification-group {
@@ -398,15 +404,15 @@ export default Component
 }
 
 .vue-notification-template {
-  display: block;	
-  box-sizing: border-box;	
-  background: white;	
-  text-align: left;	
+  display: block;
+  box-sizing: border-box;
+  background: white;
+  text-align: left;
 }
 
 .vue-notification {
   display: block;
-  box-sizing: border-box;  
+  box-sizing: border-box;
   text-align: left;
   font-size: 12px;
   padding: 10px;
@@ -436,7 +442,7 @@ export default Component
   transition: all .5s;
 }
 
-.vn-fade-enter, .vn-fade-leave-to {
+.vn-fade-enter-from, .vn-fade-leave-to {
   opacity: 0;
 }
 

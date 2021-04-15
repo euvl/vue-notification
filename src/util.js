@@ -20,7 +20,7 @@ export const split = (value) => {
 }
 
 /**
-  * Cleanes and transforms string of format "x y" into object {x, y}. 
+  * Cleanes and transforms string of format "x y" into object {x, y}.
   * Possible combinations:
   *   x - left, center, right
   *   y - top, bottom
@@ -47,7 +47,7 @@ export const listToDirection = (value) => {
 
 export function Timer (callback, delay, notifItem) {
   let start, remaining = delay;
-  
+
   this.pause = function() {
     clearTimeout(notifItem.timer);
     remaining -= Date.now() - start;
@@ -60,4 +60,4 @@ export function Timer (callback, delay, notifItem) {
   };
 
   this.resume();
-};
+}

@@ -1,27 +1,27 @@
-import { PluginFunction } from 'vue';
-
+import type { Plugin } from 'vue';
 export interface NotificationOptions {
-    title?: string;
-    text?: string;
-    type?: string;
-    group?: string;
-    duration?: number;
-    speed?: number;
-    data?: object;
-    clean?: boolean;
+  title?: string;
+  text?: string;
+  type?: string;
+  group?: string;
+  duration?: number;
+  speed?: number;
+  data?: unknown;
+  clean?: boolean;
+}
+export interface NotificationPluginOptions {
+  name?: string;
+  componentName?: string;
 }
 
-declare module 'vue/types/vue' {
-    interface Vue {
-        $notify: (options: NotificationOptions | string) => void;
-    }
-    interface VueConstructor {
-        notify: (options: NotificationOptions | string) => void;
-    }
+declare module '@vue/runtime-core' {
+  export interface ComponentCustomProperties {
+    $notify: (data: NotificationOptions) => void;
+  }
 }
 
-declare class VueNotification {
-    static install: PluginFunction<any>;
-}
+declare function VueNotification(args?: NotificationPluginOptions): Plugin;
+
+export declare function notify(data: NotificationOptions): void;
 
 export default VueNotification;

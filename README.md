@@ -28,15 +28,11 @@ npm install --save vue-notification
 Add dependencies to your `main.js`:
 
 ```javascript
-import Vue           from 'vue'
-import Notifications from 'vue-notification'
+import { createApp } from 'vue'
+import Notifications from '@iwannabecool/vue3-notification'
 
-/*
-or for SSR:
-import Notifications from 'vue-notification/dist/ssr.js'
-*/
-
-Vue.use(Notifications)
+const app = createApp({...})
+app.use(Notifications())
 ```
 
 Add the global component to your `App.vue`:
@@ -61,15 +57,13 @@ this.$notify({
 Or trigger notifications from other files, for example, your router:
 
 ```javascript
-import Vue from 'vue'
+import { notify } from '@iwannabecool/vue3-notification'
 
-Vue.notify({
+notify({
   title: 'Authorization',
   text: 'You have been logged in!'
 })
 ```
-
-## Usage
 
 ### Component props
 
@@ -146,7 +140,7 @@ this.$notify({
 Configure the plugin itself using an additional options object:
 
 ```js
-Vue.use(notifications, { name: 'alert' })
+app.use(Notifications({ name: 'alert' }))
 ```
 
 All options are optional:
@@ -336,11 +330,12 @@ To use, manually install `velocity-animate` & pass the library to the  `vue-noti
 In your `main.js`:
 
 ```javascript
-import Vue           from 'vue'
-import Notifications from 'vue-notification'
-import velocity      from 'velocity-animate'
+import { createApp } from 'vue'
+import Notifications from '@iwannabecool/vue3-notification'
+import velocity from 'velocity-animate'
 
-Vue.use(Notifications, { velocity })
+const app = createApp({...})
+app.use(Notifications({ velocity }))
 ```
 
 In the template, set the `animation-type` prop:

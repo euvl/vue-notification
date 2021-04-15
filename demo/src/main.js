@@ -1,16 +1,10 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import plugin from 'plugin'
 import velocity from 'velocity-animate'
 
-Vue.use(plugin, { 
-  velocity,
-  /*
-  name: 'foo'
-  */
-})
+const app = createApp(App)
 
-new Vue({
-  el: '#app',
-  render: h => h(App)
-})
+app.use(notification, { velocity })
+
+app.mount('#app')

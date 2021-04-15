@@ -7,7 +7,7 @@ export default {
 
       return {
         height: [height, 0],
-         opacity: [1, 0]
+        opacity: [1, 0]
       }
     },
     leave: {
