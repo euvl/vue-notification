@@ -71,6 +71,35 @@ Vue.notify({
 
 ## Usage
 
+### Nuxt.js
+
+#### nuxt.config.js
+
+```js
+plugins: [
+    { src: '~/plugins/notifications-ssr', ssr: true },
+    { src: '~/plugins/notifications-client', ssr: false }
+]
+```
+
+#### notifications-ssr.js
+
+```js
+import Notifications from 'vue-notification/dist/ssr.js';
+import Vue from 'vue';
+
+Vue.use(Notifications);
+```
+
+#### notifications-client.js
+
+```js
+import Notifications from 'vue-notification';
+import Vue from 'vue';
+
+Vue.use(Notifications);
+```
+
 ### Component props
 
 The majority of settings for the Notifications component are configured using props:
