@@ -424,6 +424,19 @@ computed: {
 }
 ```
 
+### Programatic closing
+
+```
+const id = Date.now() // This can be any unique number
+
+Vue.notify({
+  id,
+  text: 'This message will be removed immediately'
+});
+
+Vue.notify.close(id);
+```
+
 ## FAQ
 
 Check closed issues with `FAQ` label to get answers for most asked questions.
