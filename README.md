@@ -342,7 +342,7 @@ To completely replace notification content, use Vue's slots system:
       <button class="close" @click="close">
         <i class="fa fa-fw fa-close"></i>
       </button>
-      <div v-html="props.item.text"/>
+      <div v-html="item.text"/>
     </div>
   </template>
 </notifications>
