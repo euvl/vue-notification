@@ -153,7 +153,7 @@ Notifications are triggered via the API:
 
     // (optional, override)
     // Time (in ms) to show / hide notifications
-    speed: 1000
+    speed: 1000,
 
     // (optional)
     // Data object that can be used in your template
