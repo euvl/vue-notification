@@ -167,6 +167,10 @@ const Component = {
     events.$on('add', this.addItem);
     events.$on('close', this.closeItem);
   },
+  beforeDestroy() {
+    events.$off();
+    this.destroyAll();
+  },
   computed: {
     actualWidth () {
       return parseNumericValue(this.width)
