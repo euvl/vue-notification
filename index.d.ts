@@ -1,6 +1,9 @@
 import { PluginFunction } from 'vue';
 
+type Id = string | number;
+
 export interface NotificationOptions {
+    id?: Id;
     title?: string;
     text?: string;
     type?: string;
@@ -11,13 +14,23 @@ export interface NotificationOptions {
     clean?: boolean;
 }
 
-declare module 'vue/types/vue' {
-    interface Vue {
-        $notify: (options: NotificationOptions | string) => void;
+interface Notify {
+    (text: string): void;
+    (options: NotificationOptions): void;
+    close(id: Id): void;
+}
+
+/**
+    To use in:
+
+    ```ts
+    declare module 'vue/types/vue' {
+        interface Vue extends Notification<'customNotifyName'> {}
     }
-    interface VueConstructor {
-        notify: (options: NotificationOptions | string) => void;
-    }
+    ```
+*/
+export type Notification<Name extends string> = {
+    [key in Name]: Notify;
 }
 
 declare class VueNotification {
