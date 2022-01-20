@@ -1,1 +1,5 @@
-demo
+*
+!dist/
+!index.d.ts
+!LICENCE
+!package.json
