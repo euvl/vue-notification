@@ -58,7 +58,7 @@
     "karma-spec-reporter": "0.0.31",
     "karma-webpack": "^2.0.4",
     "mocha": "^3.5.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^5.0.1",
     "sinon": "^3.2.0",
     "sinon-chai": "^2.12.0",
