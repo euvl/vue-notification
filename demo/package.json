@@ -10,7 +10,7 @@
     "vue": "^2.5.0"
   },
   "devDependencies": {
-    "webpack-cli": "^3.2.3",
+    "webpack-cli": "^5.1.4",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
     "babel-preset-latest": "^6.0.0",
@@ -22,6 +22,6 @@
     "vue-loader": "^11.1.4",
     "vue-template-compiler": "^2.5.0",
     "webpack": "^2.2.0",
-    "webpack-dev-server": "^2.2.0"
+    "webpack-dev-server": "^5.0.4"
   }
 }
